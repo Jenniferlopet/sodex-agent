@@ -1,83 +1,117 @@
 const state = { market: [] };
 const $ = (id) => document.getElementById(id);
-const compact = (n) => Number.isFinite(Number(n)) ? new Intl.NumberFormat('en', { notation:'compact', maximumFractionDigits:2 }).format(Number(n)) : '0';
-const money = (n) => Number.isFinite(Number(n)) ? new Intl.NumberFormat('en', { maximumFractionDigits: Number(n)>1000 ? 0 : 4 }).format(Number(n)) : '0';
 
-async function api(path, options = {}) {
-  const res = await fetch(path, { cache:'no-store', ...options });
-  if (!res.ok) throw new Error('Request failed');
+function compact(n) {
+  const num = Number(n || 0);
+  if (!Number.isFinite(num)) return '0';
+  return Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 2 }).format(num);
+}
+function money(n) {
+  const num = Number(n || 0);
+  if (!Number.isFinite(num)) return '$0';
+  return '$' + Intl.NumberFormat('en', { maximumFractionDigits: num > 1000 ? 0 : 4 }).format(num);
+}
+async function fetchJson(url, options) {
+  const res = await fetch(url, options);
+  if (!res.ok) throw new Error('request failed');
   return res.json();
 }
-
 async function loadMarket() {
-  $('assetRows').innerHTML = '<tr><td colspan="4">Loading market data...</td></tr>';
+  $('marketStatus').textContent = 'loading';
   try {
-    const data = await api('/api/market/overview');
+    const data = await fetchJson('/api/market/overview', { cache: 'no-store' });
     state.market = Array.isArray(data.data) ? data.data : [];
-  } catch {
+    $('marketStatus').textContent = 'protected';
+  } catch (_) {
     state.market = [];
+    $('marketStatus').textContent = 'fallback';
   }
-  renderMarket();
+  renderStats();
+  renderTable();
+  drawChart();
 }
-
-function renderMarket() {
-  const market = state.market;
-  $('assetCount').textContent = String(market.length);
-  const avg = market.length ? market.reduce((s,x)=>s+Number(x.change24h||0),0)/market.length : 0;
-  const vol = market.reduce((s,x)=>s+Number(x.volume24h||0),0);
-  $('avgChange').textContent = `${avg.toFixed(2)}%`;
-  $('volume').textContent = `$${compact(vol)}`;
-  $('assetRows').innerHTML = market.length ? market.map(item => `
-    <tr>
-      <td><span class="asset-name">${escapeHtml(item.symbol)}</span><span class="sub">${escapeHtml(item.name)}</span></td>
-      <td>$${money(item.price)}</td>
-      <td class="${Number(item.change24h)>=0?'up':'down'}">${Number(item.change24h||0).toFixed(2)}%</td>
-      <td>$${compact(item.volume24h)}</td>
-    </tr>`).join('') : '<tr><td colspan="4">Market provider unavailable. Protected fallback returned no assets.</td></tr>';
-  drawChart(market);
+function renderStats() {
+  const items = state.market;
+  $('assetCount').textContent = String(items.length);
+  const avg = items.length ? items.reduce((s, x) => s + Number(x.change24h || 0), 0) / items.length : 0;
+  const vol = items.reduce((s, x) => s + Number(x.volume24h || 0), 0);
+  $('avgChange').textContent = avg.toFixed(2) + '%';
+  $('avgChange').className = avg >= 0 ? 'green' : 'red';
+  $('totalVolume').textContent = '$' + compact(vol);
 }
-
-function drawChart(market) {
-  const canvas = $('marketChart');
+function renderTable() {
+  const rows = state.market.map((x) => {
+    const cls = Number(x.change24h || 0) >= 0 ? 'green' : 'red';
+    return `<tr><td><span class="coin">${escapeHtml(x.symbol)}</span><span class="sub">${escapeHtml(x.name)}</span></td><td>${money(x.price)}</td><td class="${cls}">${Number(x.change24h || 0).toFixed(2)}%</td><td>$${compact(x.volume24h)}</td></tr>`;
+  }).join('');
+  $('marketRows').innerHTML = rows || '<tr><td colspan="4">No data available.</td></tr>';
+}
+function drawChart() {
+  const canvas = $('chart');
   const ctx = canvas.getContext('2d');
-  const w = canvas.width, h = canvas.height;
-  ctx.clearRect(0,0,w,h);
-  ctx.fillStyle = 'rgba(2,6,23,.25)';
-  ctx.fillRect(0,0,w,h);
-  for (let i=0;i<5;i++) {
-    ctx.strokeStyle = 'rgba(148,163,184,.12)';
-    ctx.beginPath(); ctx.moveTo(48, 24+i*(h-70)/4); ctx.lineTo(w-18, 24+i*(h-70)/4); ctx.stroke();
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = 220 * dpr;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, rect.width, 220);
+  const data = state.market.map(x => Number(x.price || 0));
+  const labels = state.market.map(x => x.symbol || '');
+  if (!data.length) return;
+  const pad = 28;
+  const w = rect.width;
+  const h = 220;
+  const max = Math.max(...data) || 1;
+  const min = Math.min(...data);
+  const range = Math.max(max - min, 1);
+  ctx.strokeStyle = 'rgba(148,163,184,.22)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i < 4; i++) {
+    const y = pad + (i * (h - pad * 2)) / 3;
+    ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(w - pad, y); ctx.stroke();
   }
-  if (!market.length) return;
-  const vals = market.map(x=>Number(x.price||0));
-  const max = Math.max(...vals,1), min = Math.min(...vals,0);
-  const range = Math.max(max-min,1);
-  const pts = vals.map((v,i)=>({x:60 + i*((w-110)/Math.max(vals.length-1,1)), y: 24 + (max-v)/range*(h-78)}));
-  const grad = ctx.createLinearGradient(0,20,0,h-40); grad.addColorStop(0,'rgba(34,211,238,.34)'); grad.addColorStop(1,'rgba(34,211,238,0)');
-  ctx.beginPath(); pts.forEach((p,i)=> i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)); ctx.lineTo(pts[pts.length-1].x,h-38); ctx.lineTo(pts[0].x,h-38); ctx.closePath(); ctx.fillStyle=grad; ctx.fill();
-  ctx.beginPath(); pts.forEach((p,i)=> i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)); ctx.strokeStyle='#22d3ee'; ctx.lineWidth=3; ctx.stroke();
-  pts.forEach((p,i)=>{ ctx.fillStyle='#22d3ee'; ctx.beginPath(); ctx.arc(p.x,p.y,5,0,Math.PI*2); ctx.fill(); ctx.fillStyle='#94a3b8'; ctx.font='13px Arial'; ctx.textAlign='center'; ctx.fillText(market[i].symbol,p.x,h-14); });
+  const points = data.map((v, i) => {
+    const x = pad + (i * (w - pad * 2)) / Math.max(data.length - 1, 1);
+    const y = h - pad - ((v - min) / range) * (h - pad * 2);
+    return { x, y, v };
+  });
+  const grad = ctx.createLinearGradient(0, pad, 0, h - pad);
+  grad.addColorStop(0, 'rgba(34,211,238,.35)');
+  grad.addColorStop(1, 'rgba(34,211,238,0)');
+  ctx.beginPath();
+  points.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y));
+  ctx.lineTo(points[points.length - 1].x, h - pad); ctx.lineTo(points[0].x, h - pad); ctx.closePath();
+  ctx.fillStyle = grad; ctx.fill();
+  ctx.beginPath();
+  points.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y));
+  ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 3; ctx.stroke();
+  ctx.fillStyle = '#cbd5e1'; ctx.font = '12px Arial'; ctx.textAlign = 'center';
+  points.forEach((p, i) => { ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, Math.PI * 2); ctx.fillStyle = '#22d3ee'; ctx.fill(); ctx.fillStyle = '#cbd5e1'; ctx.fillText(labels[i], p.x, h - 6); });
 }
-
+function escapeHtml(s) { return String(s || '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
 async function askAgent() {
-  const box = $('answer'); box.classList.remove('hidden'); box.textContent = 'Thinking...';
+  $('agentAnswer').textContent = 'Thinking...';
   try {
-    const data = await api('/api/agent', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({prompt:$('prompt').value}) });
-    box.textContent = data.answer || 'No response.';
-  } catch { box.textContent = 'Agent is temporarily unavailable.'; }
+    const data = await fetchJson('/api/agent', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt: $('prompt').value }) });
+    $('agentAnswer').textContent = data.answer || 'No response.';
+  } catch (_) { $('agentAnswer').textContent = 'Agent unavailable. Fallback UI remains active.'; }
 }
-
 async function verifyOrder() {
-  const box = $('orderStatus'); box.classList.remove('hidden'); box.textContent = 'Preparing order...';
+  $('orderStatus').textContent = 'Preparing protected order...';
   try {
-    const data = await api('/api/sodex/order', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({symbol:'BTC-USDC', side:'buy', type:'market', amount:'0.01'}) });
-    box.textContent = data.message || 'Order verified.';
-  } catch { box.textContent = 'Order module unavailable.'; }
+    const data = await fetchJson('/api/sodex/order', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ symbol: 'BTC-USDC', side: 'buy', type: 'market', amount: '0.01' }) });
+    $('orderStatus').textContent = data.message || 'Order verified.';
+  } catch (_) { $('orderStatus').textContent = 'Execution layer unavailable.'; }
 }
-
-function escapeHtml(str) { return String(str || '').replace(/[&<>"]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s])); }
-
+async function checkHealth() {
+  $('healthBox').textContent = 'checking...';
+  try { const data = await fetchJson('/api/health', { cache: 'no-store' }); $('healthBox').textContent = JSON.stringify(data, null, 2); }
+  catch (_) { $('healthBox').textContent = 'health check unavailable'; }
+}
 $('refreshBtn').addEventListener('click', loadMarket);
 $('askBtn').addEventListener('click', askAgent);
-$('orderBtn').addEventListener('click', verifyOrder);
+$('verifyBtn').addEventListener('click', verifyOrder);
+$('healthBtn').addEventListener('click', checkHealth);
+window.addEventListener('resize', drawChart);
 loadMarket();
+checkHealth();

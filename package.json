@@ -1,13 +1,14 @@
 {
-  "name": "sodex-agent-netlify-static",
+  "name": "sodex-agent-fresh",
   "version": "1.0.0",
   "private": true,
+  "description": "Static Netlify SoDEX AI agent dashboard with serverless API fallback.",
   "scripts": {
-    "build": "node scripts/check.js"
+    "build": "node scripts/build.js",
+    "start": "netlify dev"
   },
-  "dependencies": {},
-  "devDependencies": {},
-  "engines": {
-    "node": "20.x"
-  }
+  "dependencies": {
+    "@netlify/functions": "2.8.2"
+  },
+  "devDependencies": {}
 }
