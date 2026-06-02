@@ -59,20 +59,25 @@ function renderTable(rows) {
 }
 function drawChart() {
   const canvas = $('chart'); const ctx = canvas.getContext('2d'); const dpr = window.devicePixelRatio || 1;
-  const rows = [...state.market].sort((a,b)=>Number(b.volume24h||0)-Number(a.volume24h||0)).slice(0, Number(state.meta.chartLimit || 28));
+  const chartLimit = Math.min(Number(state.meta.chartLimit || 60), 200);
+  const rows = [...state.market].sort((a,b)=>Number(b.volume24h||0)-Number(a.volume24h||0)).slice(0, chartLimit);
   const containerW = canvas.parentElement?.clientWidth || 700;
-  const w = Math.max(containerW, 980, rows.length * 44);
-  const h = 280; canvas.width = w * dpr; canvas.height = h * dpr; canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+  const w = Math.max(containerW, 980, rows.length * 50);
+  const h = 320; canvas.width = w * dpr; canvas.height = h * dpr; canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
   ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
   if (!rows.length) { $('chartNote').textContent = 'No live market data available yet.'; return; }
   $('chartNote').textContent = `Showing top ${rows.length} liquid assets by 24h volume. Bars show 24h % change, not raw price.`;
-  const padL = 54, padR = 26, padT = 24, padB = 54, chartW = w - padL - padR, chartH = h - padT - padB;
-  const values = rows.map(x=>Number(x.change24h||0)); const minRaw = Math.min(...values,0); const maxRaw = Math.max(...values,0); const span = Math.max(Math.abs(minRaw), Math.abs(maxRaw), 1); const min=-span, max=span;
-  const yFor = v => padT + ((max-v)/(max-min))*chartH; const zeroY = yFor(0);
-  ctx.strokeStyle='rgba(148,163,184,.18)'; ctx.lineWidth=1; ctx.fillStyle='rgba(203,213,225,.78)'; ctx.font='11px Arial'; ctx.textAlign='right'; ctx.textBaseline='middle';
+  const padL = 58, padR = 30, padT = 26, padB = 64;
+  const vals = rows.map(x => Number(x.change24h || 0));
+  const absMax = Math.max(4, ...vals.map(v => Math.abs(v)));
+  const max = absMax, min = -absMax;
+  const chartH = h - padT - padB, chartW = w - padL - padR;
+  const zeroY = padT + (max / (max - min)) * chartH;
+  const yFor = (v) => padT + ((max - v) / (max - min)) * chartH;
+  ctx.strokeStyle='rgba(148,163,184,.16)'; ctx.fillStyle='rgba(203,213,225,.82)'; ctx.font='11px Arial'; ctx.textAlign='right'; ctx.textBaseline='middle';
   for(let i=0;i<=4;i++){ const val=max-(i*(max-min))/4; const y=yFor(val); ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(w-padR,y); ctx.stroke(); ctx.fillText(val.toFixed(1)+'%', padL-8, y); }
-  ctx.strokeStyle='rgba(34,211,238,.6)'; ctx.beginPath(); ctx.moveTo(padL,zeroY); ctx.lineTo(w-padR,zeroY); ctx.stroke();
-  const gap=10; const barW=Math.max(20,(chartW-gap*(rows.length-1))/rows.length);
+  ctx.strokeStyle='rgba(34,211,238,.55)'; ctx.beginPath(); ctx.moveTo(padL,zeroY); ctx.lineTo(w-padR,zeroY); ctx.stroke();
+  const gap=12; const barW=Math.max(24,(chartW-gap*(rows.length-1))/rows.length);
   rows.forEach((item,i)=>{ const x=padL+i*(barW+gap); const val=Number(item.change24h||0); const y=yFor(val); const barTop=Math.min(y,zeroY); const barH=Math.max(Math.abs(zeroY-y),3); const grad=ctx.createLinearGradient(0,barTop,0,barTop+barH); if(val>=0){grad.addColorStop(0,'rgba(52,211,153,.95)');grad.addColorStop(1,'rgba(34,211,238,.35)');} else {grad.addColorStop(0,'rgba(251,113,133,.95)');grad.addColorStop(1,'rgba(251,113,133,.28)');} roundRect(ctx,x,barTop,barW,barH,7); ctx.fillStyle=grad; ctx.fill(); ctx.fillStyle='rgba(226,232,240,.95)'; ctx.font='bold 10px Arial'; ctx.textAlign='center'; ctx.textBaseline=val>=0?'bottom':'top'; ctx.fillText(pct(val), x+barW/2, val>=0?barTop-5:barTop+barH+5); ctx.save(); ctx.translate(x+barW/2,h-padB+18); ctx.rotate(-Math.PI/5); ctx.fillStyle='rgba(203,213,225,.85)'; ctx.font='bold 11px Arial'; ctx.textAlign='right'; ctx.textBaseline='middle'; ctx.fillText(String(item.symbol).slice(0,10),0,0); ctx.restore(); });
 }
 function roundRect(ctx,x,y,width,height,radius){const r=Math.min(radius,width/2,height/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+width,y,x+width,y+height,r);ctx.arcTo(x+width,y+height,x,y+height,r);ctx.arcTo(x,y+height,x,y,r);ctx.arcTo(x,y,x+width,y,r);ctx.closePath();}
