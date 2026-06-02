@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SoDEX Agent Console</title>
+  <meta name="description" content="AI Web3 trading intelligence dashboard with protected fallback data." />
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">AI Web3 Trading Intelligence</div>
+        <h1>SoDEX Agent Console</h1>
+        <p class="lead">Real market dashboard, protected API fallback, AI strategy assistant, and safe SoDEX verification layer.</p>
+      </div>
+      <div class="status-card">
+        <span>Execution Mode</span>
+        <strong id="modeText">Protected</strong>
+      </div>
+    </section>
+
+    <section class="stats">
+      <article class="card"><span>Tracked Assets</span><strong id="assetCount">0</strong></article>
+      <article class="card"><span>Avg 24h Change</span><strong id="avgChange">0.00%</strong></article>
+      <article class="card"><span>Market Volume</span><strong id="volume">$0</strong></article>
+    </section>
+
+    <section class="grid-main">
+      <article class="card market-panel">
+        <div class="panel-head">
+          <div>
+            <h2>Market Overview</h2>
+            <p>Uses real providers and silent fallback. Provider details are not exposed.</p>
+          </div>
+          <button id="refreshBtn">Refresh</button>
+        </div>
+        <div class="chart-wrap"><canvas id="marketChart" width="900" height="320"></canvas></div>
+      </article>
+
+      <article class="card agent-panel">
+        <h2>AI Agent</h2>
+        <p>Ask about risk, rebalance, gas, or trading execution.</p>
+        <textarea id="prompt">Analyze my crypto portfolio risk</textarea>
+        <button id="askBtn" class="primary">Ask Agent</button>
+        <div id="answer" class="response hidden"></div>
+      </article>
+    </section>
+
+    <section class="grid-main lower">
+      <article class="card assets-panel">
+        <h2>Assets</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Asset</th><th>Price</th><th>24h</th><th>Volume</th></tr></thead>
+            <tbody id="assetRows"><tr><td colspan="4">Loading market data...</td></tr></tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="card execute-panel">
+        <h2>SoDEX Execution Layer</h2>
+        <p>Live execution stays disabled unless server-side credentials and LIVE_TRADING are enabled.</p>
+        <div class="ticket">
+          <div><span>Pair</span><strong>BTC-USDC</strong></div>
+          <div><span>Side</span><strong class="green">BUY</strong></div>
+          <div><span>Amount</span><strong>0.01 BTC</strong></div>
+        </div>
+        <button id="orderBtn" class="outline">Verify Order</button>
+        <div id="orderStatus" class="response hidden"></div>
+      </article>
+    </section>
+  </main>
+  <script src="/assets/app.js"></script>
+</body>
+</html>
