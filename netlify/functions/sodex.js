@@ -1,30 +1,110 @@
-const { ok, bad, safeFetchJson } = require('./_utils');
+const { ok, bad, safeFetchJson, env } = require('./_utils');
 
-function liveTrading() { return process.env.LIVE_TRADING === 'true'; }
-function envName() { return process.env.SODEX_ENV || 'testnet'; }
-function baseUrl() { return envName() === 'mainnet' ? 'https://api.sodex.com' : 'https://api-testnet.sodex.com'; }
-function headers() {
-  return { accept: 'application/json', ...(process.env.SODEX_API_KEY_NAME ? { 'X-API-Key': process.env.SODEX_API_KEY_NAME } : {}) };
+function liveTrading() { return env('LIVE_TRADING', 'false') === 'true'; }
+function envName() { return env('SODEX_ENV', 'testnet'); }
+function baseUrl() {
+  if (env('SODEX_API_BASE_URL')) return env('SODEX_API_BASE_URL').replace(/\/$/, '');
+  return envName() === 'mainnet' ? 'https://api.sodex.com' : 'https://api-testnet.sodex.com';
 }
+function apiHeaders(extra = {}) {
+  const key = env('SODEX_API_KEY_NAME') || env('SODEX_API_KEY');
+  const headerName = env('SODEX_API_HEADER_NAME', 'X-API-Key');
+  const headers = { accept: 'application/json', 'content-type': 'application/json', ...extra };
+  if (key) headers[headerName] = key;
+  return headers;
+}
+function pathEnv(name, fallback) {
+  const p = env(name, fallback);
+  return p.startsWith('/') ? p : `/${p}`;
+}
+function endpoint(path) { return `${baseUrl()}${path}`; }
+
+async function fetchSodex(path, options = {}) {
+  return safeFetchJson(endpoint(path), {
+    ...options,
+    headers: apiHeaders(options.headers || {})
+  });
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') return ok({ ok: true });
-  const path = (event.path || '').split('/api/sodex/')[1] || (event.path || '').split('/.netlify/functions/sodex/')[1] || '';
-  if (path.startsWith('account')) return ok({ ok: true, env: envName(), liveTrading: liveTrading(), accountConfigured: Boolean(process.env.SODEX_ACCOUNT_ID), apiConfigured: Boolean(process.env.SODEX_API_KEY_NAME) });
+
+  const path = (event.path || '').split('/api/sodex/')[1] ||
+    (event.path || '').split('/.netlify/functions/sodex/')[1] || '';
+
+  if (path.startsWith('account')) {
+    const accountPath = env('SODEX_ACCOUNT_PATH');
+    if (accountPath && (env('SODEX_API_KEY_NAME') || env('SODEX_API_KEY'))) {
+      try {
+        const data = await fetchSodex(pathEnv('SODEX_ACCOUNT_PATH', accountPath));
+        return ok({ ok: true, env: envName(), liveTrading: liveTrading(), data });
+      } catch (_) {}
+    }
+    return ok({
+      ok: true,
+      env: envName(),
+      liveTrading: liveTrading(),
+      accountConfigured: Boolean(env('SODEX_ACCOUNT_ID')),
+      apiConfigured: Boolean(env('SODEX_API_KEY_NAME') || env('SODEX_API_KEY')),
+      dataSource: accountPath ? 'live-configured' : 'env-status'
+    });
+  }
+
   if (path.startsWith('markets')) {
-    try { return ok({ ok: true, data: await safeFetchJson(`${baseUrl()}/api/markets`, { headers: headers() }) }); }
-    catch (_) { return ok({ ok: true, data: { markets: [{ symbol: 'BTC-USDC', status: 'available' }, { symbol: 'ETH-USDC', status: 'available' }, { symbol: 'SOL-USDC', status: 'available' }], protected: true } }); }
+    try {
+      const data = await fetchSodex(pathEnv('SODEX_MARKETS_PATH', '/api/markets'));
+      return ok({ ok: true, provider: 'live', data });
+    } catch (_) {
+      return ok({ ok: false, provider: 'protected', data: [], message: 'SoDEX market data is temporarily unavailable.' });
+    }
   }
+
   if (path.startsWith('orderbook')) {
-    const symbol = new URLSearchParams(event.rawQuery || '').get('symbol') || 'BTC-USDC';
-    try { return ok({ ok: true, data: await safeFetchJson(`${baseUrl()}/api/orderbook?symbol=${encodeURIComponent(symbol)}`, { headers: headers() }) }); }
-    catch (_) { return ok({ ok: true, data: { symbol, bids: [['68100','0.42'],['68040','0.31'],['67920','0.18']], asks: [['68220','0.36'],['68310','0.27'],['68480','0.16']], protected: true } }); }
+    const symbol = new URLSearchParams(event.rawQuery || '').get('symbol') || env('DEFAULT_SODEX_SYMBOL', 'BTC-USDC');
+    const template = pathEnv('SODEX_ORDERBOOK_PATH', '/api/orderbook?symbol={symbol}');
+    const resolvedPath = template.replace('{symbol}', encodeURIComponent(symbol));
+    try {
+      const data = await fetchSodex(resolvedPath);
+      return ok({ ok: true, provider: 'live', data });
+    } catch (_) {
+      return ok({ ok: false, provider: 'protected', data: { symbol, bids: [], asks: [] }, message: 'SoDEX orderbook is temporarily unavailable.' });
+    }
   }
+
   if (path.startsWith('order')) {
     let order = {};
     try { order = JSON.parse(event.body || '{}'); } catch (_) {}
-    if (!liveTrading()) return ok({ ok: true, mode: 'verification', message: 'Order verified. Live trading is disabled server-side.', order: { symbol: order.symbol || 'BTC-USDC', side: order.side || 'buy', type: order.type || 'market', amount: order.amount || '0', status: 'simulated' } });
-    if (!process.env.SODEX_API_KEY_NAME || !process.env.SODEX_API_PRIVATE_KEY) return bad({ ok: false, message: 'Live credentials are not configured.' });
-    return bad({ ok: false, message: 'Live signing schema must be connected to official SoDEX production signing before enabling real orders.' });
+
+    if (!liveTrading()) {
+      return ok({
+        ok: true,
+        mode: 'verification',
+        message: 'Order checked. Live trading is disabled by LIVE_TRADING=false.',
+        order: {
+          symbol: order.symbol || env('DEFAULT_SODEX_SYMBOL', 'BTC-USDC'),
+          side: order.side || 'buy',
+          type: order.type || 'market',
+          amount: order.amount || '0',
+          status: 'not-submitted'
+        }
+      });
+    }
+
+    const orderPath = env('SODEX_ORDER_PATH');
+    if (!orderPath) return bad({ ok: false, message: 'SODEX_ORDER_PATH is not configured.' });
+    if (!(env('SODEX_API_KEY_NAME') || env('SODEX_API_KEY'))) return bad({ ok: false, message: 'SoDEX API key is not configured.' });
+
+    // Only submit exactly what the server env and UI send. Secrets never go to the browser.
+    try {
+      const data = await fetchSodex(pathEnv('SODEX_ORDER_PATH', orderPath), {
+        method: 'POST',
+        body: JSON.stringify(order)
+      });
+      return ok({ ok: true, provider: 'live', data });
+    } catch (_) {
+      return bad({ ok: false, message: 'Live order submission failed.' });
+    }
   }
-  return ok({ ok: true, routes: ['account','markets','orderbook','order'] });
+
+  return ok({ ok: true, routes: ['account', 'markets', 'orderbook', 'order'] });
 };

@@ -1,36 +1,70 @@
-# SoDEX Agent Fresh
+# SoDEX Agent Fresh — ENV Real Data Edition
 
-A fresh Netlify static + serverless implementation. It does not use Next.js, Tailwind, Turbopack, or React, so it avoids the Netlify Next.js runtime errors.
+Static Netlify tool with Netlify Functions. No Next.js runtime. No Tailwind. No exposed keys.
 
-## Netlify settings
+## What changed
 
-- Base directory: empty
-- Package directory: empty
-- Build command: `npm run build`
-- Publish directory: `.`
-- Functions directory: `netlify/functions`
+This edition uses **real data from Netlify Environment Variables**:
 
-Remove any existing Netlify Next.js Runtime / @netlify/plugin-nextjs from the old site, or create a new Netlify site.
+1. Tries `SOSOVALUE_MARKET_URL` with `SOSOVALUE_API_KEY`.
+2. If that fails, silently falls back to CoinGecko.
+3. If CoinGecko fails, silently falls back to Binance public market data.
+4. SoDEX base URL, paths, API header name, and API key are all configurable from env.
 
-## Environment variables
+The frontend never receives API keys or private keys.
 
-Start with:
+## Netlify build settings
+
+Build command:
+
+```txt
+npm run build
+```
+
+Publish directory:
+
+```txt
+.
+```
+
+Functions directory:
+
+```txt
+netlify/functions
+```
+
+Do not enable Next.js Runtime or @netlify/plugin-nextjs.
+
+## Required env
 
 ```env
+NODE_VERSION=20
 LIVE_TRADING=false
 SODEX_ENV=testnet
-NODE_VERSION=20
 ```
 
-Optional:
+## Real market env
 
 ```env
-SOSOVALUE_API_KEY=...
-SODEX_API_KEY_NAME=...
-SODEX_API_PRIVATE_KEY=...
-SODEX_ACCOUNT_ID=...
+SOSOVALUE_API_KEY=your_key
+SOSOVALUE_MARKET_URL=https://your-official-sosovalue-market-endpoint
+SOSOVALUE_API_HEADER_NAME=X-API-Key
+SOSOVALUE_AUTH_MODE=header
+COINGECKO_API_KEY=optional
+COINGECKO_IDS=bitcoin,ethereum,solana,chainlink,arbitrum
+BINANCE_PAIRS=BTCUSDT,ETHUSDT,SOLUSDT,LINKUSDT,ARBUSDT
 ```
 
-## Safety
+## Real SoDEX env
 
-Live trading is disabled by default. The frontend never receives API keys or private keys.
+```env
+SODEX_API_BASE_URL=https://official-sodex-api-base-url
+SODEX_API_KEY_NAME=your_key_name_or_key
+SODEX_API_HEADER_NAME=X-API-Key
+SODEX_MARKETS_PATH=/api/markets
+SODEX_ORDERBOOK_PATH=/api/orderbook?symbol={symbol}
+SODEX_ACCOUNT_PATH=
+DEFAULT_SODEX_SYMBOL=BTC-USDC
+```
+
+Keep `LIVE_TRADING=false` for verification. Only enable live orders after the official order endpoint and signing schema are confirmed.

@@ -14,7 +14,7 @@
       <div>
         <div class="eyebrow">SoSoValue Brain × SoDEX Hands</div>
         <h1>SoDEX Agent Console</h1>
-        <p class="hero-text">Agentic market intelligence, protected real-data fallback, and a safe execution layer designed for Netlify deployment.</p>
+        <p class="hero-text">Agentic market intelligence powered by server-side ENV providers, with keys hidden from the frontend.</p>
         <div class="hero-actions">
           <button id="refreshBtn" class="btn primary">Refresh market</button>
           <button id="healthBtn" class="btn ghost">Check API health</button>
@@ -22,9 +22,9 @@
       </div>
       <div class="terminal-card">
         <div class="terminal-top"><span></span><span></span><span></span></div>
-        <pre id="healthBox">system: protected mode
+        <pre id="healthBox">system: env real-data mode
 live_trading: false
-provider_errors: hidden</pre>
+secrets: server-side only</pre>
       </div>
     </section>
 
@@ -38,7 +38,7 @@ provider_errors: hidden</pre>
     <section class="grid-main">
       <article class="panel wide">
         <div class="panel-head">
-          <div><h2>Market Signal</h2><p>Real provider with silent fallback.</p></div>
+          <div><h2>Market Signal</h2><p>Real providers loaded from Netlify ENV.</p></div>
           <span id="marketStatus" class="pill">loading</span>
         </div>
         <canvas id="chart" height="220"></canvas>
@@ -55,7 +55,7 @@ provider_errors: hidden</pre>
 
     <section class="grid-main lower">
       <article class="panel wide">
-        <div class="panel-head"><div><h2>Assets</h2><p>Prices are normalized for dashboard use.</p></div></div>
+        <div class="panel-head"><div><h2>Assets</h2><p>Prices come from configured live providers.</p></div></div>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Asset</th><th>Price</th><th>24h</th><th>Volume</th></tr></thead>

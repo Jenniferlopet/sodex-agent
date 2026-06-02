@@ -21,10 +21,10 @@ async function loadMarket() {
   try {
     const data = await fetchJson('/api/market/overview', { cache: 'no-store' });
     state.market = Array.isArray(data.data) ? data.data : [];
-    $('marketStatus').textContent = 'protected';
+    $('marketStatus').textContent = data.ok ? 'live env' : 'unavailable';
   } catch (_) {
     state.market = [];
-    $('marketStatus').textContent = 'fallback';
+    $('marketStatus').textContent = 'unavailable';
   }
   renderStats();
   renderTable();
@@ -97,7 +97,7 @@ async function askAgent() {
   } catch (_) { $('agentAnswer').textContent = 'Agent unavailable. Fallback UI remains active.'; }
 }
 async function verifyOrder() {
-  $('orderStatus').textContent = 'Preparing protected order...';
+  $('orderStatus').textContent = 'Checking server env order layer...';
   try {
     const data = await fetchJson('/api/sodex/order', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ symbol: 'BTC-USDC', side: 'buy', type: 'market', amount: '0.01' }) });
     $('orderStatus').textContent = data.message || 'Order verified.';

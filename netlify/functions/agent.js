@@ -5,10 +5,12 @@ exports.handler = async (event) => {
   let body = {};
   try { body = JSON.parse(event.body || '{}'); } catch (_) {}
   const prompt = String(body.prompt || '').toLowerCase();
-  let answer = 'Agent ready. I can analyze risk, rebalance ideas, market signals, gas cost awareness, and SoDEX execution safety.';
-  if (prompt.includes('rebalance')) answer = 'Rebalance idea: keep BTC/ETH as core exposure, reduce over-concentration in small caps, and only prepare orders while LIVE_TRADING is disabled for verification.';
-  if (prompt.includes('risk')) answer = 'Risk view: crypto portfolios are volatile. Use position sizing, stablecoin buffers, and avoid executing live trades until API credentials and account settings are confirmed.';
-  if (prompt.includes('gas')) answer = 'Gas view: always estimate network cost before execution. Provider/API failures are hidden from UI and replaced with protected fallback responses.';
-  if (prompt.includes('buy') || prompt.includes('sell') || prompt.includes('order') || prompt.includes('trade')) answer = 'Trading action detected. This console can verify the order flow, but live execution stays blocked unless LIVE_TRADING=true is set server-side.';
+
+  let answer = 'I can read live market data from server environment providers, check risk, and prepare protected SoDEX actions without exposing keys.';
+  if (prompt.includes('rebalance')) answer = 'Rebalance view: use live prices from configured providers, keep core exposure in major assets, and avoid live execution until server env credentials are verified.';
+  if (prompt.includes('risk')) answer = 'Risk view: crypto is volatile. Watch 24h change, volume, and position concentration before any SoDEX action.';
+  if (prompt.includes('gas')) answer = 'Execution view: check chain, account, orderbook, and fee assumptions from server-side env before submitting an on-chain order.';
+  if (prompt.includes('buy') || prompt.includes('sell') || prompt.includes('order')) answer = 'Order intent detected. The server will only submit if LIVE_TRADING=true and SoDEX order env variables are configured.';
+
   return ok({ ok: true, answer });
 };
