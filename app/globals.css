@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+body { margin: 0; background: #060606; color: #f5f5f5; }
+* { box-sizing: border-box; }
+.grid-bg {
+  background-image: radial-gradient(circle at 20% 10%, rgba(255, 120, 31, .18), transparent 25%), radial-gradient(circle at 90% 10%, rgba(255,255,255,.08), transparent 25%), linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 44px 44px, 44px 44px;
+}
+.card { @apply rounded-3xl border border-white/10 bg-white/[.045] backdrop-blur-xl shadow-glow; }
+.btn { @apply rounded-2xl bg-orange-500 px-5 py-3 font-semibold text-black transition hover:bg-orange-400 disabled:cursor-not-allowed disabled:opacity-40; }
+.input { @apply w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm outline-none focus:border-orange-400; }
+.badge { @apply rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-300; }
