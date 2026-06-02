@@ -25,13 +25,62 @@ function sosovalueHeaders() {
   else headers[headerName] = key;
   return headers;
 }
+
+const DEFAULT_SODEX_WATCHLIST = [
+  'SOSO','vSOSO','USDC','vUSDC','BTC','vBTC','ETH','vETH','SOL','vSOL','BNB','vBNB','AVAX','vAVAX','ARB','vARB','OP','vOP','MATIC','vMATIC','POL','vPOL','LINK','vLINK','UNI','vUNI','AAVE','vAAVE','SUI','vSUI','APT','vAPT','NEAR','vNEAR','INJ','vINJ','ATOM','vATOM','DOT','vDOT','SEI','vSEI','TIA','vTIA','JUP','vJUP','PYTH','vPYTH','WIF','vWIF','BONK','vBONK','ORDI','vORDI','STX','vSTX','LDO','vLDO','MKR','vMKR','ENA','vENA','ONDO','vONDO','PENDLE','vPENDLE','RENDER','vRENDER','RNDR','vRNDR','FET','vFET','TAO','vTAO','ICP','vICP','GRT','vGRT','IMX','vIMX','STRK','vSTRK','AEVO','vAEVO','ZRO','vZRO','ZK','vZK','WLD','vWLD','FIL','vFIL','ETC','vETC','DOGE','vDOGE','XRP','vXRP','ADA','vADA','TRX','vTRX','TON','vTON','PEPE','vPEPE','SHIB','vSHIB'
+];
+function watchlistRows(existing = []) {
+  const enabled = env('SHOW_SODEX_WATCHLIST', 'true') !== 'false';
+  if (!enabled) return [];
+  const extra = csv('SODEX_WATCHLIST_TOKENS', DEFAULT_SODEX_WATCHLIST.join(','));
+  const seen = new Set(existing.map(x => String(x.symbol || '').toUpperCase()));
+  const rows = [];
+  for (const raw of extra) {
+    const symbol = String(raw || '').trim().toUpperCase();
+    if (!symbol || seen.has(symbol)) continue;
+    seen.add(symbol);
+    rows.push({
+      symbol,
+      rawSymbol: symbol.includes('_') ? symbol : `${symbol}_vUSDC`,
+      name: symbol === 'SOSO' || symbol === 'VSOSO' ? 'SoSoValue Token' : `${symbol} SoDEX Watchlist`,
+      price: 0,
+      change24h: 0,
+      marketCap: 0,
+      volume24h: 0,
+      watchlist: true
+    });
+  }
+  return rows;
+}
+function mergeWatchlist(rows) {
+  const merged = [...rows, ...watchlistRows(rows)];
+  const limit = Number(env('MARKET_LIMIT', '250'));
+  return merged.slice(0, limit);
+}
+
 async function fromSodex() {
   const limit = Number(env('MARKET_LIMIT', '250'));
   const candidates = [
     pathEnv('SODEX_MARKETS_PATH', '/markets/tickers'),
     pathEnv('SODEX_MINI_TICKERS_PATH', '/markets/miniTickers'),
     '/markets/tickers',
-    '/markets/miniTickers'
+    '/markets/miniTickers',
+    '/markets',
+    '/symbols',
+    '/api/markets/tickers',
+    '/api/markets/miniTickers',
+    '/api/markets',
+    '/api/symbols',
+    '/api/v1/markets/tickers',
+    '/api/v1/markets/miniTickers',
+    '/api/v1/markets',
+    '/api/v1/symbols',
+    '/api/v1/spot/markets/tickers',
+    '/api/v1/spot/markets',
+    '/spot/markets/tickers',
+    '/spot/markets',
+    '/spot/api/v1/markets/tickers',
+    '/spot/api/v1/markets'
   ];
   const unique = [...new Set(candidates.filter(Boolean))];
   for (const path of unique) {
@@ -39,7 +88,7 @@ async function fromSodex() {
       const payload = await safeFetchJson(`${sodexBaseUrl()}${path}`, { headers: sodexHeaders() });
       const rows = sortAndLimit(unwrapArray(payload).map(normalizeMarketItem), limit);
       if (rows.length) {
-        return { rows, meta: { source: 'SoDEX', universe: 'sodex', endpoint: 'protected' } };
+        return { rows: mergeWatchlist(rows), meta: { source: 'SoDEX', universe: 'sodex', endpoint: 'protected' } };
       }
     } catch (_) {}
   }
@@ -52,7 +101,7 @@ async function fromSoSoValue() {
   const payload = await safeFetchJson(url, { headers: sosovalueHeaders() });
   const rows = sortAndLimit(unwrapArray(payload).map(normalizeMarketItem), Number(env('MARKET_LIMIT', '250')));
   if (!rows.length) throw new Error('sosovalue empty');
-  return { rows, meta: { source: 'SoSoValue', universe: 'sosovalue', endpoint: 'protected' } };
+  return { rows: mergeWatchlist(rows), meta: { source: 'SoSoValue', universe: 'sosovalue', endpoint: 'protected' } };
 }
 async function fromCoinGecko() {
   const ids = csv('COINGECKO_IDS', 'bitcoin,ethereum,solana,chainlink,arbitrum,optimism,uniswap,aave,maker,lido-dao,near,render-token,internet-computer,ondo-finance,jupiter-exchange-solana');
@@ -67,7 +116,7 @@ async function fromCoinGecko() {
   const data = await safeFetchJson(url, { headers });
   const rows = sortAndLimit(unwrapArray(data).map(normalizeMarketItem), limit);
   if (!rows.length) throw new Error('coingecko empty');
-  return { rows, meta: { source: 'Live fallback', universe: 'fallback', endpoint: 'protected' } };
+  return { rows: mergeWatchlist(rows), meta: { source: 'Live fallback + SoDEX watchlist', universe: 'fallback+watchlist', endpoint: 'protected' } };
 }
 async function fromBinance() {
   const pairs = csv('BINANCE_PAIRS', 'BTCUSDT,ETHUSDT,SOLUSDT,LINKUSDT,ARBUSDT,OPUSDT,UNIUSDT,AAVEUSDT,MKRUSDT,LDOUSDT,NEARUSDT,RNDRUSDT,ICPUSDT,ONDOUSDT,JUPUSDT');
@@ -83,7 +132,7 @@ async function fromBinance() {
   }));
   const sorted = sortAndLimit(rows, Number(env('MARKET_LIMIT', '250')));
   if (!sorted.length) throw new Error('binance empty');
-  return { rows: sorted, meta: { source: 'Live fallback', universe: 'fallback', endpoint: 'protected' } };
+  return { rows: mergeWatchlist(sorted), meta: { source: 'Live fallback + SoDEX watchlist', universe: 'fallback+watchlist', endpoint: 'protected' } };
 }
 exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') return ok({ ok: true });

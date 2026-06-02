@@ -60,3 +60,18 @@ LIVE_TRADING=false
 ```
 
 Only enable live trading after the official SoDEX signing flow and order format are fully verified.
+
+
+## Full SoDEX Universe / SOSO
+
+This build tries multiple SoDEX market endpoint patterns and keeps a server-side SoDEX watchlist enabled by default. If the official SoDEX market endpoint does not return the full universe, tokens such as `SOSO`, `vSOSO`, `vUSDC`, `vBTC`, `vETH`, and other likely SoDEX assets remain searchable in the asset table without fake prices. Values show as `—` until a live provider returns price/volume data.
+
+Optional ENV:
+
+```env
+SHOW_SODEX_WATCHLIST=true
+SODEX_WATCHLIST_TOKENS=SOSO,vSOSO,vUSDC,vBTC,vETH,vSOL,vARB,vOP,vLINK,vUNI,vAAVE
+MARKET_LIMIT=250
+CHART_LIMIT=60
+TABLE_LIMIT=200
+```

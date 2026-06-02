@@ -1,7 +1,7 @@
 const state = { market: [], meta: {}, filtered: [] };
 const $ = (id) => document.getElementById(id);
 function compact(n) { const num = Number(n || 0); if (!Number.isFinite(num)) return '0'; return Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 2 }).format(num); }
-function money(n) { const num = Number(n || 0); if (!Number.isFinite(num)) return '$0'; return '$' + Intl.NumberFormat('en', { maximumFractionDigits: num > 1000 ? 0 : 5 }).format(num); }
+function money(n) { const num = Number(n || 0); if (!Number.isFinite(num) || num === 0) return '—'; return '$' + Intl.NumberFormat('en', { maximumFractionDigits: num > 1000 ? 0 : 5 }).format(num); }
 function pct(n) { const num = Number(n || 0); if (!Number.isFinite(num)) return '0.00%'; return (num >= 0 ? '+' : '') + num.toFixed(2) + '%'; }
 function escapeHtml(s) { return String(s || '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
 async function fetchJson(url, options = {}, timeoutMs = 14000) {
@@ -54,19 +54,20 @@ function applyFilters(){
 function renderTable(rows) {
   $('marketRows').innerHTML = rows.map((x, i) => {
     const cls = Number(x.change24h || 0) >= 0 ? 'green' : 'red';
-    return `<tr><td class="rank">${i+1}</td><td><span class="coin">${escapeHtml(x.symbol)}</span><span class="sub">${escapeHtml(x.rawSymbol || x.name)}</span></td><td>${money(x.price)}</td><td class="${cls}">${pct(x.change24h)}</td><td>$${compact(x.volume24h)}</td></tr>`;
+    return `<tr><td class="rank">${i+1}</td><td><span class="coin">${escapeHtml(x.symbol)}</span><span class="sub">${escapeHtml(x.rawSymbol || x.name)}${x.watchlist ? ' • watchlist' : ''}</span></td><td>${money(x.price)}</td><td class="${cls}">${x.watchlist ? '—' : pct(x.change24h)}</td><td>${x.volume24h ? '$' + compact(x.volume24h) : '—'}</td></tr>`;
   }).join('') || '<tr><td colspan="5">No data available.</td></tr>';
 }
 function drawChart() {
   const canvas = $('chart'); const ctx = canvas.getContext('2d'); const dpr = window.devicePixelRatio || 1;
   const chartLimit = Math.min(Number(state.meta.chartLimit || 60), 200);
-  const rows = [...state.market].sort((a,b)=>Number(b.volume24h||0)-Number(a.volume24h||0)).slice(0, chartLimit);
+  let rows = [...state.market].filter(x => !x.watchlist && (Number(x.volume24h || 0) > 0 || Number(x.price || 0) > 0 || Math.abs(Number(x.change24h || 0)) > 0)).sort((a,b)=>Number(b.volume24h||0)-Number(a.volume24h||0)).slice(0, chartLimit);
+  if (!rows.length) rows = [...state.market].slice(0, chartLimit);
   const containerW = canvas.parentElement?.clientWidth || 700;
   const w = Math.max(containerW, 980, rows.length * 50);
   const h = 320; canvas.width = w * dpr; canvas.height = h * dpr; canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
   ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
   if (!rows.length) { $('chartNote').textContent = 'No live market data available yet.'; return; }
-  $('chartNote').textContent = `Showing top ${rows.length} liquid assets by 24h volume. Bars show 24h % change, not raw price.`;
+  $('chartNote').textContent = `Showing top ${rows.length} liquid assets by 24h volume. SoDEX watchlist tokens such as SOSO remain searchable in the asset table even when price/volume is not returned by the public endpoint.`;
   const padL = 58, padR = 30, padT = 26, padB = 64;
   const vals = rows.map(x => Number(x.change24h || 0));
   const absMax = Math.max(4, ...vals.map(v => Math.abs(v)));
