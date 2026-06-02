@@ -9,21 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/node": "latest",
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
-    "autoprefixer": "latest",
-    "ethers": "latest",
-    "lucide-react": "latest",
-    "next": "latest",
-    "postcss": "latest",
-    "react": "latest",
-    "react-dom": "latest",
-    "recharts": "latest",
-    "tailwindcss": "latest",
-    "typescript": "latest"
+    "@types/node": "20.12.12",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "autoprefixer": "10.4.19",
+    "ethers": "6.13.1",
+    "lucide-react": "0.468.0",
+    "next": "14.2.4",
+    "postcss": "8.4.38",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-is": "18.3.1",
+    "recharts": "2.12.7",
+    "tailwindcss": "3.4.4",
+    "typescript": "5.4.5"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "latest"
+    "@netlify/plugin-nextjs": "5.5.1"
   }
 }
