@@ -165,7 +165,7 @@ function localAgentAnswer(promptText) {
   const worst = [...items].sort((a, b) => Number(a.change24h || 0) - Number(b.change24h || 0))[0];
   const best = [...items].sort((a, b) => Number(b.volume24h || 0) - Number(a.volume24h || 0))[0];
   if (p.includes('xin chào') || p.includes('hello') || p.includes('hi')) {
-    return 'Xin chào! Tôi là SoDEX Agent. Bạn có thể hỏi về risk, rebalance, market signal, gas hoặc orderbook.';
+    return 'Hello! I am SoDEX Agent. You can ask about risk, rebalance, market signals, gas fees, or orderbook checks.';
   }
   if (p.includes('rebalance') || p.includes('portfolio') || p.includes('risk')) {
     return `Risk summary: average 24h change is ${avg.toFixed(2)}%. ${worst ? worst.symbol + ' is the weakest tracked asset at ' + pct(worst.change24h) + '. ' : ''}A safer rebalance keeps BTC/ETH as core exposure, limits smaller tokens, and checks SoDEX orderbook before execution.`;
@@ -179,7 +179,7 @@ function localAgentAnswer(promptText) {
   if (p.includes('signal') || p.includes('market')) {
     return `Market signal: ${items.length} assets loaded from live providers. ${best ? best.symbol + ' has the largest tracked volume at $' + compact(best.volume24h) + '. ' : ''}Use 24h change and volume together, not only price.`;
   }
-  return 'I can answer market, risk, rebalance, gas, signal, and SoDEX execution questions. Try: “Analyze portfolio risk and suggest a safe rebalance.”';
+  return 'I can answer questions about market data, risk, rebalance, gas fees, trading signals, and SoDEX execution. Try: “Analyze portfolio risk and suggest a safe rebalance.”';
 }
 async function askAgent() {
   const btn = $('askBtn');
