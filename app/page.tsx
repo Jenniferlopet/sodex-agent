@@ -1,58 +1,201 @@
-'use client';
-import { useEffect, useState } from 'react';
-import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { Activity, Bot, LockKeyhole, RadioTower, ShieldCheck, Sparkles, Wallet } from 'lucide-react';
+"use client";
 
-type MarketItem = { symbol: string; name: string; price: number; change24h: number; volume: number; marketCap?: number };
+import { useEffect, useMemo, useState } from "react";
 
-const fmt = (n: number) => n >= 1 ? n.toLocaleString(undefined, { maximumFractionDigits: 2 }) : n.toPrecision(4);
+type MarketItem = {
+  symbol: string;
+  name: string;
+  price: number;
+  change24h: number;
+  marketCap: number;
+  volume24h: number;
+};
 
-export default function Home() {
+export default function Page() {
   const [market, setMarket] = useState<MarketItem[]>([]);
-  const [prompt, setPrompt] = useState('Give me today market risk and a rebalance idea');
-  const [answer, setAnswer] = useState('');
-  const [busy, setBusy] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [prompt, setPrompt] = useState("Analyze BTC, ETH and SOL portfolio risk");
+  const [answer, setAnswer] = useState("");
+  const [orderStatus, setOrderStatus] = useState("");
 
-  useEffect(() => {
-    fetch('/api/market/overview').then(r => r.json()).then(j => setMarket(j.data || [])).catch(() => setMarket([]));
-  }, []);
-
-  async function askAgent() {
-    setBusy(true);
+  async function loadMarket() {
+    setLoading(true);
     try {
-      const r = await fetch('/api/agent', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt }) });
-      const j = await r.json();
-      setAnswer(j.answer || 'No answer.');
-    } finally { setBusy(false); }
+      const res = await fetch("/api/market/overview", { cache: "no-store" });
+      const payload = await res.json();
+      setMarket(Array.isArray(payload.data) ? payload.data : []);
+    } catch {
+      setMarket([]);
+    } finally {
+      setLoading(false);
+    }
   }
 
-  const chart = market.slice(0, 10).map((x, i) => ({ name: x.symbol, value: Math.max(0, 100 + Number(x.change24h || 0) + i * .8) }));
+  async function askAgent() {
+    setAnswer("Thinking...");
+    try {
+      const res = await fetch("/api/agent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt })
+      });
+      const data = await res.json();
+      setAnswer(data.answer || "Agent response unavailable.");
+    } catch {
+      setAnswer("Agent is temporarily unavailable. Try again later.");
+    }
+  }
 
-  return <main className="grid-bg min-h-screen px-5 py-6 md:px-10">
-    <nav className="mx-auto flex max-w-7xl items-center justify-between py-2">
-      <div className="flex items-center gap-3"><div className="rounded-2xl bg-orange-500 p-2 text-black"><Sparkles size={22}/></div><div><h1 className="text-xl font-black tracking-tight">SoDEX Agent Console</h1><p className="text-xs text-zinc-400">Real market data • Agentic strategy • Server-side keys</p></div></div>
-      <div className="hidden gap-2 md:flex"><span className="badge"><ShieldCheck size={13} className="inline"/> No secret in browser</span><span className="badge"><RadioTower size={13} className="inline"/> Live data</span></div>
-    </nav>
+  async function verifyOrder() {
+    setOrderStatus("Preparing protected order verification...");
+    try {
+      const res = await fetch("/api/sodex/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ symbol: "BTC-USDC", side: "buy", type: "market", amount: "0.01" })
+      });
+      const data = await res.json();
+      setOrderStatus(data.message || "Order verification completed.");
+    } catch {
+      setOrderStatus("Order module temporarily unavailable.");
+    }
+  }
 
-    <section className="mx-auto mt-8 grid max-w-7xl gap-5 lg:grid-cols-[1.25fr_.75fr]">
-      <div className="card p-7 md:p-10">
-        <div className="mb-8 flex flex-wrap items-start justify-between gap-5"><div><p className="mb-3 text-sm font-semibold text-orange-400">AI BUILDATHON WAVE 2</p><h2 className="max-w-3xl text-4xl font-black leading-tight md:text-6xl">Automated trading intelligence for SoDEX users.</h2><p className="mt-4 max-w-2xl text-zinc-300">One dashboard for market signals, risk monitoring, orderbook checks, and agent strategy. If primary APIs fail, the server quietly switches to public exchange data.</p></div><div className="rounded-3xl border border-orange-400/30 bg-orange-500/10 p-4"><Wallet className="text-orange-300"/></div></div>
-        <div className="h-72 rounded-3xl border border-white/10 bg-black/30 p-4">
-          <ResponsiveContainer width="100%" height="100%"><AreaChart data={chart}><defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stopOpacity=".6"/><stop offset="100%" stopOpacity="0"/></linearGradient></defs><XAxis dataKey="name" stroke="#777"/><YAxis stroke="#777"/><Tooltip contentStyle={{ background: '#111', border: '1px solid rgba(255,255,255,.1)', borderRadius: 16 }}/><Area dataKey="value" stroke="currentColor" fill="url(#g)" strokeWidth={3}/></AreaChart></ResponsiveContainer>
+  useEffect(() => {
+    loadMarket();
+  }, []);
+
+  const avgChange = useMemo(() => {
+    if (!market.length) return 0;
+    return market.reduce((sum, item) => sum + Number(item.change24h || 0), 0) / market.length;
+  }, [market]);
+
+  const totalVolume = useMemo(() => {
+    return market.reduce((sum, item) => sum + Number(item.volume24h || 0), 0);
+  }, [market]);
+
+  const maxPrice = Math.max(...market.map((item) => Number(item.price || 0)), 1);
+
+  return (
+    <main className="main">
+      <section className="shell">
+        <div className="hero">
+          <div>
+            <p className="kicker">AI Web3 Trading Intelligence</p>
+            <h1>SoDEX Agent Console</h1>
+            <p className="sub">
+              Real market dashboard with silent fallback data, AI strategy assistant and safe server-side SoDEX execution layer for deploy verification.
+            </p>
+          </div>
+          <div className="badge">Protected deploy mode · No client-side secrets</div>
         </div>
-      </div>
 
-      <div className="card p-6">
-        <div className="mb-4 flex items-center gap-3"><Bot className="text-orange-400"/><h3 className="text-2xl font-bold">Trading Agent</h3></div>
-        <textarea className="input min-h-32" value={prompt} onChange={e => setPrompt(e.target.value)} />
-        <button className="btn mt-3 w-full" disabled={busy} onClick={askAgent}>{busy ? 'Thinking...' : 'Ask agent'}</button>
-        <div className="mt-4 rounded-2xl border border-white/10 bg-black/40 p-4 text-sm leading-6 text-zinc-200">{answer || 'Ask for portfolio risk, rebalance idea, or order preparation.'}</div>
-        <div className="mt-5 grid grid-cols-2 gap-3 text-sm"><div className="rounded-2xl bg-white/5 p-4"><Activity className="mb-2 text-orange-400"/>Signals</div><div className="rounded-2xl bg-white/5 p-4"><LockKeyhole className="mb-2 text-orange-400"/>Server keys</div></div>
-      </div>
-    </section>
+        <div className="grid3">
+          <Stat title="Tracked Assets" value={String(market.length || 0)} />
+          <Stat title="Average 24h Change" value={`${avgChange.toFixed(2)}%`} />
+          <Stat title="Market Volume" value={`$${compact(totalVolume)}`} />
+        </div>
 
-    <section className="mx-auto mt-5 grid max-w-7xl gap-4 md:grid-cols-2 xl:grid-cols-4">
-      {market.slice(0, 8).map(x => <div key={x.symbol} className="card p-5"><div className="flex items-start justify-between"><div><p className="text-sm text-zinc-400">{x.name}</p><h4 className="text-2xl font-black">{x.symbol}</h4></div><span className={`rounded-full px-3 py-1 text-xs ${Number(x.change24h) >= 0 ? 'bg-emerald-500/15 text-emerald-300' : 'bg-red-500/15 text-red-300'}`}>{Number(x.change24h).toFixed(2)}%</span></div><p className="mt-5 text-3xl font-bold">${fmt(Number(x.price))}</p><p className="mt-2 text-xs text-zinc-500">Volume ${fmt(Number(x.volume || 0))}</p></div>)}
-    </section>
-  </main>;
+        <div className="grid2">
+          <div className="card">
+            <div className="card-head">
+              <div>
+                <h2>Market Overview</h2>
+                <p className="muted">Primary API first, exchange fallback silently. Provider errors are never exposed in UI.</p>
+              </div>
+              <button className="btn" onClick={loadMarket}>Refresh</button>
+            </div>
+
+            <div className="chart" aria-label="Market price chart">
+              {loading ? (
+                <p className="muted">Loading real market data...</p>
+              ) : market.length ? (
+                market.map((item) => (
+                  <div className="bar-wrap" key={item.symbol} title={`${item.symbol}: $${formatNumber(item.price)}`}>
+                    <div className="bar" style={{ height: `${Math.max(10, (Number(item.price || 0) / maxPrice) * 230)}px` }} />
+                    <div className="bar-label">{item.symbol}</div>
+                  </div>
+                ))
+              ) : (
+                <p className="muted">No market rows available.</p>
+              )}
+            </div>
+          </div>
+
+          <div className="card">
+            <h2>AI Agent</h2>
+            <p className="muted">Ask about risk, rebalance, market movement, gas cost or order execution.</p>
+            <textarea value={prompt} onChange={(e) => setPrompt(e.target.value)} />
+            <button className="btn-full" onClick={askAgent}>Ask Agent</button>
+            {answer ? <div className="answer">{answer}</div> : null}
+          </div>
+        </div>
+
+        <div className="grid2">
+          <div className="card">
+            <h2>Assets</h2>
+            <p className="muted">Live data when providers are reachable, protected fallback when they are not.</p>
+            <div style={{ overflowX: "auto", marginTop: 16 }}>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Asset</th>
+                    <th>Price</th>
+                    <th>24h</th>
+                    <th>Volume</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {market.map((item) => (
+                    <tr key={item.symbol}>
+                      <td className="asset">{item.symbol}<small>{item.name}</small></td>
+                      <td>${formatNumber(item.price)}</td>
+                      <td className={item.change24h >= 0 ? "pos" : "neg"}>{item.change24h.toFixed(2)}%</td>
+                      <td>${compact(item.volume24h)}</td>
+                    </tr>
+                  ))}
+                  {!market.length && !loading ? (
+                    <tr><td colSpan={4} className="muted">No assets available.</td></tr>
+                  ) : null}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="card">
+            <h2>SoDEX Execution Layer</h2>
+            <p className="muted">Credentials stay server-side. Live execution is blocked unless LIVE_TRADING=true and production signing is confirmed.</p>
+            <div className="ticket">
+              <div className="row"><span>Pair</span><strong>BTC-USDC</strong></div>
+              <div className="row"><span>Side</span><strong style={{ color: "var(--green)" }}>BUY</strong></div>
+              <div className="row"><span>Amount</span><strong>0.01 BTC</strong></div>
+              <div className="row"><span>Mode</span><strong>Verification</strong></div>
+            </div>
+            <button className="btn-full btn-safe" onClick={verifyOrder}>Verify Order</button>
+            {orderStatus ? <div className="answer">{orderStatus}</div> : null}
+            <p className="footer-note">Do not expose API keys in frontend. Add keys only in Netlify Environment Variables.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function Stat({ title, value }: { title: string; value: string }) {
+  return (
+    <div className="card">
+      <div className="stat-title">{title}</div>
+      <div className="stat-value">{value}</div>
+    </div>
+  );
+}
+
+function compact(value: number) {
+  if (!Number.isFinite(value)) return "0";
+  return new Intl.NumberFormat("en", { notation: "compact", maximumFractionDigits: 2 }).format(value);
+}
+
+function formatNumber(value: number) {
+  if (!Number.isFinite(value)) return "0";
+  return new Intl.NumberFormat("en", { maximumFractionDigits: value > 1000 ? 0 : 4 }).format(value);
 }

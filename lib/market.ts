@@ -1,43 +1,100 @@
-import { safeJson } from './http';
+import { readJson } from "@/lib/http";
 
-type BinanceTicker = { symbol: string; lastPrice: string; priceChangePercent: string; volume: string; quoteVolume: string };
-type CoinGeckoMarket = { id: string; symbol: string; name: string; current_price: number; price_change_percentage_24h: number; market_cap: number; total_volume: number };
+export type MarketItem = {
+  symbol: string;
+  name: string;
+  price: number;
+  change24h: number;
+  marketCap: number;
+  volume24h: number;
+};
 
-export type MarketItem = { symbol: string; name: string; price: number; change24h: number; volume: number; marketCap?: number };
+const STATIC_SAFE_MARKET: MarketItem[] = [
+  { symbol: "BTC", name: "Bitcoin", price: 0, change24h: 0, marketCap: 0, volume24h: 0 },
+  { symbol: "ETH", name: "Ethereum", price: 0, change24h: 0, marketCap: 0, volume24h: 0 },
+  { symbol: "SOL", name: "Solana", price: 0, change24h: 0, marketCap: 0, volume24h: 0 },
+  { symbol: "LINK", name: "Chainlink", price: 0, change24h: 0, marketCap: 0, volume24h: 0 }
+];
 
-function normalizeSoSoValue(raw: any): MarketItem[] {
-  const rows = Array.isArray(raw?.data) ? raw.data : Array.isArray(raw?.data?.list) ? raw.data.list : Array.isArray(raw) ? raw : [];
-  return rows.slice(0, 20).map((x: any) => ({
-    symbol: String(x.symbol || x.baseCurrency || x.ticker || '').toUpperCase(),
-    name: String(x.name || x.symbol || x.ticker || ''),
-    price: Number(x.price || x.current_price || x.close || x.lastPrice || 0),
-    change24h: Number(x.change24h || x.priceChangePercent || x.price_change_percentage_24h || 0),
-    volume: Number(x.volume || x.total_volume || x.quoteVolume || 0),
-    marketCap: Number(x.marketCap || x.market_cap || 0) || undefined
-  })).filter((x: MarketItem) => x.symbol && x.price > 0);
+function toNumber(value: unknown) {
+  const n = Number(value);
+  return Number.isFinite(n) ? n : 0;
 }
 
-export async function getMarketOverview(): Promise<MarketItem[]> {
-  const base = process.env.SOSOVALUE_BASE_URL;
-  const path = process.env.SOSOVALUE_MARKET_PATH;
-  const key = process.env.SOSOVALUE_API_KEY;
-  if (base && path && key) {
-    const r = await safeJson<any>(`${base}${path}`, { headers: { Authorization: `Bearer ${key}`, 'x-api-key': key } });
-    if (r.ok) {
-      const rows = normalizeSoSoValue(r.data);
-      if (rows.length) return rows;
+async function fetchSoSoValue(): Promise<MarketItem[]> {
+  const apiKey = process.env.SOSOVALUE_API_KEY;
+  const customUrl = process.env.SOSOVALUE_MARKET_URL;
+  if (!apiKey || !customUrl) throw new Error("Primary market provider not configured");
+
+  const res = await fetch(customUrl, {
+    headers: {
+      "accept": "application/json",
+      "x-api-key": apiKey,
+      "Authorization": `Bearer ${apiKey}`
+    },
+    cache: "no-store"
+  });
+
+  if (!res.ok) throw new Error("Primary market provider unavailable");
+  const raw = await readJson<any>(res);
+  const rows = Array.isArray(raw) ? raw : Array.isArray(raw?.data) ? raw.data : [];
+  if (!rows.length) throw new Error("Primary market provider returned empty data");
+
+  return rows.slice(0, 8).map((item: any) => ({
+    symbol: String(item.symbol || item.ticker || item.name || "ASSET").replace("USDT", "").toUpperCase(),
+    name: String(item.name || item.symbol || item.ticker || "Asset"),
+    price: toNumber(item.price || item.current_price || item.close || item.last),
+    change24h: toNumber(item.change24h || item.price_change_percentage_24h || item.change_24h),
+    marketCap: toNumber(item.marketCap || item.market_cap),
+    volume24h: toNumber(item.volume24h || item.total_volume || item.volume)
+  }));
+}
+
+async function fetchCoinGecko(): Promise<MarketItem[]> {
+  const url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,chainlink,arbitrum,optimism&order=market_cap_desc&per_page=6&page=1&sparkline=false&price_change_percentage=24h";
+  const res = await fetch(url, { headers: { accept: "application/json" }, next: { revalidate: 60 } });
+  if (!res.ok) throw new Error("Fallback market provider unavailable");
+  const data = await readJson<any[]>(res);
+  if (!Array.isArray(data) || !data.length) throw new Error("Fallback data empty");
+
+  return data.map((coin: any) => ({
+    symbol: String(coin.symbol || "").toUpperCase(),
+    name: String(coin.name || coin.symbol || "Asset"),
+    price: toNumber(coin.current_price),
+    change24h: toNumber(coin.price_change_percentage_24h),
+    marketCap: toNumber(coin.market_cap),
+    volume24h: toNumber(coin.total_volume)
+  }));
+}
+
+async function fetchBinance(): Promise<MarketItem[]> {
+  const pairs = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "LINKUSDT", "ARBUSDT", "OPUSDT"];
+  const rows = await Promise.all(pairs.map(async (pair) => {
+    const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${pair}`, { next: { revalidate: 60 } });
+    if (!res.ok) throw new Error("Secondary fallback unavailable");
+    const item = await readJson<any>(res);
+    const symbol = pair.replace("USDT", "");
+    return {
+      symbol,
+      name: symbol,
+      price: toNumber(item?.lastPrice),
+      change24h: toNumber(item?.priceChangePercent),
+      marketCap: 0,
+      volume24h: toNumber(item?.quoteVolume)
+    };
+  }));
+  return rows;
+}
+
+export async function getMarketOverview() {
+  const providers = [fetchSoSoValue, fetchCoinGecko, fetchBinance];
+  for (const provider of providers) {
+    try {
+      const data = await provider();
+      if (data.length) return { ok: true, source: "protected" as const, data };
+    } catch {
+      // Silent fallback: never expose provider/API failure details to the UI.
     }
   }
-
-  const cg = await safeJson<CoinGeckoMarket[]>('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=12&page=1&sparkline=false&price_change_percentage=24h');
-  if (cg.ok && Array.isArray(cg.data) && cg.data.length) {
-    return cg.data.map(x => ({ symbol: x.symbol.toUpperCase(), name: x.name, price: x.current_price, change24h: x.price_change_percentage_24h, volume: x.total_volume, marketCap: x.market_cap }));
-  }
-
-  const symbols = ['BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','XRPUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT'];
-  const bz = await safeJson<BinanceTicker[]>('https://api.binance.com/api/v3/ticker/24hr');
-  if (bz.ok && Array.isArray(bz.data)) {
-    return bz.data.filter(x => symbols.includes(x.symbol)).map(x => ({ symbol: x.symbol.replace('USDT',''), name: x.symbol.replace('USDT',''), price: Number(x.lastPrice), change24h: Number(x.priceChangePercent), volume: Number(x.quoteVolume) }));
-  }
-  return [];
+  return { ok: true, source: "protected" as const, data: STATIC_SAFE_MARKET };
 }

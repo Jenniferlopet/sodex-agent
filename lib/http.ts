@@ -1,28 +1,29 @@
-export const runtime = 'nodejs';
+export type ApiEnvelope<T> = {
+  ok: boolean;
+  data?: T;
+  message?: string;
+  source?: "protected";
+};
 
-export type FetchResult<T> = { ok: true; data: T } | { ok: false; error: string };
+export function json<T>(payload: ApiEnvelope<T> | Record<string, unknown>, status = 200) {
+  return Response.json(payload, {
+    status,
+    headers: {
+      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+      "Pragma": "no-cache",
+      "Expires": "0"
+    }
+  });
+}
 
-export async function safeJson<T>(url: string, init?: RequestInit, timeoutMs = 8000): Promise<FetchResult<T>> {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
+export async function readJson<T = unknown>(res: Response): Promise<T | null> {
   try {
-    const res = await fetch(url, { ...init, signal: controller.signal, cache: 'no-store', next: { revalidate: 0 } });
-    if (!res.ok) return { ok: false, error: `HTTP ${res.status}` };
-    return { ok: true, data: await res.json() as T };
+    return (await res.json()) as T;
   } catch {
-    return { ok: false, error: 'FETCH_FAILED' };
-  } finally {
-    clearTimeout(timer);
+    return null;
   }
 }
 
-export function json(data: unknown, status = 200) {
-  return Response.json(data, {
-    status,
-    headers: {
-      'Cache-Control': 'no-store, no-cache, must-revalidate',
-      'X-Robots-Tag': 'noindex',
-      'Referrer-Policy': 'no-referrer'
-    }
-  });
+export function publicError(message = "Service temporarily unavailable") {
+  return { ok: false, message, source: "protected" as const };
 }
