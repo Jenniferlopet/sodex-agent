@@ -1,75 +1,89 @@
-# SoDEX Agent Fresh — ENV Real Data Edition
+# SoDEX Agent Console Pro
 
-Static Netlify tool with Netlify Functions. No Next.js runtime. No Tailwind. No exposed keys.
+**SoDEX Agent Console Pro** is a SoDEX-first AI market intelligence terminal for the SoSoValue × SoDEX buildathon concept: **SoSoValue Brain × SoDEX Hands**.
 
-## What changed
+It loads the live SoDEX market universe server-side, visualizes top liquid tokens, and provides a professional English-only AI Agent for risk, rebalance, market-signal, orderbook, and protected execution planning.
 
-This edition uses **real data from Netlify Environment Variables**:
+## What this version improves
 
-1. Tries `SOSOVALUE_MARKET_URL` with `SOSOVALUE_API_KEY`.
-2. If that fails, silently falls back to CoinGecko.
-3. If CoinGecko fails, silently falls back to Binance public market data.
-4. SoDEX base URL, paths, API header name, and API key are all configurable from env.
-
-The frontend never receives API keys or private keys.
+- SoDEX-first market loading through `SODEX_MARKETS_PATH=/markets/tickers`.
+- Designed for large token universes: hundreds of loaded SoDEX assets can be tracked.
+- Dashboard count shows the full loaded universe.
+- Chart shows top liquid assets by 24h volume, using 24h % change instead of raw price.
+- Scrollable asset table supports search and sorting.
+- AI Agent answers in polished English only.
+- Gemini API support for free/low-cost AI responses.
+- Local pro fallback if Gemini is not configured or temporarily unavailable.
+- No Next.js runtime. Static frontend + Netlify Functions only.
+- API keys and private keys stay server-side in Netlify Environment Variables.
+- Live trading stays off by default.
 
 ## Netlify build settings
 
-Build command:
+Use a clean Netlify site without Next.js Runtime or `@netlify/plugin-nextjs`.
 
 ```txt
-npm run build
+Build command: npm run build
+Publish directory: .
+Functions directory: netlify/functions
 ```
 
-Publish directory:
-
-```txt
-.
-```
-
-Functions directory:
-
-```txt
-netlify/functions
-```
-
-Do not enable Next.js Runtime or @netlify/plugin-nextjs.
-
-## Required env
+## Environment variables
 
 ```env
 NODE_VERSION=20
 LIVE_TRADING=false
+
+GEMINI_API_KEY=
+GEMINI_MODEL=gemini-1.5-flash
+
 SODEX_ENV=testnet
-```
+SODEX_API_BASE_URL=https://api.sodex.com
+SODEX_API_KEY_NAME=
+SODEX_API_PRIVATE_KEY=
+SODEX_API_HEADER_NAME=X-API-Key
+SODEX_MARKETS_PATH=/markets/tickers
+SODEX_MINI_TICKERS_PATH=/markets/miniTickers
+SODEX_ORDERBOOK_PATH=/markets/{symbol}/orderbook
+SODEX_KLINES_PATH=/markets/{symbol}/klines
+DEFAULT_SODEX_SYMBOL=vBTC_vUSDC
+SODEX_ACCOUNT_PATH=
+SODEX_ORDER_PATH=
 
-## Real market env
-
-```env
-SOSOVALUE_API_KEY=your_key
-SOSOVALUE_MARKET_URL=https://your-official-sosovalue-market-endpoint
+SOSOVALUE_API_KEY=
+SOSOVALUE_MARKET_URL=
 SOSOVALUE_API_HEADER_NAME=X-API-Key
 SOSOVALUE_AUTH_MODE=header
-COINGECKO_API_KEY=optional
-COINGECKO_IDS=bitcoin,ethereum,solana,chainlink,arbitrum
-BINANCE_PAIRS=BTCUSDT,ETHUSDT,SOLUSDT,LINKUSDT,ARBUSDT
+
+COINGECKO_API_KEY=
+COINGECKO_IDS=bitcoin,ethereum,solana,chainlink,arbitrum,optimism,uniswap,aave,maker,lido-dao,near,render-token,internet-computer,ondo-finance,jupiter-exchange-solana
+BINANCE_PAIRS=BTCUSDT,ETHUSDT,SOLUSDT,LINKUSDT,ARBUSDT,OPUSDT,UNIUSDT,AAVEUSDT,MKRUSDT,LDOUSDT,NEARUSDT,RNDRUSDT,ICPUSDT,ONDOUSDT,JUPUSDT
+PROVIDER_TIMEOUT_MS=9000
+MARKET_LIMIT=250
+CHART_LIMIT=28
+TABLE_LIMIT=120
 ```
 
-## Real SoDEX env
+## API routes
+
+```txt
+/api/health
+/api/market/overview
+/api/agent
+/api/sodex/markets
+/api/sodex/orderbook
+/api/sodex/account
+/api/sodex/order
+```
+
+## Safety
+
+This project is for demo, education, and hackathon verification. It does not provide guaranteed financial advice.
+
+Keep this setting for demos:
 
 ```env
-SODEX_API_BASE_URL=https://official-sodex-api-base-url
-SODEX_API_KEY_NAME=your_key_name_or_key
-SODEX_API_HEADER_NAME=X-API-Key
-SODEX_MARKETS_PATH=/api/markets
-SODEX_ORDERBOOK_PATH=/api/orderbook?symbol={symbol}
-SODEX_ACCOUNT_PATH=
-DEFAULT_SODEX_SYMBOL=BTC-USDC
+LIVE_TRADING=false
 ```
 
-Keep `LIVE_TRADING=false` for verification. Only enable live orders after the official order endpoint and signing schema are confirmed.
-
-
-## Language Policy
-
-The AI Agent is configured to always answer in English, even when the user asks in Vietnamese or another language. This keeps the hackathon demo consistent and professional.
+Only switch live trading on after the official SoDEX signing and order format have been fully tested.

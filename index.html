@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SoDEX Agent Console</title>
-  <meta name="description" content="AI trading intelligence dashboard for SoDEX and crypto markets" />
+  <title>SoDEX Agent Console Pro</title>
+  <meta name="description" content="Professional SoDEX-first AI trading intelligence dashboard" />
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
@@ -13,41 +13,45 @@
     <section class="hero">
       <div>
         <div class="eyebrow">SoSoValue Brain × SoDEX Hands</div>
-        <h1>SoDEX Agent Console</h1>
-        <p class="hero-text">Agentic market intelligence powered by server-side ENV providers, with keys hidden from the frontend.</p>
+        <h1>SoDEX Agent<br/>Console Pro</h1>
+        <p class="hero-text">A SoDEX-first agentic market terminal that tracks the live token universe, reads risk, and prepares protected execution checks with secrets kept server-side.</p>
         <div class="hero-actions">
-          <button id="refreshBtn" class="btn primary">Refresh market</button>
+          <button id="refreshBtn" class="btn primary">Refresh SoDEX universe</button>
           <button id="healthBtn" class="btn ghost">Check API health</button>
         </div>
       </div>
       <div class="terminal-card">
         <div class="terminal-top"><span></span><span></span><span></span></div>
-        <pre id="healthBox">system: env real-data mode
-live_trading: false
+        <pre id="healthBox">system: SoDEX-first market universe
+mode: protected execution
 secrets: server-side only</pre>
       </div>
     </section>
 
     <section class="stats">
-      <article class="stat-card"><span>Tracked Assets</span><strong id="assetCount">--</strong></article>
-      <article class="stat-card"><span>Avg 24h Change</span><strong id="avgChange">--</strong></article>
-      <article class="stat-card"><span>Total Volume</span><strong id="totalVolume">--</strong></article>
-      <article class="stat-card"><span>Execution Mode</span><strong id="mode">Protected</strong></article>
+      <article class="stat-card"><span>Tracked SoDEX Assets</span><strong id="assetCount">--</strong><small id="universeLabel">loading</small></article>
+      <article class="stat-card"><span>Avg 24h Change</span><strong id="avgChange">--</strong><small>Across loaded universe</small></article>
+      <article class="stat-card"><span>Total 24h Volume</span><strong id="totalVolume">--</strong><small>Sorted by liquidity</small></article>
+      <article class="stat-card"><span>Execution Mode</span><strong id="mode">Protected</strong><small>LIVE_TRADING=false</small></article>
     </section>
 
     <section class="grid-main">
       <article class="panel wide">
         <div class="panel-head">
-          <div><h2>Market Signal</h2><p>Real providers loaded from Netlify ENV.</p></div>
+          <div>
+            <h2>SoDEX Market Signal</h2>
+            <p>Top liquid tokens by 24h volume, visualized by 24h % move. The full loaded universe is shown in the asset table.</p>
+          </div>
           <span id="marketStatus" class="pill">loading</span>
         </div>
-        <canvas id="chart" height="220"></canvas>
+        <div class="chart-wrap"><canvas id="chart" height="280"></canvas></div>
+        <div class="chart-note" id="chartNote">Loading market universe...</div>
       </article>
 
-      <article class="panel">
+      <article class="panel agent-panel">
         <h2>AI Agent</h2>
-        <p class="muted">Ask about risk, rebalance, gas, trading signals, or SoDEX execution.</p>
-        <textarea id="prompt" spellcheck="false">Analyze portfolio risk and suggest a safe rebalance.</textarea>
+        <p class="muted">Ask for a premium market brief, safe rebalance, orderbook checklist, or protected execution plan. Responses are English-only.</p>
+        <textarea id="prompt" spellcheck="false">Give me a premium market brief and a safe rebalance plan.</textarea>
         <button id="askBtn" class="btn primary full">Ask Agent</button>
         <div id="agentAnswer" class="answer">Waiting for command...</div>
       </article>
@@ -55,24 +59,38 @@ secrets: server-side only</pre>
 
     <section class="grid-main lower">
       <article class="panel wide">
-        <div class="panel-head"><div><h2>Assets</h2><p>Prices come from configured live providers.</p></div></div>
+        <div class="panel-head">
+          <div>
+            <h2>SoDEX Asset Universe</h2>
+            <p>Scrollable list of loaded tokens, primarily from SoDEX market tickers. Fallback providers are used only when SoDEX is unavailable.</p>
+          </div>
+          <div class="filters">
+            <input id="searchBox" placeholder="Search token..." />
+            <select id="sortBox">
+              <option value="volume">Sort by volume</option>
+              <option value="changeDesc">Top gainers</option>
+              <option value="changeAsc">Top losers</option>
+              <option value="price">Sort by price</option>
+            </select>
+          </div>
+        </div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Asset</th><th>Price</th><th>24h</th><th>Volume</th></tr></thead>
-            <tbody id="marketRows"><tr><td colspan="4">Loading...</td></tr></tbody>
+            <thead><tr><th>#</th><th>Asset</th><th>Price</th><th>24h</th><th>Volume</th></tr></thead>
+            <tbody id="marketRows"><tr><td colspan="5">Loading...</td></tr></tbody>
           </table>
         </div>
       </article>
 
       <article class="panel">
         <h2>SoDEX Execution Layer</h2>
-        <p class="muted">Live orders stay disabled until credentials and LIVE_TRADING=true are set server-side.</p>
+        <p class="muted">Protected execution keeps real orders disabled until credentials, signing, orderbook, and LIVE_TRADING=true are configured server-side.</p>
         <div class="order-box">
-          <div><span>Pair</span><strong>BTC-USDC</strong></div>
+          <div><span>Pair</span><strong id="orderPair">vBTC_vUSDC</strong></div>
           <div><span>Side</span><strong class="green">BUY</strong></div>
           <div><span>Amount</span><strong>0.01 BTC</strong></div>
         </div>
-        <button id="verifyBtn" class="btn ghost full">Verify Order</button>
+        <button id="verifyBtn" class="btn ghost full">Verify Protected Order</button>
         <div id="orderStatus" class="answer small">No order prepared.</div>
       </article>
     </section>

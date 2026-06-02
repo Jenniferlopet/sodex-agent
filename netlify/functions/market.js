@@ -1,54 +1,76 @@
-const { ok, safeFetchJson, env, csv, normalizeMarketItem } = require('./_utils');
+const { ok, safeFetchJson, env, csv, unwrapArray, normalizeMarketItem, sortAndLimit } = require('./_utils');
 
+function sodexBaseUrl() {
+  if (env('SODEX_API_BASE_URL')) return env('SODEX_API_BASE_URL').replace(/\/$/, '');
+  return env('SODEX_ENV', 'testnet') === 'mainnet' ? 'https://api.sodex.com' : 'https://api-testnet.sodex.com';
+}
+function pathEnv(name, fallback) {
+  const p = env(name, fallback);
+  return p.startsWith('/') ? p : `/${p}`;
+}
+function sodexHeaders() {
+  const headers = { accept: 'application/json' };
+  const key = env('SODEX_API_KEY_NAME') || env('SODEX_API_KEY');
+  const headerName = env('SODEX_API_HEADER_NAME', 'X-API-Key');
+  if (key) headers[headerName] = key;
+  return headers;
+}
 function sosovalueHeaders() {
   const key = env('SOSOVALUE_API_KEY');
   const headerName = env('SOSOVALUE_API_HEADER_NAME', 'X-API-Key');
-  const authMode = env('SOSOVALUE_AUTH_MODE', 'header'); // header | bearer
+  const authMode = env('SOSOVALUE_AUTH_MODE', 'header');
   const headers = { accept: 'application/json' };
   if (!key) return headers;
   if (authMode === 'bearer') headers.Authorization = `Bearer ${key}`;
   else headers[headerName] = key;
   return headers;
 }
-
-function unwrapArray(payload) {
-  if (Array.isArray(payload)) return payload;
-  if (Array.isArray(payload?.data)) return payload.data;
-  if (Array.isArray(payload?.data?.list)) return payload.data.list;
-  if (Array.isArray(payload?.result)) return payload.result;
-  if (Array.isArray(payload?.result?.list)) return payload.result.list;
-  if (Array.isArray(payload?.coins)) return payload.coins;
-  if (Array.isArray(payload?.tokens)) return payload.tokens;
-  return [];
+async function fromSodex() {
+  const limit = Number(env('MARKET_LIMIT', '250'));
+  const candidates = [
+    pathEnv('SODEX_MARKETS_PATH', '/markets/tickers'),
+    pathEnv('SODEX_MINI_TICKERS_PATH', '/markets/miniTickers'),
+    '/markets/tickers',
+    '/markets/miniTickers'
+  ];
+  const unique = [...new Set(candidates.filter(Boolean))];
+  for (const path of unique) {
+    try {
+      const payload = await safeFetchJson(`${sodexBaseUrl()}${path}`, { headers: sodexHeaders() });
+      const rows = sortAndLimit(unwrapArray(payload).map(normalizeMarketItem), limit);
+      if (rows.length) {
+        return { rows, meta: { source: 'SoDEX', universe: 'sodex', endpoint: 'protected' } };
+      }
+    } catch (_) {}
+  }
+  throw new Error('sodex empty');
 }
-
 async function fromSoSoValue() {
   const key = env('SOSOVALUE_API_KEY');
   const url = env('SOSOVALUE_MARKET_URL');
   if (!key || !url) throw new Error('sosovalue env missing');
   const payload = await safeFetchJson(url, { headers: sosovalueHeaders() });
-  const rows = unwrapArray(payload).map(normalizeMarketItem).filter((x) => x.price > 0);
+  const rows = sortAndLimit(unwrapArray(payload).map(normalizeMarketItem), Number(env('MARKET_LIMIT', '250')));
   if (!rows.length) throw new Error('sosovalue empty');
-  return rows.slice(0, Number(env('MARKET_LIMIT', '8')));
+  return { rows, meta: { source: 'SoSoValue', universe: 'sosovalue', endpoint: 'protected' } };
 }
-
 async function fromCoinGecko() {
-  const ids = csv('COINGECKO_IDS', 'bitcoin,ethereum,solana,chainlink,arbitrum');
+  const ids = csv('COINGECKO_IDS', 'bitcoin,ethereum,solana,chainlink,arbitrum,optimism,uniswap,aave,maker,lido-dao,near,render-token,internet-computer,ondo-finance,jupiter-exchange-solana');
   const apiKey = env('COINGECKO_API_KEY');
+  const limit = Number(env('MARKET_LIMIT', '250'));
   const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=' +
     encodeURIComponent(ids.join(',')) +
-    '&order=market_cap_desc&per_page=' + Number(env('MARKET_LIMIT', '8')) +
+    '&order=market_cap_desc&per_page=' + Math.min(ids.length, limit) +
     '&page=1&sparkline=false&price_change_percentage=24h';
   const headers = { accept: 'application/json' };
   if (apiKey) headers['x-cg-demo-api-key'] = apiKey;
   const data = await safeFetchJson(url, { headers });
-  const rows = unwrapArray(data).map(normalizeMarketItem).filter((x) => x.price > 0);
+  const rows = sortAndLimit(unwrapArray(data).map(normalizeMarketItem), limit);
   if (!rows.length) throw new Error('coingecko empty');
-  return rows;
+  return { rows, meta: { source: 'Live fallback', universe: 'fallback', endpoint: 'protected' } };
 }
-
 async function fromBinance() {
-  const pairs = csv('BINANCE_PAIRS', 'BTCUSDT,ETHUSDT,SOLUSDT,LINKUSDT,ARBUSDT');
+  const pairs = csv('BINANCE_PAIRS', 'BTCUSDT,ETHUSDT,SOLUSDT,LINKUSDT,ARBUSDT,OPUSDT,UNIUSDT,AAVEUSDT,MKRUSDT,LDOUSDT,NEARUSDT,RNDRUSDT,ICPUSDT,ONDOUSDT,JUPUSDT');
   const rows = await Promise.all(pairs.map(async (pair) => {
     const data = await safeFetchJson(`https://api.binance.com/api/v3/ticker/24hr?symbol=${encodeURIComponent(pair)}`);
     return normalizeMarketItem({
@@ -59,26 +81,31 @@ async function fromBinance() {
       quoteVolume: data.quoteVolume
     });
   }));
-  return rows.filter((x) => x.price > 0);
+  const sorted = sortAndLimit(rows, Number(env('MARKET_LIMIT', '250')));
+  if (!sorted.length) throw new Error('binance empty');
+  return { rows: sorted, meta: { source: 'Live fallback', universe: 'fallback', endpoint: 'protected' } };
 }
-
 exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') return ok({ ok: true });
 
-  const providers = [fromSoSoValue, fromCoinGecko, fromBinance];
+  // SoDEX-first: the dashboard is intended to track the SoDEX market universe.
+  const providers = [fromSodex, fromSoSoValue, fromCoinGecko, fromBinance];
   for (const provider of providers) {
     try {
-      const data = await provider();
-      return ok({ ok: true, provider: 'live', data });
+      const { rows, meta } = await provider();
+      return ok({
+        ok: true,
+        provider: 'live',
+        primary: meta.source,
+        universe: meta.universe,
+        totalAssets: rows.length,
+        chartLimit: Number(env('CHART_LIMIT', '28')),
+        tableLimit: Number(env('TABLE_LIMIT', '120')),
+        data: rows
+      });
     } catch (_) {
-      // Silent failover: do not expose provider errors or env names to the deployed UI.
+      // Silent failover: never expose provider failures, endpoints, or secret config to UI.
     }
   }
-
-  return ok({
-    ok: false,
-    provider: 'protected',
-    data: [],
-    message: 'Live market data is temporarily unavailable.'
-  });
+  return ok({ ok: false, provider: 'protected', primary: 'unavailable', universe: 'empty', totalAssets: 0, data: [], message: 'Live market data is temporarily unavailable.' });
 };
