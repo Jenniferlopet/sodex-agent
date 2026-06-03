@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SoDEX Agent Console Pro</title>
-  <meta name="description" content="Professional SoDEX-first AI trading intelligence dashboard" />
+  <title>SoDEX Agent</title>
+  <meta name="description" content="SoDEX-first AI market intelligence, signal scanner, paper trading terminal, and protected execution console." />
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
@@ -12,30 +12,65 @@
   <main class="shell">
     <section class="hero">
       <div>
-        <div class="eyebrow">SoSoValue Brain × SoDEX Hands</div>
-        <h1>SoDEX Agent<br/>Console Pro</h1>
-        <p class="hero-text">A SoDEX-first agentic market terminal that tracks the live token universe, reads risk, and prepares protected execution checks with secrets kept server-side.</p>
+        <div class="eyebrow">SoSoValue Brain × SoDEX Hands × Signal Lab</div>
+        <h1>SoDEX Agent</h1>
+        <p class="hero-text">A SoDEX-first agentic market terminal that tracks the live token universe, scans 250+ signal modules, paper-trades safely, and prepares protected execution checks with secrets kept server-side.</p>
         <div class="hero-actions">
           <button id="refreshBtn" class="btn primary">Refresh SoDEX universe</button>
+          <button id="scanBtnTop" class="btn ghost">Scan signals</button>
           <button id="healthBtn" class="btn ghost">Check API health</button>
         </div>
       </div>
-      <div class="terminal-card">
+      <div class="terminal-card focus-card">
         <div class="terminal-top"><span></span><span></span><span></span></div>
-        <pre id="healthBox">system: SoDEX-first market universe
+        <div class="focus-head">
+          <div>
+            <div class="focus-symbol" id="focusSymbol">Loading</div>
+            <div class="focus-name" id="focusName">Live price focus</div>
+          </div>
+          <select id="focusSelect" aria-label="Select live chart asset"></select>
+        </div>
+        <div class="focus-price-row">
+          <strong id="focusPrice">—</strong>
+          <span id="focusChange" class="focus-change">—</span>
+        </div>
+        <div class="focus-tabs" id="focusTabs">
+          <button data-range="1D" class="active">1D</button>
+          <button data-range="1W">1W</button>
+          <button data-range="1M">1M</button>
+          <button data-range="3M">3M</button>
+          <button data-range="1Y">1Y</button>
+        </div>
+        <div class="focus-chart-shell"><canvas id="focusChart" height="210"></canvas></div>
+        <div class="focus-metrics">
+          <div><span>Open</span><strong id="focusOpen">—</strong></div>
+          <div><span>High</span><strong id="focusHigh">—</strong></div>
+          <div><span>Low</span><strong id="focusLow">—</strong></div>
+          <div><span>Vol</span><strong id="focusVol">—</strong></div>
+        </div>
+        <pre id="healthBox" class="health-mini">system: SoDEX agent terminal
 mode: protected execution
 secrets: server-side only</pre>
       </div>
     </section>
 
+    <nav class="section-tabs" aria-label="Tool sections">
+      <a href="#market">Market</a>
+      <a href="#strategies">Signal Library</a>
+      <a href="#signals">Active Signals</a>
+      <a href="#demo">Demo Trade</a>
+      <a href="#playground">Playground</a>
+    </nav>
+
     <section class="stats">
       <article class="stat-card"><span>Tracked SoDEX Assets</span><strong id="assetCount">--</strong><small id="universeLabel">loading</small></article>
+      <article class="stat-card"><span>Signal Modules</span><strong id="strategyCount">--</strong><small id="categoryCount">Loading signal library</small></article>
       <article class="stat-card"><span>Avg 24h Change</span><strong id="avgChange">--</strong><small>Across loaded universe</small></article>
       <article class="stat-card"><span>Total 24h Volume</span><strong id="totalVolume">--</strong><small>Sorted by liquidity</small></article>
       <article class="stat-card"><span>Execution Mode</span><strong id="mode">Protected</strong><small>LIVE_TRADING=false</small></article>
     </section>
 
-    <section class="grid-main">
+    <section id="market" class="grid-main">
       <article class="panel wide">
         <div class="panel-head">
           <div>
@@ -50,8 +85,8 @@ secrets: server-side only</pre>
 
       <article class="panel agent-panel">
         <h2>AI Agent</h2>
-        <p class="muted">Ask for a premium market brief, safe rebalance, orderbook checklist, or protected execution plan. Responses are English-only.</p>
-        <textarea id="prompt" spellcheck="false">Give me a premium market brief and a safe rebalance plan.</textarea>
+        <p class="muted">Ask for a premium market brief, signal confluence read, safe rebalance, orderbook checklist, or protected execution plan. Responses are English-only.</p>
+        <textarea id="prompt" spellcheck="false">Give me a premium market brief, the strongest signal confluence, and a safe rebalance plan.</textarea>
         <button id="askBtn" class="btn primary full">Ask Agent</button>
         <div id="agentAnswer" class="answer">Waiting for command...</div>
       </article>
@@ -65,7 +100,7 @@ secrets: server-side only</pre>
             <p>Scrollable list of loaded tokens, primarily from SoDEX market tickers. Fallback providers are used only when SoDEX is unavailable.</p>
           </div>
           <div class="filters">
-            <input id="searchBox" placeholder="Search token..." />
+            <input id="searchBox" placeholder="Search token, e.g. SOSO..." />
             <select id="sortBox">
               <option value="volume">Sort by volume</option>
               <option value="changeDesc">Top gainers</option>
@@ -93,6 +128,112 @@ secrets: server-side only</pre>
         <button id="verifyBtn" class="btn ghost full">Verify Protected Order</button>
         <div id="orderStatus" class="answer small">No order prepared.</div>
       </article>
+    </section>
+
+    <section id="strategies" class="panel block-panel">
+      <div class="panel-head">
+        <div>
+          <h2>Signal Library</h2>
+          <p>Built-in signal catalog for market exploration, source inspection, and one-click demo routing.</p>
+        </div>
+        <div class="filters">
+          <input id="strategySearch" placeholder="Search signal module, e.g. FVG, RSI, grid..." />
+          <select id="categoryFilter"><option value="all">All categories</option></select>
+        </div>
+      </div>
+      <div id="strategyGrid" class="strategy-grid"><div class="muted">Loading signal modules...</div></div>
+      <div class="code-panel">
+        <div class="panel-head compact"><h3 id="codeTitle">Source Viewer</h3><span class="pill">client-side</span></div>
+        <pre id="codeViewer">Select a signal module and click “View source”.</pre>
+      </div>
+    </section>
+
+    <section id="signals" class="grid-main lower">
+      <article class="panel wide">
+        <div class="panel-head">
+          <div>
+            <h2>Active Signal Scanner</h2>
+            <p>Runs the loaded signal library against the live market snapshot and ranks confluence by direction, confidence, liquidity, and 24h momentum.</p>
+          </div>
+          <button id="scanBtn" class="btn primary">Run Scanner</button>
+        </div>
+        <div class="signal-summary" id="signalSummary">Run the scanner to detect LONG/SHORT confluence.</div>
+        <div class="table-wrap short">
+          <table>
+            <thead><tr><th>#</th><th>Asset</th><th>Bias</th><th>Confidence</th><th>Confluence</th><th>Reason</th><th>Action</th></tr></thead>
+            <tbody id="signalRows"><tr><td colspan="7">No scan yet.</td></tr></tbody>
+          </table>
+        </div>
+      </article>
+      <article class="panel">
+        <h2>Confluence Lens</h2>
+        <p class="muted">This panel converts raw signals into a practical execution workflow.</p>
+        <ul class="mini-list">
+          <li>Volume confirms whether a signal is actionable.</li>
+          <li>24h change gives the market impulse.</li>
+          <li>Signal category controls signal style.</li>
+          <li>Protected mode avoids accidental live orders.</li>
+        </ul>
+        <div id="confluenceBox" class="answer small">Waiting for scan...</div>
+      </article>
+    </section>
+
+    <section id="demo" class="grid-main lower">
+      <article class="panel wide">
+        <div class="panel-head">
+          <div>
+            <h2>Demo Trade Terminal</h2>
+            <p>Paper-trade live SoDEX assets with virtual balance, leverage, ROE/PnL tracking, and local browser storage.</p>
+          </div>
+          <span class="pill">virtual only</span>
+        </div>
+        <div class="demo-grid">
+          <label>Asset<select id="demoAsset"></select></label>
+          <label>Signal Module<select id="demoStrategy"></select></label>
+          <label>Side<select id="demoSide"><option value="long">Long</option><option value="short">Short</option></select></label>
+          <label>Leverage<input id="demoLev" type="number" min="1" max="25" value="5" /></label>
+          <label>Margin USD<input id="demoMargin" type="number" min="10" value="250" /></label>
+          <button id="openDemoBtn" class="btn primary">Open Paper Trade</button>
+        </div>
+        <div class="equity-wrap"><canvas id="equityChart" height="180"></canvas></div>
+        <div class="table-wrap short">
+          <table>
+            <thead><tr><th>Asset</th><th>Side</th><th>Signal</th><th>Entry</th><th>Now</th><th>Lev</th><th>PnL</th><th></th></tr></thead>
+            <tbody id="positionRows"><tr><td colspan="8">No open paper positions.</td></tr></tbody>
+          </table>
+        </div>
+      </article>
+      <article class="panel">
+        <h2>Virtual Wallet</h2>
+        <div class="wallet-box">
+          <span>Balance</span><strong id="walletBalance">$10,000</strong>
+          <span>Open PnL</span><strong id="walletPnl">$0</strong>
+          <span>Equity</span><strong id="walletEquity">$10,000</strong>
+        </div>
+        <button id="resetWalletBtn" class="btn ghost full">Reset Demo Wallet</button>
+        <div class="answer small">Demo trading is isolated in localStorage. It never sends real orders and never stores user trades on a server.</div>
+      </article>
+    </section>
+
+    <section id="playground" class="panel block-panel">
+      <div class="panel-head">
+        <div>
+          <h2>Signal Playground</h2>
+          <p>Run custom JavaScript signal logic against the live market snapshot in an isolated browser worker. No network access is provided inside the worker.</p>
+        </div>
+        <button id="runCodeBtn" class="btn primary">Run Custom Signal</button>
+      </div>
+      <textarea id="codeInput" class="code-input" spellcheck="false">// Return { bias: 'long'|'short'|'neutral', confidence: 0-100, reason: '...' }
+function analyze(asset, market) {
+  if (asset.change24h > 3 && asset.volume24h > 1000000) {
+    return { bias: 'long', confidence: 72, reason: 'Strong momentum with live volume confirmation.' };
+  }
+  if (asset.change24h < -3) {
+    return { bias: 'short', confidence: 64, reason: 'Weak 24h momentum; wait for stabilization before long exposure.' };
+  }
+  return { bias: 'neutral', confidence: 45, reason: 'No clear edge in current snapshot.' };
+}</textarea>
+      <div id="codeOutput" class="answer">Output will appear here.</div>
     </section>
   </main>
   <script src="/assets/app.js"></script>

@@ -26,7 +26,7 @@ exports.handler = async (event) => {
 async function askGemini({ prompt, market, meta, apiKey, model }) {
   const snapshot = buildSnapshot(market, meta);
   const marketText = JSON.stringify(snapshot).slice(0, 7000);
-  const systemPrompt = `You are SoDEX Agent Console, a professional Web3 market intelligence and execution-readiness assistant.\n\nHard rules:\n- Always answer in English only, even if the user writes Vietnamese or another language.\n- Sound polished, confident, and demo-ready.\n- Do not say you are a generic chatbot. You are the SoDEX Agent.\n- Use the market snapshot when relevant.\n- Do not provide guaranteed financial advice. Use cautious terms such as "consider", "risk-aware", and "execution check".\n- Never reveal or discuss API keys, private keys, endpoints, environment variables, or internal provider errors.\n- If the user asks to buy/sell, provide an execution plan and safety checks, not a direct command to trade.\n- Keep the answer concise but premium: usually 4-7 short bullets or a short executive paragraph.\n\nMarket snapshot:\n${marketText}\n\nUser request: ${prompt}`;
+  const systemPrompt = `You are SoDEX Agent Console, a professional Web3 market intelligence and execution-readiness assistant.\n\nHard rules:\n- Always answer in English only, even if the user writes Vietnamese or another language.\n- Sound polished, confident, and demo-ready.\n- Do not say you are a generic chatbot. You are the SoDEX Agent.\n- Use the market snapshot and signal confluence context when relevant.\n- Do not provide guaranteed financial advice. Use cautious terms such as "consider", "risk-aware", and "execution check".\n- Never reveal or discuss API keys, private keys, endpoints, environment variables, or internal provider errors.\n- If the user asks to buy/sell, provide an execution plan and safety checks, not a direct command to trade.\n- Keep the answer concise but premium: usually 4-7 short bullets or a short executive paragraph.\n\nMarket snapshot:\n${marketText}\n\nUser request: ${prompt}`;
   const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -46,6 +46,8 @@ function buildSnapshot(market = [], meta = {}) {
     universe: meta.universe || 'protected',
     primary: meta.primary || 'live',
     trackedAssets: Number(meta.totalAssets || items.length || 0),
+    strategyModules: Number(meta.strategies || 0),
+    topSignals: Array.isArray(meta.signals) ? meta.signals.slice(0, 5) : [],
     average24hChange: avg,
     topVolume,
     gainers,
@@ -63,7 +65,7 @@ function proLocalAnswer(promptText = '', market = [], meta = {}) {
   const tracked = s.trackedAssets || market.length || 0;
 
   if (!p || p.includes('hello') || p.includes('hi') || p.includes('xin chào')) {
-    return `Hello — I am SoDEX Agent. I am tracking ${tracked} live assets from the protected market layer. Ask me for a market brief, risk read, rebalance plan, orderbook checklist, or execution readiness review.`;
+    return `Hello — I am SoDEX Agent. I am tracking ${tracked} live assets from the protected market layer. Ask me for a market brief, signal confluence read, risk read, rebalance plan, orderbook checklist, or execution readiness review.`;
   }
 
   if (hasAny(p, ['buy', 'sell', 'order', 'trade', 'mua', 'bán', 'lệnh', 'tư vấn mua'])) {

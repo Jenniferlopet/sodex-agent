@@ -1,0 +1,3849 @@
+{
+  "count": 269,
+  "strategies": [
+    {
+      "id": "advancedsmc__daily_level",
+      "slug": "daily_level",
+      "category": "advancedsmc",
+      "name": "Daily Level",
+      "short": "Advancedsmc strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/advancedsmc__daily_level.ts"
+      ],
+      "description": "Advanced SMC structures such as mitigation blocks, demand/supply and SMT.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "advancedsmc__demand_zone",
+      "slug": "demand_zone",
+      "category": "advancedsmc",
+      "name": "Demand Zone",
+      "short": "Advancedsmc strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/advancedsmc__demand_zone.ts"
+      ],
+      "description": "Advanced SMC structures such as mitigation blocks, demand/supply and SMT.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "advancedsmc__equal_highs_cluster",
+      "slug": "equal_highs_cluster",
+      "category": "advancedsmc",
+      "name": "Equal Highs Cluster",
+      "short": "Advancedsmc strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/advancedsmc__equal_highs_cluster.ts"
+      ],
+      "description": "Advanced SMC structures such as mitigation blocks, demand/supply and SMT.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "advancedsmc__fvg_inversion",
+      "slug": "fvg_inversion",
+      "category": "advancedsmc",
+      "name": "FVG Inversion",
+      "short": "Advancedsmc strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/advancedsmc__fvg_inversion.ts"
+      ],
+      "description": "Advanced SMC structures such as mitigation blocks, demand/supply and SMT.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "advancedsmc__liquidity_void",
+      "slug": "liquidity_void",
+      "category": "advancedsmc",
+      "name": "Liquidity Void",
+      "short": "Advancedsmc strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/advancedsmc__liquidity_void.ts"
+      ],
+      "description": "Advanced SMC structures such as mitigation blocks, demand/supply and SMT.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "advancedsmc__mitigation_block",
+      "slug": "mitigation_block",
+      "category": "advancedsmc",
+      "name": "Mitigation Block",
+      "short": "Advancedsmc strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/advancedsmc__mitigation_block.ts"
+      ],
+      "description": "Advanced SMC structures such as mitigation blocks, demand/supply and SMT.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "advancedsmc__order_flow_imbalance",
+      "slug": "order_flow_imbalance",
+      "category": "advancedsmc",
+      "name": "Order Flow Imbalance",
+      "short": "Advancedsmc strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/advancedsmc__order_flow_imbalance.ts"
+      ],
+      "description": "Advanced SMC structures such as mitigation blocks, demand/supply and SMT.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "advancedsmc__rejection_block",
+      "slug": "rejection_block",
+      "category": "advancedsmc",
+      "name": "Rejection Block",
+      "short": "Advancedsmc strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/advancedsmc__rejection_block.ts"
+      ],
+      "description": "Advanced SMC structures such as mitigation blocks, demand/supply and SMT.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "advancedsmc__session_liquidity",
+      "slug": "session_liquidity",
+      "category": "advancedsmc",
+      "name": "Session Liquidity",
+      "short": "Advancedsmc strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/advancedsmc__session_liquidity.ts"
+      ],
+      "description": "Advanced SMC structures such as mitigation blocks, demand/supply and SMT.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "advancedsmc__smt_divergence",
+      "slug": "smt_divergence",
+      "category": "advancedsmc",
+      "name": "Smt Divergence",
+      "short": "Advancedsmc strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/advancedsmc__smt_divergence.ts"
+      ],
+      "description": "Advanced SMC structures such as mitigation blocks, demand/supply and SMT.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "advancedsmc__supply_zone",
+      "slug": "supply_zone",
+      "category": "advancedsmc",
+      "name": "Supply Zone",
+      "short": "Advancedsmc strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/advancedsmc__supply_zone.ts"
+      ],
+      "description": "Advanced SMC structures such as mitigation blocks, demand/supply and SMT.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "advancedsmc__turtle_soup",
+      "slug": "turtle_soup",
+      "category": "advancedsmc",
+      "name": "Turtle Soup",
+      "short": "Advancedsmc strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/advancedsmc__turtle_soup.ts"
+      ],
+      "description": "Advanced SMC structures such as mitigation blocks, demand/supply and SMT.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "bands__acceleration_bands",
+      "slug": "acceleration_bands",
+      "category": "bands",
+      "name": "Acceleration Bands",
+      "short": "Bands strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/bands__acceleration_bands.ts"
+      ],
+      "description": "Band and channel systems using Keltner, Donchian, regression and envelopes.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "bands__bb_percent_b",
+      "slug": "bb_percent_b",
+      "category": "bands",
+      "name": "BB Percent B",
+      "short": "Bands strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/bands__bb_percent_b.ts"
+      ],
+      "description": "Band and channel systems using Keltner, Donchian, regression and envelopes.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "bands__donchian_mid",
+      "slug": "donchian_mid",
+      "category": "bands",
+      "name": "Donchian Mid",
+      "short": "Bands strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/bands__donchian_mid.ts"
+      ],
+      "description": "Band and channel systems using Keltner, Donchian, regression and envelopes.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "bands__fib_channel",
+      "slug": "fib_channel",
+      "category": "bands",
+      "name": "Fib Channel",
+      "short": "Bands strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/bands__fib_channel.ts"
+      ],
+      "description": "Band and channel systems using Keltner, Donchian, regression and envelopes.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "bands__keltner_bounce",
+      "slug": "keltner_bounce",
+      "category": "bands",
+      "name": "Keltner Bounce",
+      "short": "Bands strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/bands__keltner_bounce.ts"
+      ],
+      "description": "Band and channel systems using Keltner, Donchian, regression and envelopes.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "bands__linreg_channel",
+      "slug": "linreg_channel",
+      "category": "bands",
+      "name": "Linreg Channel",
+      "short": "Bands strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/bands__linreg_channel.ts"
+      ],
+      "description": "Band and channel systems using Keltner, Donchian, regression and envelopes.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "bands__median_bands",
+      "slug": "median_bands",
+      "category": "bands",
+      "name": "Median Bands",
+      "short": "Bands strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/bands__median_bands.ts"
+      ],
+      "description": "Band and channel systems using Keltner, Donchian, regression and envelopes.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "bands__pivot_bands",
+      "slug": "pivot_bands",
+      "category": "bands",
+      "name": "Pivot Bands",
+      "short": "Bands strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/bands__pivot_bands.ts"
+      ],
+      "description": "Band and channel systems using Keltner, Donchian, regression and envelopes.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "bands__price_channel",
+      "slug": "price_channel",
+      "category": "bands",
+      "name": "Price Channel",
+      "short": "Bands strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/bands__price_channel.ts"
+      ],
+      "description": "Band and channel systems using Keltner, Donchian, regression and envelopes.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "bands__regression_slope",
+      "slug": "regression_slope",
+      "category": "bands",
+      "name": "Regression Slope",
+      "short": "Bands strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/bands__regression_slope.ts"
+      ],
+      "description": "Band and channel systems using Keltner, Donchian, regression and envelopes.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "bands__starc_bands",
+      "slug": "starc_bands",
+      "category": "bands",
+      "name": "Starc Bands",
+      "short": "Bands strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/bands__starc_bands.ts"
+      ],
+      "description": "Band and channel systems using Keltner, Donchian, regression and envelopes.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "bands__std_error_bands",
+      "slug": "std_error_bands",
+      "category": "bands",
+      "name": "Std Error Bands",
+      "short": "Bands strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/bands__std_error_bands.ts"
+      ],
+      "description": "Band and channel systems using Keltner, Donchian, regression and envelopes.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "botstrat__anti_martingale",
+      "slug": "anti_martingale",
+      "category": "botstrat",
+      "name": "Anti Martingale",
+      "short": "Botstrat strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/botstrat__anti_martingale.ts"
+      ],
+      "description": "Crypto bot frameworks such as grid, DCA, TWAP and rebalance bands.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "botstrat__breakout_grid",
+      "slug": "breakout_grid",
+      "category": "botstrat",
+      "name": "Breakout Grid",
+      "short": "Botstrat strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/botstrat__breakout_grid.ts"
+      ],
+      "description": "Crypto bot frameworks such as grid, DCA, TWAP and rebalance bands.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "botstrat__dca",
+      "slug": "dca",
+      "category": "botstrat",
+      "name": "DCA",
+      "short": "Botstrat strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/botstrat__dca.ts"
+      ],
+      "description": "Crypto bot frameworks such as grid, DCA, TWAP and rebalance bands.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "botstrat__grid_trading",
+      "slug": "grid_trading",
+      "category": "botstrat",
+      "name": "Grid Trading",
+      "short": "Botstrat strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/botstrat__grid_trading.ts"
+      ],
+      "description": "Crypto bot frameworks such as grid, DCA, TWAP and rebalance bands.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "botstrat__ladder_entry",
+      "slug": "ladder_entry",
+      "category": "botstrat",
+      "name": "Ladder Entry",
+      "short": "Botstrat strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/botstrat__ladder_entry.ts"
+      ],
+      "description": "Crypto bot frameworks such as grid, DCA, TWAP and rebalance bands.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "botstrat__martingale",
+      "slug": "martingale",
+      "category": "botstrat",
+      "name": "Martingale",
+      "short": "Botstrat strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/botstrat__martingale.ts"
+      ],
+      "description": "Crypto bot frameworks such as grid, DCA, TWAP and rebalance bands.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "botstrat__mean_reversion_grid",
+      "slug": "mean_reversion_grid",
+      "category": "botstrat",
+      "name": "Mean Reversion Grid",
+      "short": "Botstrat strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/botstrat__mean_reversion_grid.ts"
+      ],
+      "description": "Crypto bot frameworks such as grid, DCA, TWAP and rebalance bands.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "botstrat__rebalance_bands",
+      "slug": "rebalance_bands",
+      "category": "botstrat",
+      "name": "Rebalance Bands",
+      "short": "Botstrat strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/botstrat__rebalance_bands.ts"
+      ],
+      "description": "Crypto bot frameworks such as grid, DCA, TWAP and rebalance bands.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "botstrat__trailing_stop",
+      "slug": "trailing_stop",
+      "category": "botstrat",
+      "name": "Trailing Stop",
+      "short": "Botstrat strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/botstrat__trailing_stop.ts"
+      ],
+      "description": "Crypto bot frameworks such as grid, DCA, TWAP and rebalance bands.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "botstrat__twap_entry",
+      "slug": "twap_entry",
+      "category": "botstrat",
+      "name": "Twap Entry",
+      "short": "Botstrat strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/botstrat__twap_entry.ts"
+      ],
+      "description": "Crypto bot frameworks such as grid, DCA, TWAP and rebalance bands.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "breakout__channel_breakout",
+      "slug": "channel_breakout",
+      "category": "breakout",
+      "name": "Channel Breakout",
+      "short": "Breakout strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/breakout__channel_breakout.ts"
+      ],
+      "description": "Breakout strategies around ranges, volatility contraction and new highs/lows.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "breakout__darvas_box",
+      "slug": "darvas_box",
+      "category": "breakout",
+      "name": "Darvas Box",
+      "short": "Breakout strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/breakout__darvas_box.ts"
+      ],
+      "description": "Breakout strategies around ranges, volatility contraction and new highs/lows.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "breakout__opening_range_breakout",
+      "slug": "opening_range_breakout",
+      "category": "breakout",
+      "name": "Opening Range Breakout",
+      "short": "Breakout strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/breakout__opening_range_breakout.ts"
+      ],
+      "description": "Breakout strategies around ranges, volatility contraction and new highs/lows.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "breakout__volatility_contraction",
+      "slug": "volatility_contraction",
+      "category": "breakout",
+      "name": "Volatility Contraction",
+      "short": "Breakout strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/breakout__volatility_contraction.ts"
+      ],
+      "description": "Breakout strategies around ranges, volatility contraction and new highs/lows.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "candles2__dark_cloud_cover",
+      "slug": "dark_cloud_cover",
+      "category": "candles2",
+      "name": "Dark Cloud Cover",
+      "short": "Candles2 strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/candles2__dark_cloud_cover.ts"
+      ],
+      "description": "Advanced candlestick reversal and continuation structures.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "candles2__doji_reversal",
+      "slug": "doji_reversal",
+      "category": "candles2",
+      "name": "Doji Reversal",
+      "short": "Candles2 strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/candles2__doji_reversal.ts"
+      ],
+      "description": "Advanced candlestick reversal and continuation structures.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "candles2__harami",
+      "slug": "harami",
+      "category": "candles2",
+      "name": "Harami",
+      "short": "Candles2 strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/candles2__harami.ts"
+      ],
+      "description": "Advanced candlestick reversal and continuation structures.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "candles2__marubozu",
+      "slug": "marubozu",
+      "category": "candles2",
+      "name": "Marubozu",
+      "short": "Candles2 strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/candles2__marubozu.ts"
+      ],
+      "description": "Advanced candlestick reversal and continuation structures.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "candles2__piercing_line",
+      "slug": "piercing_line",
+      "category": "candles2",
+      "name": "Piercing Line",
+      "short": "Candles2 strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/candles2__piercing_line.ts"
+      ],
+      "description": "Advanced candlestick reversal and continuation structures.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "candles2__tweezer",
+      "slug": "tweezer",
+      "category": "candles2",
+      "name": "Tweezer",
+      "short": "Candles2 strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/candles2__tweezer.ts"
+      ],
+      "description": "Advanced candlestick reversal and continuation structures.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "chartpatterns__ascending_triangle",
+      "slug": "ascending_triangle",
+      "category": "chartpatterns",
+      "name": "Ascending Triangle",
+      "short": "Chartpatterns strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/chartpatterns__ascending_triangle.ts"
+      ],
+      "description": "Chart patterns such as flags, triangles, rectangles and head-and-shoulders.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "chartpatterns__bull_flag",
+      "slug": "bull_flag",
+      "category": "chartpatterns",
+      "name": "Bull Flag",
+      "short": "Chartpatterns strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/chartpatterns__bull_flag.ts"
+      ],
+      "description": "Chart patterns such as flags, triangles, rectangles and head-and-shoulders.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "chartpatterns__descending_triangle",
+      "slug": "descending_triangle",
+      "category": "chartpatterns",
+      "name": "Descending Triangle",
+      "short": "Chartpatterns strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/chartpatterns__descending_triangle.ts"
+      ],
+      "description": "Chart patterns such as flags, triangles, rectangles and head-and-shoulders.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "chartpatterns__double_bottom",
+      "slug": "double_bottom",
+      "category": "chartpatterns",
+      "name": "Double Bottom",
+      "short": "Chartpatterns strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/chartpatterns__double_bottom.ts"
+      ],
+      "description": "Chart patterns such as flags, triangles, rectangles and head-and-shoulders.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "chartpatterns__double_top",
+      "slug": "double_top",
+      "category": "chartpatterns",
+      "name": "Double Top",
+      "short": "Chartpatterns strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/chartpatterns__double_top.ts"
+      ],
+      "description": "Chart patterns such as flags, triangles, rectangles and head-and-shoulders.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "chartpatterns__head_shoulders",
+      "slug": "head_shoulders",
+      "category": "chartpatterns",
+      "name": "Head Shoulders",
+      "short": "Chartpatterns strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/chartpatterns__head_shoulders.ts"
+      ],
+      "description": "Chart patterns such as flags, triangles, rectangles and head-and-shoulders.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "chartpatterns__inverse_head_shoulders",
+      "slug": "inverse_head_shoulders",
+      "category": "chartpatterns",
+      "name": "Inverse Head Shoulders",
+      "short": "Chartpatterns strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/chartpatterns__inverse_head_shoulders.ts"
+      ],
+      "description": "Chart patterns such as flags, triangles, rectangles and head-and-shoulders.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "chartpatterns__rectangle",
+      "slug": "rectangle",
+      "category": "chartpatterns",
+      "name": "Rectangle",
+      "short": "Chartpatterns strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/chartpatterns__rectangle.ts"
+      ],
+      "description": "Chart patterns such as flags, triangles, rectangles and head-and-shoulders.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "divergence__div_ao",
+      "slug": "div_ao",
+      "category": "divergence",
+      "name": "Div Ao",
+      "short": "Divergence strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/divergence__div_ao.ts"
+      ],
+      "description": "Divergence strategies across RSI, MACD, CCI, OBV, MFI and stochastic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "divergence__div_cci",
+      "slug": "div_cci",
+      "category": "divergence",
+      "name": "Div CCI",
+      "short": "Divergence strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/divergence__div_cci.ts"
+      ],
+      "description": "Divergence strategies across RSI, MACD, CCI, OBV, MFI and stochastic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "divergence__div_macd",
+      "slug": "div_macd",
+      "category": "divergence",
+      "name": "Div MACD",
+      "short": "Divergence strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/divergence__div_macd.ts"
+      ],
+      "description": "Divergence strategies across RSI, MACD, CCI, OBV, MFI and stochastic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "divergence__div_macd_hidden",
+      "slug": "div_macd_hidden",
+      "category": "divergence",
+      "name": "Div MACD Hidden",
+      "short": "Divergence strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/divergence__div_macd_hidden.ts"
+      ],
+      "description": "Divergence strategies across RSI, MACD, CCI, OBV, MFI and stochastic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "divergence__div_mfi",
+      "slug": "div_mfi",
+      "category": "divergence",
+      "name": "Div MFI",
+      "short": "Divergence strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/divergence__div_mfi.ts"
+      ],
+      "description": "Divergence strategies across RSI, MACD, CCI, OBV, MFI and stochastic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "divergence__div_multi",
+      "slug": "div_multi",
+      "category": "divergence",
+      "name": "Div Multi",
+      "short": "Divergence strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/divergence__div_multi.ts"
+      ],
+      "description": "Divergence strategies across RSI, MACD, CCI, OBV, MFI and stochastic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "divergence__div_obv",
+      "slug": "div_obv",
+      "category": "divergence",
+      "name": "Div OBV",
+      "short": "Divergence strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/divergence__div_obv.ts"
+      ],
+      "description": "Divergence strategies across RSI, MACD, CCI, OBV, MFI and stochastic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "divergence__div_rsi",
+      "slug": "div_rsi",
+      "category": "divergence",
+      "name": "Div RSI",
+      "short": "Divergence strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/divergence__div_rsi.ts"
+      ],
+      "description": "Divergence strategies across RSI, MACD, CCI, OBV, MFI and stochastic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "divergence__div_rsi_hidden",
+      "slug": "div_rsi_hidden",
+      "category": "divergence",
+      "name": "Div RSI Hidden",
+      "short": "Divergence strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/divergence__div_rsi_hidden.ts"
+      ],
+      "description": "Divergence strategies across RSI, MACD, CCI, OBV, MFI and stochastic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "divergence__div_stoch",
+      "slug": "div_stoch",
+      "category": "divergence",
+      "name": "Div Stoch",
+      "short": "Divergence strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/divergence__div_stoch.ts"
+      ],
+      "description": "Divergence strategies across RSI, MACD, CCI, OBV, MFI and stochastic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "fibonacci__fib_cluster",
+      "slug": "fib_cluster",
+      "category": "fibonacci",
+      "name": "Fib Cluster",
+      "short": "Fibonacci strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/fibonacci__fib_cluster.ts"
+      ],
+      "description": "Fibonacci retracement, continuation, cluster and extension strategies.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "fibonacci__fib_confluence",
+      "slug": "fib_confluence",
+      "category": "fibonacci",
+      "name": "Fib Confluence",
+      "short": "Fibonacci strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/fibonacci__fib_confluence.ts"
+      ],
+      "description": "Fibonacci retracement, continuation, cluster and extension strategies.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "fibonacci__fib_continuation",
+      "slug": "fib_continuation",
+      "category": "fibonacci",
+      "name": "Fib Continuation",
+      "short": "Fibonacci strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/fibonacci__fib_continuation.ts"
+      ],
+      "description": "Fibonacci retracement, continuation, cluster and extension strategies.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "fibonacci__fib_deep",
+      "slug": "fib_deep",
+      "category": "fibonacci",
+      "name": "Fib Deep",
+      "short": "Fibonacci strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/fibonacci__fib_deep.ts"
+      ],
+      "description": "Fibonacci retracement, continuation, cluster and extension strategies.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "fibonacci__fib_extension",
+      "slug": "fib_extension",
+      "category": "fibonacci",
+      "name": "Fib Extension",
+      "short": "Fibonacci strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/fibonacci__fib_extension.ts"
+      ],
+      "description": "Fibonacci retracement, continuation, cluster and extension strategies.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "fibonacci__fib_full_retrace",
+      "slug": "fib_full_retrace",
+      "category": "fibonacci",
+      "name": "Fib Full Retrace",
+      "short": "Fibonacci strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/fibonacci__fib_full_retrace.ts"
+      ],
+      "description": "Fibonacci retracement, continuation, cluster and extension strategies.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "fibonacci__fib_golden",
+      "slug": "fib_golden",
+      "category": "fibonacci",
+      "name": "Fib Golden",
+      "short": "Fibonacci strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/fibonacci__fib_golden.ts"
+      ],
+      "description": "Fibonacci retracement, continuation, cluster and extension strategies.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "fibonacci__fib_retest",
+      "slug": "fib_retest",
+      "category": "fibonacci",
+      "name": "Fib Retest",
+      "short": "Fibonacci strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/fibonacci__fib_retest.ts"
+      ],
+      "description": "Fibonacci retracement, continuation, cluster and extension strategies.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "fibonacci__fib_retrace",
+      "slug": "fib_retrace",
+      "category": "fibonacci",
+      "name": "Fib Retrace",
+      "short": "Fibonacci strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/fibonacci__fib_retrace.ts"
+      ],
+      "description": "Fibonacci retracement, continuation, cluster and extension strategies.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "fibonacci__fib_shallow",
+      "slug": "fib_shallow",
+      "category": "fibonacci",
+      "name": "Fib Shallow",
+      "short": "Fibonacci strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/fibonacci__fib_shallow.ts"
+      ],
+      "description": "Fibonacci retracement, continuation, cluster and extension strategies.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "harmonic__abcd",
+      "slug": "abcd",
+      "category": "harmonic",
+      "name": "Abcd",
+      "short": "Harmonic strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/harmonic__abcd.ts"
+      ],
+      "description": "Harmonic pattern structures such as Gartley, Bat, Crab and ABCD.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "harmonic__bat",
+      "slug": "bat",
+      "category": "harmonic",
+      "name": "Bat",
+      "short": "Harmonic strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/harmonic__bat.ts"
+      ],
+      "description": "Harmonic pattern structures such as Gartley, Bat, Crab and ABCD.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "harmonic__butterfly",
+      "slug": "butterfly",
+      "category": "harmonic",
+      "name": "Butterfly",
+      "short": "Harmonic strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/harmonic__butterfly.ts"
+      ],
+      "description": "Harmonic pattern structures such as Gartley, Bat, Crab and ABCD.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "harmonic__crab",
+      "slug": "crab",
+      "category": "harmonic",
+      "name": "Crab",
+      "short": "Harmonic strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/harmonic__crab.ts"
+      ],
+      "description": "Harmonic pattern structures such as Gartley, Bat, Crab and ABCD.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "harmonic__cypher",
+      "slug": "cypher",
+      "category": "harmonic",
+      "name": "Cypher",
+      "short": "Harmonic strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/harmonic__cypher.ts"
+      ],
+      "description": "Harmonic pattern structures such as Gartley, Bat, Crab and ABCD.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "harmonic__gartley",
+      "slug": "gartley",
+      "category": "harmonic",
+      "name": "Gartley",
+      "short": "Harmonic strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/harmonic__gartley.ts"
+      ],
+      "description": "Harmonic pattern structures such as Gartley, Bat, Crab and ABCD.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "hybrid__adaptive_combo",
+      "slug": "adaptive_combo",
+      "category": "hybrid",
+      "name": "Adaptive Combo",
+      "short": "Hybrid strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/hybrid__adaptive_combo.ts"
+      ],
+      "description": "Multi-signal confluence systems combining trend, volume and oscillators.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "hybrid__bb_rsi_stoch",
+      "slug": "bb_rsi_stoch",
+      "category": "hybrid",
+      "name": "BB RSI Stoch",
+      "short": "Hybrid strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/hybrid__bb_rsi_stoch.ts"
+      ],
+      "description": "Multi-signal confluence systems combining trend, volume and oscillators.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "hybrid__confluence_score",
+      "slug": "confluence_score",
+      "category": "hybrid",
+      "name": "Confluence Score",
+      "short": "Hybrid strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/hybrid__confluence_score.ts"
+      ],
+      "description": "Multi-signal confluence systems combining trend, volume and oscillators.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "hybrid__ema_adx",
+      "slug": "ema_adx",
+      "category": "hybrid",
+      "name": "EMA ADX",
+      "short": "Hybrid strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/hybrid__ema_adx.ts"
+      ],
+      "description": "Multi-signal confluence systems combining trend, volume and oscillators.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "hybrid__macd_rsi",
+      "slug": "macd_rsi",
+      "category": "hybrid",
+      "name": "MACD RSI",
+      "short": "Hybrid strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/hybrid__macd_rsi.ts"
+      ],
+      "description": "Multi-signal confluence systems combining trend, volume and oscillators.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "hybrid__ma_rsi_vol",
+      "slug": "ma_rsi_vol",
+      "category": "hybrid",
+      "name": "Ma RSI Vol",
+      "short": "Hybrid strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/hybrid__ma_rsi_vol.ts"
+      ],
+      "description": "Multi-signal confluence systems combining trend, volume and oscillators.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "hybrid__multi_timeframe",
+      "slug": "multi_timeframe",
+      "category": "hybrid",
+      "name": "Multi Timeframe",
+      "short": "Hybrid strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/hybrid__multi_timeframe.ts"
+      ],
+      "description": "Multi-signal confluence systems combining trend, volume and oscillators.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "hybrid__rsi_bb",
+      "slug": "rsi_bb",
+      "category": "hybrid",
+      "name": "RSI BB",
+      "short": "Hybrid strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/hybrid__rsi_bb.ts"
+      ],
+      "description": "Multi-signal confluence systems combining trend, volume and oscillators.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "hybrid__stoch_macd",
+      "slug": "stoch_macd",
+      "category": "hybrid",
+      "name": "Stoch MACD",
+      "short": "Hybrid strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/hybrid__stoch_macd.ts"
+      ],
+      "description": "Multi-signal confluence systems combining trend, volume and oscillators.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "hybrid__trend_momentum_combo",
+      "slug": "trend_momentum_combo",
+      "category": "hybrid",
+      "name": "Trend Momentum Combo",
+      "short": "Hybrid strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/hybrid__trend_momentum_combo.ts"
+      ],
+      "description": "Multi-signal confluence systems combining trend, volume and oscillators.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "hybrid__triple_screen",
+      "slug": "triple_screen",
+      "category": "hybrid",
+      "name": "Triple Screen",
+      "short": "Hybrid strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/hybrid__triple_screen.ts"
+      ],
+      "description": "Multi-signal confluence systems combining trend, volume and oscillators.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "hybrid__volume_price",
+      "slug": "volume_price",
+      "category": "hybrid",
+      "name": "Volume Price",
+      "short": "Hybrid strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/hybrid__volume_price.ts"
+      ],
+      "description": "Multi-signal confluence systems combining trend, volume and oscillators.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "ichimoku__ichi_chikou",
+      "slug": "ichi_chikou",
+      "category": "ichimoku",
+      "name": "Ichi Chikou",
+      "short": "Ichimoku strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/ichimoku__ichi_chikou.ts"
+      ],
+      "description": "Ichimoku cloud, Kijun, TK cross and Chikou confirmation systems.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "ichimoku__ichi_cloud_thick",
+      "slug": "ichi_cloud_thick",
+      "category": "ichimoku",
+      "name": "Ichi Cloud Thick",
+      "short": "Ichimoku strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/ichimoku__ichi_cloud_thick.ts"
+      ],
+      "description": "Ichimoku cloud, Kijun, TK cross and Chikou confirmation systems.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "ichimoku__ichi_flat_kijun",
+      "slug": "ichi_flat_kijun",
+      "category": "ichimoku",
+      "name": "Ichi Flat Kijun",
+      "short": "Ichimoku strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/ichimoku__ichi_flat_kijun.ts"
+      ],
+      "description": "Ichimoku cloud, Kijun, TK cross and Chikou confirmation systems.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "ichimoku__ichi_full",
+      "slug": "ichi_full",
+      "category": "ichimoku",
+      "name": "Ichi Full",
+      "short": "Ichimoku strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/ichimoku__ichi_full.ts"
+      ],
+      "description": "Ichimoku cloud, Kijun, TK cross and Chikou confirmation systems.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "ichimoku__ichi_kijun_bounce",
+      "slug": "ichi_kijun_bounce",
+      "category": "ichimoku",
+      "name": "Ichi Kijun Bounce",
+      "short": "Ichimoku strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/ichimoku__ichi_kijun_bounce.ts"
+      ],
+      "description": "Ichimoku cloud, Kijun, TK cross and Chikou confirmation systems.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "ichimoku__ichi_kumo_break",
+      "slug": "ichi_kumo_break",
+      "category": "ichimoku",
+      "name": "Ichi Kumo Break",
+      "short": "Ichimoku strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/ichimoku__ichi_kumo_break.ts"
+      ],
+      "description": "Ichimoku cloud, Kijun, TK cross and Chikou confirmation systems.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "ichimoku__ichi_lagging_break",
+      "slug": "ichi_lagging_break",
+      "category": "ichimoku",
+      "name": "Ichi Lagging Break",
+      "short": "Ichimoku strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/ichimoku__ichi_lagging_break.ts"
+      ],
+      "description": "Ichimoku cloud, Kijun, TK cross and Chikou confirmation systems.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "ichimoku__ichi_senkou_twist",
+      "slug": "ichi_senkou_twist",
+      "category": "ichimoku",
+      "name": "Ichi Senkou Twist",
+      "short": "Ichimoku strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/ichimoku__ichi_senkou_twist.ts"
+      ],
+      "description": "Ichimoku cloud, Kijun, TK cross and Chikou confirmation systems.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "ichimoku__ichi_tk_cross",
+      "slug": "ichi_tk_cross",
+      "category": "ichimoku",
+      "name": "Ichi TK Cross",
+      "short": "Ichimoku strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/ichimoku__ichi_tk_cross.ts"
+      ],
+      "description": "Ichimoku cloud, Kijun, TK cross and Chikou confirmation systems.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "ichimoku__ichi_tk_price_align",
+      "slug": "ichi_tk_price_align",
+      "category": "ichimoku",
+      "name": "Ichi TK Price Align",
+      "short": "Ichimoku strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/ichimoku__ichi_tk_price_align.ts"
+      ],
+      "description": "Ichimoku cloud, Kijun, TK cross and Chikou confirmation systems.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "indicators__bb_squeeze",
+      "slug": "bb_squeeze",
+      "category": "indicators",
+      "name": "BB Squeeze",
+      "short": "Indicators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/indicators__bb_squeeze.pine",
+        "strategy-code/indicators__bb_squeeze.py",
+        "strategy-code/indicators__bb_squeeze.ts"
+      ],
+      "description": "Classic indicator logic using RSI, MACD, Bollinger Bands, VWAP and trend filters.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "indicators__chandelier",
+      "slug": "chandelier",
+      "category": "indicators",
+      "name": "Chandelier",
+      "short": "Indicators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/indicators__chandelier.pine",
+        "strategy-code/indicators__chandelier.py",
+        "strategy-code/indicators__chandelier.ts"
+      ],
+      "description": "Classic indicator logic using RSI, MACD, Bollinger Bands, VWAP and trend filters.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "indicators__donchian_breakout",
+      "slug": "donchian_breakout",
+      "category": "indicators",
+      "name": "Donchian Breakout",
+      "short": "Indicators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/indicators__donchian_breakout.ts"
+      ],
+      "description": "Classic indicator logic using RSI, MACD, Bollinger Bands, VWAP and trend filters.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "indicators__ichimoku",
+      "slug": "ichimoku",
+      "category": "indicators",
+      "name": "Ichimoku",
+      "short": "Indicators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/indicators__ichimoku.pine",
+        "strategy-code/indicators__ichimoku.py",
+        "strategy-code/indicators__ichimoku.ts"
+      ],
+      "description": "Classic indicator logic using RSI, MACD, Bollinger Bands, VWAP and trend filters.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "indicators__keltner_squeeze",
+      "slug": "keltner_squeeze",
+      "category": "indicators",
+      "name": "Keltner Squeeze",
+      "short": "Indicators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/indicators__keltner_squeeze.ts"
+      ],
+      "description": "Classic indicator logic using RSI, MACD, Bollinger Bands, VWAP and trend filters.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "indicators__parabolic_sar",
+      "slug": "parabolic_sar",
+      "category": "indicators",
+      "name": "Parabolic Sar",
+      "short": "Indicators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/indicators__parabolic_sar.ts"
+      ],
+      "description": "Classic indicator logic using RSI, MACD, Bollinger Bands, VWAP and trend filters.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "indicators__rsi_divergence",
+      "slug": "rsi_divergence",
+      "category": "indicators",
+      "name": "RSI Divergence",
+      "short": "Indicators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/indicators__rsi_divergence.pine",
+        "strategy-code/indicators__rsi_divergence.py",
+        "strategy-code/indicators__rsi_divergence.ts"
+      ],
+      "description": "Classic indicator logic using RSI, MACD, Bollinger Bands, VWAP and trend filters.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "indicators__stoch_rsi",
+      "slug": "stoch_rsi",
+      "category": "indicators",
+      "name": "Stoch RSI",
+      "short": "Indicators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/indicators__stoch_rsi.ts"
+      ],
+      "description": "Classic indicator logic using RSI, MACD, Bollinger Bands, VWAP and trend filters.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "indicators__supertrend_adx",
+      "slug": "supertrend_adx",
+      "category": "indicators",
+      "name": "Supertrend ADX",
+      "short": "Indicators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/indicators__supertrend_adx.pine",
+        "strategy-code/indicators__supertrend_adx.py",
+        "strategy-code/indicators__supertrend_adx.ts"
+      ],
+      "description": "Classic indicator logic using RSI, MACD, Bollinger Bands, VWAP and trend filters.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "indicators__triple_confluence",
+      "slug": "triple_confluence",
+      "category": "indicators",
+      "name": "Triple Confluence",
+      "short": "Indicators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/indicators__triple_confluence.pine",
+        "strategy-code/indicators__triple_confluence.py",
+        "strategy-code/indicators__triple_confluence.ts"
+      ],
+      "description": "Classic indicator logic using RSI, MACD, Bollinger Bands, VWAP and trend filters.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "indicators__vwap_volume",
+      "slug": "vwap_volume",
+      "category": "indicators",
+      "name": "VWAP Volume",
+      "short": "Indicators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/indicators__vwap_volume.pine",
+        "strategy-code/indicators__vwap_volume.py",
+        "strategy-code/indicators__vwap_volume.ts"
+      ],
+      "description": "Classic indicator logic using RSI, MACD, Bollinger Bands, VWAP and trend filters.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "indicators__wyckoff",
+      "slug": "wyckoff",
+      "category": "indicators",
+      "name": "Wyckoff",
+      "short": "Indicators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/indicators__wyckoff.pine",
+        "strategy-code/indicators__wyckoff.py",
+        "strategy-code/indicators__wyckoff.ts"
+      ],
+      "description": "Classic indicator logic using RSI, MACD, Bollinger Bands, VWAP and trend filters.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "meanrev__bb_mean_reversion",
+      "slug": "bb_mean_reversion",
+      "category": "meanrev",
+      "name": "BB Mean Reversion",
+      "short": "Meanrev strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/meanrev__bb_mean_reversion.ts"
+      ],
+      "description": "Mean-reversion models that look for stretched price returning to fair value.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "meanrev__rsi_extreme",
+      "slug": "rsi_extreme",
+      "category": "meanrev",
+      "name": "RSI Extreme",
+      "short": "Meanrev strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/meanrev__rsi_extreme.ts"
+      ],
+      "description": "Mean-reversion models that look for stretched price returning to fair value.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "meanrev__z_score_reversion",
+      "slug": "z_score_reversion",
+      "category": "meanrev",
+      "name": "Z Score Reversion",
+      "short": "Meanrev strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/meanrev__z_score_reversion.ts"
+      ],
+      "description": "Mean-reversion models that look for stretched price returning to fair value.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "memecoin__bonding_curve_sniper",
+      "slug": "bonding_curve_sniper",
+      "category": "memecoin",
+      "name": "Bonding Curve Sniper",
+      "short": "Memecoin strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/memecoin__bonding_curve_sniper.py",
+        "strategy-code/memecoin__bonding_curve_sniper.ts"
+      ],
+      "description": "High-volatility memecoin patterns focusing on volume, holders and momentum.",
+      "languages": [
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "memecoin__dev_pattern",
+      "slug": "dev_pattern",
+      "category": "memecoin",
+      "name": "Dev Pattern",
+      "short": "Memecoin strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/memecoin__dev_pattern.py",
+        "strategy-code/memecoin__dev_pattern.ts"
+      ],
+      "description": "High-volatility memecoin patterns focusing on volume, holders and momentum.",
+      "languages": [
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "memecoin__holder_distribution",
+      "slug": "holder_distribution",
+      "category": "memecoin",
+      "name": "Holder Distribution",
+      "short": "Memecoin strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/memecoin__holder_distribution.py",
+        "strategy-code/memecoin__holder_distribution.ts"
+      ],
+      "description": "High-volatility memecoin patterns focusing on volume, holders and momentum.",
+      "languages": [
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "memecoin__migration_play",
+      "slug": "migration_play",
+      "category": "memecoin",
+      "name": "Migration Play",
+      "short": "Memecoin strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/memecoin__migration_play.py",
+        "strategy-code/memecoin__migration_play.ts"
+      ],
+      "description": "High-volatility memecoin patterns focusing on volume, holders and momentum.",
+      "languages": [
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "memecoin__pump_cascade",
+      "slug": "pump_cascade",
+      "category": "memecoin",
+      "name": "Pump Cascade",
+      "short": "Memecoin strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/memecoin__pump_cascade.ts"
+      ],
+      "description": "High-volatility memecoin patterns focusing on volume, holders and momentum.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "memecoin__social_momentum",
+      "slug": "social_momentum",
+      "category": "memecoin",
+      "name": "Social Momentum",
+      "short": "Memecoin strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/memecoin__social_momentum.py",
+        "strategy-code/memecoin__social_momentum.ts"
+      ],
+      "description": "High-volatility memecoin patterns focusing on volume, holders and momentum.",
+      "languages": [
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "memecoin__tiered_exit",
+      "slug": "tiered_exit",
+      "category": "memecoin",
+      "name": "Tiered Exit",
+      "short": "Memecoin strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/memecoin__tiered_exit.pine",
+        "strategy-code/memecoin__tiered_exit.py",
+        "strategy-code/memecoin__tiered_exit.ts"
+      ],
+      "description": "High-volatility memecoin patterns focusing on volume, holders and momentum.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "memecoin__volume_surge",
+      "slug": "volume_surge",
+      "category": "memecoin",
+      "name": "Volume Surge",
+      "short": "Memecoin strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/memecoin__volume_surge.pine",
+        "strategy-code/memecoin__volume_surge.py",
+        "strategy-code/memecoin__volume_surge.ts"
+      ],
+      "description": "High-volatility memecoin patterns focusing on volume, holders and momentum.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "memecoin__whale_buy",
+      "slug": "whale_buy",
+      "category": "memecoin",
+      "name": "Whale Buy",
+      "short": "Memecoin strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/memecoin__whale_buy.ts"
+      ],
+      "description": "High-volatility memecoin patterns focusing on volume, holders and momentum.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "momentum__connors_rsi",
+      "slug": "connors_rsi",
+      "category": "momentum",
+      "name": "Connors RSI",
+      "short": "Momentum strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/momentum__connors_rsi.ts"
+      ],
+      "description": "Momentum systems using stochastic, vortex, KST, DMI and RSI variants.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "momentum__dmi",
+      "slug": "dmi",
+      "category": "momentum",
+      "name": "Dmi",
+      "short": "Momentum strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/momentum__dmi.ts"
+      ],
+      "description": "Momentum systems using stochastic, vortex, KST, DMI and RSI variants.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "momentum__fisher_transform",
+      "slug": "fisher_transform",
+      "category": "momentum",
+      "name": "Fisher Transform",
+      "short": "Momentum strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/momentum__fisher_transform.ts"
+      ],
+      "description": "Momentum systems using stochastic, vortex, KST, DMI and RSI variants.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "momentum__kst",
+      "slug": "kst",
+      "category": "momentum",
+      "name": "Kst",
+      "short": "Momentum strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/momentum__kst.ts"
+      ],
+      "description": "Momentum systems using stochastic, vortex, KST, DMI and RSI variants.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "momentum__momentum_osc",
+      "slug": "momentum_osc",
+      "category": "momentum",
+      "name": "Momentum Osc",
+      "short": "Momentum strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/momentum__momentum_osc.ts"
+      ],
+      "description": "Momentum systems using stochastic, vortex, KST, DMI and RSI variants.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "momentum__relative_momentum_index",
+      "slug": "relative_momentum_index",
+      "category": "momentum",
+      "name": "Relative Momentum Index",
+      "short": "Momentum strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/momentum__relative_momentum_index.ts"
+      ],
+      "description": "Momentum systems using stochastic, vortex, KST, DMI and RSI variants.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "momentum__rsi2",
+      "slug": "rsi2",
+      "category": "momentum",
+      "name": "Rsi2",
+      "short": "Momentum strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/momentum__rsi2.ts"
+      ],
+      "description": "Momentum systems using stochastic, vortex, KST, DMI and RSI variants.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "momentum__schaff_trend",
+      "slug": "schaff_trend",
+      "category": "momentum",
+      "name": "Schaff Trend",
+      "short": "Momentum strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/momentum__schaff_trend.ts"
+      ],
+      "description": "Momentum systems using stochastic, vortex, KST, DMI and RSI variants.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "momentum__stochastic",
+      "slug": "stochastic",
+      "category": "momentum",
+      "name": "Stochastic",
+      "short": "Momentum strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/momentum__stochastic.ts"
+      ],
+      "description": "Momentum systems using stochastic, vortex, KST, DMI and RSI variants.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "momentum__stochastic_slow",
+      "slug": "stochastic_slow",
+      "category": "momentum",
+      "name": "Stochastic Slow",
+      "short": "Momentum strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/momentum__stochastic_slow.ts"
+      ],
+      "description": "Momentum systems using stochastic, vortex, KST, DMI and RSI variants.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "momentum__tsi",
+      "slug": "tsi",
+      "category": "momentum",
+      "name": "Tsi",
+      "short": "Momentum strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/momentum__tsi.ts"
+      ],
+      "description": "Momentum systems using stochastic, vortex, KST, DMI and RSI variants.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "momentum__vortex",
+      "slug": "vortex",
+      "category": "momentum",
+      "name": "Vortex",
+      "short": "Momentum strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/momentum__vortex.ts"
+      ],
+      "description": "Momentum systems using stochastic, vortex, KST, DMI and RSI variants.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "movingavg__dema_cross",
+      "slug": "dema_cross",
+      "category": "movingavg",
+      "name": "Dema Cross",
+      "short": "Movingavg strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/movingavg__dema_cross.ts"
+      ],
+      "description": "Moving-average systems including EMA ribbons, HMA, KAMA and crossovers.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "movingavg__golden_cross",
+      "slug": "golden_cross",
+      "category": "movingavg",
+      "name": "Golden Cross",
+      "short": "Movingavg strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/movingavg__golden_cross.ts"
+      ],
+      "description": "Moving-average systems including EMA ribbons, HMA, KAMA and crossovers.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "movingavg__guppy_mma",
+      "slug": "guppy_mma",
+      "category": "movingavg",
+      "name": "Guppy Mma",
+      "short": "Movingavg strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/movingavg__guppy_mma.ts"
+      ],
+      "description": "Moving-average systems including EMA ribbons, HMA, KAMA and crossovers.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "movingavg__hma_cross",
+      "slug": "hma_cross",
+      "category": "movingavg",
+      "name": "HMA Cross",
+      "short": "Movingavg strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/movingavg__hma_cross.ts"
+      ],
+      "description": "Moving-average systems including EMA ribbons, HMA, KAMA and crossovers.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "movingavg__kama",
+      "slug": "kama",
+      "category": "movingavg",
+      "name": "KAMA",
+      "short": "Movingavg strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/movingavg__kama.ts"
+      ],
+      "description": "Moving-average systems including EMA ribbons, HMA, KAMA and crossovers.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "movingavg__ma_envelope",
+      "slug": "ma_envelope",
+      "category": "movingavg",
+      "name": "Ma Envelope",
+      "short": "Movingavg strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/movingavg__ma_envelope.ts"
+      ],
+      "description": "Moving-average systems including EMA ribbons, HMA, KAMA and crossovers.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "movingavg__ma_slope",
+      "slug": "ma_slope",
+      "category": "movingavg",
+      "name": "Ma Slope",
+      "short": "Movingavg strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/movingavg__ma_slope.ts"
+      ],
+      "description": "Moving-average systems including EMA ribbons, HMA, KAMA and crossovers.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "movingavg__tema_cross",
+      "slug": "tema_cross",
+      "category": "movingavg",
+      "name": "Tema Cross",
+      "short": "Movingavg strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/movingavg__tema_cross.ts"
+      ],
+      "description": "Moving-average systems including EMA ribbons, HMA, KAMA and crossovers.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "oscillators__awesome_oscillator",
+      "slug": "awesome_oscillator",
+      "category": "oscillators",
+      "name": "Awesome Oscillator",
+      "short": "Oscillators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/oscillators__awesome_oscillator.ts"
+      ],
+      "description": "Oscillator-based strategies using overbought/oversold and momentum turns.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "oscillators__cci",
+      "slug": "cci",
+      "category": "oscillators",
+      "name": "CCI",
+      "short": "Oscillators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/oscillators__cci.ts"
+      ],
+      "description": "Oscillator-based strategies using overbought/oversold and momentum turns.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "oscillators__coppock",
+      "slug": "coppock",
+      "category": "oscillators",
+      "name": "Coppock",
+      "short": "Oscillators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/oscillators__coppock.ts"
+      ],
+      "description": "Oscillator-based strategies using overbought/oversold and momentum turns.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "oscillators__mfi",
+      "slug": "mfi",
+      "category": "oscillators",
+      "name": "MFI",
+      "short": "Oscillators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/oscillators__mfi.ts"
+      ],
+      "description": "Oscillator-based strategies using overbought/oversold and momentum turns.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "oscillators__roc",
+      "slug": "roc",
+      "category": "oscillators",
+      "name": "Roc",
+      "short": "Oscillators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/oscillators__roc.ts"
+      ],
+      "description": "Oscillator-based strategies using overbought/oversold and momentum turns.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "oscillators__trix",
+      "slug": "trix",
+      "category": "oscillators",
+      "name": "Trix",
+      "short": "Oscillators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/oscillators__trix.ts"
+      ],
+      "description": "Oscillator-based strategies using overbought/oversold and momentum turns.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "oscillators__ultimate_oscillator",
+      "slug": "ultimate_oscillator",
+      "category": "oscillators",
+      "name": "Ultimate Oscillator",
+      "short": "Oscillators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/oscillators__ultimate_oscillator.ts"
+      ],
+      "description": "Oscillator-based strategies using overbought/oversold and momentum turns.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "oscillators__williams_r",
+      "slug": "williams_r",
+      "category": "oscillators",
+      "name": "Williams R",
+      "short": "Oscillators strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/oscillators__williams_r.ts"
+      ],
+      "description": "Oscillator-based strategies using overbought/oversold and momentum turns.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "patterns__engulfing",
+      "slug": "engulfing",
+      "category": "patterns",
+      "name": "Engulfing",
+      "short": "Patterns strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/patterns__engulfing.ts"
+      ],
+      "description": "Candlestick pattern strategies with reversal or continuation logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "patterns__pin_bar",
+      "slug": "pin_bar",
+      "category": "patterns",
+      "name": "Pin Bar",
+      "short": "Patterns strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/patterns__pin_bar.ts"
+      ],
+      "description": "Candlestick pattern strategies with reversal or continuation logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "patterns__star_pattern",
+      "slug": "star_pattern",
+      "category": "patterns",
+      "name": "Star Pattern",
+      "short": "Patterns strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/patterns__star_pattern.ts"
+      ],
+      "description": "Candlestick pattern strategies with reversal or continuation logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "patterns__three_soldiers",
+      "slug": "three_soldiers",
+      "category": "patterns",
+      "name": "Three Soldiers",
+      "short": "Patterns strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/patterns__three_soldiers.ts"
+      ],
+      "description": "Candlestick pattern strategies with reversal or continuation logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "pivots__cpr",
+      "slug": "cpr",
+      "category": "pivots",
+      "name": "CPR",
+      "short": "Pivots strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/pivots__cpr.ts"
+      ],
+      "description": "Pivot systems for support/resistance, CPR, Camarilla and breakout logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "pivots__camarilla",
+      "slug": "camarilla",
+      "category": "pivots",
+      "name": "Camarilla",
+      "short": "Pivots strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/pivots__camarilla.ts"
+      ],
+      "description": "Pivot systems for support/resistance, CPR, Camarilla and breakout logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "pivots__classic_pivot",
+      "slug": "classic_pivot",
+      "category": "pivots",
+      "name": "Classic Pivot",
+      "short": "Pivots strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/pivots__classic_pivot.ts"
+      ],
+      "description": "Pivot systems for support/resistance, CPR, Camarilla and breakout logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "pivots__demark_pivot",
+      "slug": "demark_pivot",
+      "category": "pivots",
+      "name": "Demark Pivot",
+      "short": "Pivots strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/pivots__demark_pivot.ts"
+      ],
+      "description": "Pivot systems for support/resistance, CPR, Camarilla and breakout logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "pivots__fib_pivot",
+      "slug": "fib_pivot",
+      "category": "pivots",
+      "name": "Fib Pivot",
+      "short": "Pivots strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/pivots__fib_pivot.ts"
+      ],
+      "description": "Pivot systems for support/resistance, CPR, Camarilla and breakout logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "pivots__floor_pivot_bounce",
+      "slug": "floor_pivot_bounce",
+      "category": "pivots",
+      "name": "Floor Pivot Bounce",
+      "short": "Pivots strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/pivots__floor_pivot_bounce.ts"
+      ],
+      "description": "Pivot systems for support/resistance, CPR, Camarilla and breakout logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "pivots__pivot_breakout",
+      "slug": "pivot_breakout",
+      "category": "pivots",
+      "name": "Pivot Breakout",
+      "short": "Pivots strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/pivots__pivot_breakout.ts"
+      ],
+      "description": "Pivot systems for support/resistance, CPR, Camarilla and breakout logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "pivots__woodie",
+      "slug": "woodie",
+      "category": "pivots",
+      "name": "Woodie",
+      "short": "Pivots strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/pivots__woodie.ts"
+      ],
+      "description": "Pivot systems for support/resistance, CPR, Camarilla and breakout logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "popular__chaikin_osc",
+      "slug": "chaikin_osc",
+      "category": "popular",
+      "name": "Chaikin Osc",
+      "short": "Popular strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/popular__chaikin_osc.ts"
+      ],
+      "description": "Popular TradingView-style systems like UT Bot, QQE, HalfTrend and WaveTrend.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "popular__coral_trend",
+      "slug": "coral_trend",
+      "category": "popular",
+      "name": "Coral Trend",
+      "short": "Popular strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/popular__coral_trend.ts"
+      ],
+      "description": "Popular TradingView-style systems like UT Bot, QQE, HalfTrend and WaveTrend.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "popular__elder_impulse",
+      "slug": "elder_impulse",
+      "category": "popular",
+      "name": "Elder Impulse",
+      "short": "Popular strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/popular__elder_impulse.ts"
+      ],
+      "description": "Popular TradingView-style systems like UT Bot, QQE, HalfTrend and WaveTrend.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "popular__half_trend",
+      "slug": "half_trend",
+      "category": "popular",
+      "name": "Half Trend",
+      "short": "Popular strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/popular__half_trend.ts"
+      ],
+      "description": "Popular TradingView-style systems like UT Bot, QQE, HalfTrend and WaveTrend.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "popular__hull_suite",
+      "slug": "hull_suite",
+      "category": "popular",
+      "name": "Hull Suite",
+      "short": "Popular strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/popular__hull_suite.ts"
+      ],
+      "description": "Popular TradingView-style systems like UT Bot, QQE, HalfTrend and WaveTrend.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "popular__klinger_osc",
+      "slug": "klinger_osc",
+      "category": "popular",
+      "name": "Klinger Osc",
+      "short": "Popular strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/popular__klinger_osc.ts"
+      ],
+      "description": "Popular TradingView-style systems like UT Bot, QQE, HalfTrend and WaveTrend.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "popular__qqe_mod",
+      "slug": "qqe_mod",
+      "category": "popular",
+      "name": "QQE Mod",
+      "short": "Popular strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/popular__qqe_mod.ts"
+      ],
+      "description": "Popular TradingView-style systems like UT Bot, QQE, HalfTrend and WaveTrend.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "popular__range_filter",
+      "slug": "range_filter",
+      "category": "popular",
+      "name": "Range Filter",
+      "short": "Popular strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/popular__range_filter.ts"
+      ],
+      "description": "Popular TradingView-style systems like UT Bot, QQE, HalfTrend and WaveTrend.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "popular__ssl_channel",
+      "slug": "ssl_channel",
+      "category": "popular",
+      "name": "SSL Channel",
+      "short": "Popular strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/popular__ssl_channel.ts"
+      ],
+      "description": "Popular TradingView-style systems like UT Bot, QQE, HalfTrend and WaveTrend.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "popular__squeeze_momentum",
+      "slug": "squeeze_momentum",
+      "category": "popular",
+      "name": "Squeeze Momentum",
+      "short": "Popular strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/popular__squeeze_momentum.ts"
+      ],
+      "description": "Popular TradingView-style systems like UT Bot, QQE, HalfTrend and WaveTrend.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "popular__ttm_squeeze",
+      "slug": "ttm_squeeze",
+      "category": "popular",
+      "name": "Ttm Squeeze",
+      "short": "Popular strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/popular__ttm_squeeze.ts"
+      ],
+      "description": "Popular TradingView-style systems like UT Bot, QQE, HalfTrend and WaveTrend.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "popular__ut_bot",
+      "slug": "ut_bot",
+      "category": "popular",
+      "name": "UT Bot",
+      "short": "Popular strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/popular__ut_bot.ts"
+      ],
+      "description": "Popular TradingView-style systems like UT Bot, QQE, HalfTrend and WaveTrend.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "popular__vw_macd",
+      "slug": "vw_macd",
+      "category": "popular",
+      "name": "Vw MACD",
+      "short": "Popular strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/popular__vw_macd.ts"
+      ],
+      "description": "Popular TradingView-style systems like UT Bot, QQE, HalfTrend and WaveTrend.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "popular__wavetrend",
+      "slug": "wavetrend",
+      "category": "popular",
+      "name": "Wavetrend",
+      "short": "Popular strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/popular__wavetrend.ts"
+      ],
+      "description": "Popular TradingView-style systems like UT Bot, QQE, HalfTrend and WaveTrend.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "priceaction__exhaustion_bar",
+      "slug": "exhaustion_bar",
+      "category": "priceaction",
+      "name": "Exhaustion Bar",
+      "short": "Priceaction strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/priceaction__exhaustion_bar.ts"
+      ],
+      "description": "Pure price-action structures such as inside bars, traps and exhaustion bars.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "priceaction__fakey",
+      "slug": "fakey",
+      "category": "priceaction",
+      "name": "Fakey",
+      "short": "Priceaction strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/priceaction__fakey.ts"
+      ],
+      "description": "Pure price-action structures such as inside bars, traps and exhaustion bars.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "priceaction__inside_bar",
+      "slug": "inside_bar",
+      "category": "priceaction",
+      "name": "Inside Bar",
+      "short": "Priceaction strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/priceaction__inside_bar.ts"
+      ],
+      "description": "Pure price-action structures such as inside bars, traps and exhaustion bars.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "priceaction__nr4",
+      "slug": "nr4",
+      "category": "priceaction",
+      "name": "Nr4",
+      "short": "Priceaction strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/priceaction__nr4.ts"
+      ],
+      "description": "Pure price-action structures such as inside bars, traps and exhaustion bars.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "priceaction__nr7",
+      "slug": "nr7",
+      "category": "priceaction",
+      "name": "Nr7",
+      "short": "Priceaction strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/priceaction__nr7.ts"
+      ],
+      "description": "Pure price-action structures such as inside bars, traps and exhaustion bars.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "priceaction__outside_bar",
+      "slug": "outside_bar",
+      "category": "priceaction",
+      "name": "Outside Bar",
+      "short": "Priceaction strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/priceaction__outside_bar.ts"
+      ],
+      "description": "Pure price-action structures such as inside bars, traps and exhaustion bars.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "priceaction__pin_bar_combo",
+      "slug": "pin_bar_combo",
+      "category": "priceaction",
+      "name": "Pin Bar Combo",
+      "short": "Priceaction strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/priceaction__pin_bar_combo.ts"
+      ],
+      "description": "Pure price-action structures such as inside bars, traps and exhaustion bars.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "priceaction__springboard",
+      "slug": "springboard",
+      "category": "priceaction",
+      "name": "Springboard",
+      "short": "Priceaction strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/priceaction__springboard.ts"
+      ],
+      "description": "Pure price-action structures such as inside bars, traps and exhaustion bars.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "priceaction__three_bar_reversal",
+      "slug": "three_bar_reversal",
+      "category": "priceaction",
+      "name": "Three Bar Reversal",
+      "short": "Priceaction strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/priceaction__three_bar_reversal.ts"
+      ],
+      "description": "Pure price-action structures such as inside bars, traps and exhaustion bars.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "priceaction__trap_bar",
+      "slug": "trap_bar",
+      "category": "priceaction",
+      "name": "Trap Bar",
+      "short": "Priceaction strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/priceaction__trap_bar.ts"
+      ],
+      "description": "Pure price-action structures such as inside bars, traps and exhaustion bars.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "priceaction__two_bar_reversal",
+      "slug": "two_bar_reversal",
+      "category": "priceaction",
+      "name": "Two Bar Reversal",
+      "short": "Priceaction strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/priceaction__two_bar_reversal.ts"
+      ],
+      "description": "Pure price-action structures such as inside bars, traps and exhaustion bars.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "priceaction__wide_range_bar",
+      "slug": "wide_range_bar",
+      "category": "priceaction",
+      "name": "Wide Range Bar",
+      "short": "Priceaction strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/priceaction__wide_range_bar.ts"
+      ],
+      "description": "Pure price-action structures such as inside bars, traps and exhaustion bars.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "reversal__abandoned_baby",
+      "slug": "abandoned_baby",
+      "category": "reversal",
+      "name": "Abandoned Baby",
+      "short": "Reversal strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/reversal__abandoned_baby.ts"
+      ],
+      "description": "Reversal patterns designed to catch exhaustion and trend flips.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "reversal__belt_hold",
+      "slug": "belt_hold",
+      "category": "reversal",
+      "name": "Belt Hold",
+      "short": "Reversal strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/reversal__belt_hold.ts"
+      ],
+      "description": "Reversal patterns designed to catch exhaustion and trend flips.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "reversal__counterattack",
+      "slug": "counterattack",
+      "category": "reversal",
+      "name": "Counterattack",
+      "short": "Reversal strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/reversal__counterattack.ts"
+      ],
+      "description": "Reversal patterns designed to catch exhaustion and trend flips.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "reversal__hikkake",
+      "slug": "hikkake",
+      "category": "reversal",
+      "name": "Hikkake",
+      "short": "Reversal strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/reversal__hikkake.ts"
+      ],
+      "description": "Reversal patterns designed to catch exhaustion and trend flips.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "reversal__island_reversal",
+      "slug": "island_reversal",
+      "category": "reversal",
+      "name": "Island Reversal",
+      "short": "Reversal strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/reversal__island_reversal.ts"
+      ],
+      "description": "Reversal patterns designed to catch exhaustion and trend flips.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "reversal__kicking",
+      "slug": "kicking",
+      "category": "reversal",
+      "name": "Kicking",
+      "short": "Reversal strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/reversal__kicking.ts"
+      ],
+      "description": "Reversal patterns designed to catch exhaustion and trend flips.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "reversal__ladder_bottom",
+      "slug": "ladder_bottom",
+      "category": "reversal",
+      "name": "Ladder Bottom",
+      "short": "Reversal strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/reversal__ladder_bottom.ts"
+      ],
+      "description": "Reversal patterns designed to catch exhaustion and trend flips.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "reversal__matching_low",
+      "slug": "matching_low",
+      "category": "reversal",
+      "name": "Matching Low",
+      "short": "Reversal strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/reversal__matching_low.ts"
+      ],
+      "description": "Reversal patterns designed to catch exhaustion and trend flips.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "reversal__rising_three_methods",
+      "slug": "rising_three_methods",
+      "category": "reversal",
+      "name": "Rising Three Methods",
+      "short": "Reversal strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/reversal__rising_three_methods.ts"
+      ],
+      "description": "Reversal patterns designed to catch exhaustion and trend flips.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "reversal__stick_sandwich",
+      "slug": "stick_sandwich",
+      "category": "reversal",
+      "name": "Stick Sandwich",
+      "short": "Reversal strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/reversal__stick_sandwich.ts"
+      ],
+      "description": "Reversal patterns designed to catch exhaustion and trend flips.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "reversal__three_inside_up",
+      "slug": "three_inside_up",
+      "category": "reversal",
+      "name": "Three Inside Up",
+      "short": "Reversal strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/reversal__three_inside_up.ts"
+      ],
+      "description": "Reversal patterns designed to catch exhaustion and trend flips.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "reversal__three_outside_up",
+      "slug": "three_outside_up",
+      "category": "reversal",
+      "name": "Three Outside Up",
+      "short": "Reversal strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/reversal__three_outside_up.ts"
+      ],
+      "description": "Reversal patterns designed to catch exhaustion and trend flips.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "scalping__momentum_burst",
+      "slug": "momentum_burst",
+      "category": "scalping",
+      "name": "Momentum Burst",
+      "short": "Scalping strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/scalping__momentum_burst.ts"
+      ],
+      "description": "Fast intraday setups designed for quick entries and tight risk.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "scalping__quick_scalp",
+      "slug": "quick_scalp",
+      "category": "scalping",
+      "name": "Quick Scalp",
+      "short": "Scalping strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/scalping__quick_scalp.ts"
+      ],
+      "description": "Fast intraday setups designed for quick entries and tight risk.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "scalping__range_bounce",
+      "slug": "range_bounce",
+      "category": "scalping",
+      "name": "Range Bounce",
+      "short": "Scalping strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/scalping__range_bounce.ts"
+      ],
+      "description": "Fast intraday setups designed for quick entries and tight risk.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "smc__breaker_block",
+      "slug": "breaker_block",
+      "category": "smc",
+      "name": "Breaker Block",
+      "short": "SMC strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/smc__breaker_block.pine",
+        "strategy-code/smc__breaker_block.py",
+        "strategy-code/smc__breaker_block.ts"
+      ],
+      "description": "Smart Money Concepts: liquidity, order blocks, FVGs and structure shifts.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "smc__choch",
+      "slug": "choch",
+      "category": "smc",
+      "name": "Choch",
+      "short": "SMC strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/smc__choch.ts"
+      ],
+      "description": "Smart Money Concepts: liquidity, order blocks, FVGs and structure shifts.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "smc__eq_sweep",
+      "slug": "eq_sweep",
+      "category": "smc",
+      "name": "Eq Sweep",
+      "short": "SMC strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/smc__eq_sweep.pine",
+        "strategy-code/smc__eq_sweep.py",
+        "strategy-code/smc__eq_sweep.ts"
+      ],
+      "description": "Smart Money Concepts: liquidity, order blocks, FVGs and structure shifts.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "smc__fvg",
+      "slug": "fvg",
+      "category": "smc",
+      "name": "FVG",
+      "short": "SMC strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/smc__fvg.pine",
+        "strategy-code/smc__fvg.py",
+        "strategy-code/smc__fvg.ts"
+      ],
+      "description": "Smart Money Concepts: liquidity, order blocks, FVGs and structure shifts.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "smc__inducement",
+      "slug": "inducement",
+      "category": "smc",
+      "name": "Inducement",
+      "short": "SMC strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/smc__inducement.pine",
+        "strategy-code/smc__inducement.py",
+        "strategy-code/smc__inducement.ts"
+      ],
+      "description": "Smart Money Concepts: liquidity, order blocks, FVGs and structure shifts.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "smc__liquidity_grab_bos",
+      "slug": "liquidity_grab_bos",
+      "category": "smc",
+      "name": "Liquidity Grab Bos",
+      "short": "SMC strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/smc__liquidity_grab_bos.pine",
+        "strategy-code/smc__liquidity_grab_bos.py",
+        "strategy-code/smc__liquidity_grab_bos.ts"
+      ],
+      "description": "Smart Money Concepts: liquidity, order blocks, FVGs and structure shifts.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "smc__ote",
+      "slug": "ote",
+      "category": "smc",
+      "name": "OTE",
+      "short": "SMC strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/smc__ote.pine",
+        "strategy-code/smc__ote.py",
+        "strategy-code/smc__ote.ts"
+      ],
+      "description": "Smart Money Concepts: liquidity, order blocks, FVGs and structure shifts.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "smc__order_block",
+      "slug": "order_block",
+      "category": "smc",
+      "name": "Order Block",
+      "short": "SMC strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/smc__order_block.pine",
+        "strategy-code/smc__order_block.py",
+        "strategy-code/smc__order_block.ts"
+      ],
+      "description": "Smart Money Concepts: liquidity, order blocks, FVGs and structure shifts.",
+      "languages": [
+        "pine",
+        "py",
+        "ts"
+      ]
+    },
+    {
+      "id": "smc__power_of_3",
+      "slug": "power_of_3",
+      "category": "smc",
+      "name": "Power Of 3",
+      "short": "SMC strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/smc__power_of_3.ts"
+      ],
+      "description": "Smart Money Concepts: liquidity, order blocks, FVGs and structure shifts.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "smc__premium_discount",
+      "slug": "premium_discount",
+      "category": "smc",
+      "name": "Premium Discount",
+      "short": "SMC strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/smc__premium_discount.ts"
+      ],
+      "description": "Smart Money Concepts: liquidity, order blocks, FVGs and structure shifts.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "statistical__correlation_trend",
+      "slug": "correlation_trend",
+      "category": "statistical",
+      "name": "Correlation Trend",
+      "short": "Statistical strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/statistical__correlation_trend.ts"
+      ],
+      "description": "Statistical models such as z-score, regression, variance and Sharpe filters.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "statistical__hurst_exponent",
+      "slug": "hurst_exponent",
+      "category": "statistical",
+      "name": "Hurst Exponent",
+      "short": "Statistical strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/statistical__hurst_exponent.ts"
+      ],
+      "description": "Statistical models such as z-score, regression, variance and Sharpe filters.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "statistical__kalman_trend",
+      "slug": "kalman_trend",
+      "category": "statistical",
+      "name": "Kalman Trend",
+      "short": "Statistical strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/statistical__kalman_trend.ts"
+      ],
+      "description": "Statistical models such as z-score, regression, variance and Sharpe filters.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "statistical__linreg_slope",
+      "slug": "linreg_slope",
+      "category": "statistical",
+      "name": "Linreg Slope",
+      "short": "Statistical strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/statistical__linreg_slope.ts"
+      ],
+      "description": "Statistical models such as z-score, regression, variance and Sharpe filters.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "statistical__mean_reversion_stat",
+      "slug": "mean_reversion_stat",
+      "category": "statistical",
+      "name": "Mean Reversion Stat",
+      "short": "Statistical strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/statistical__mean_reversion_stat.ts"
+      ],
+      "description": "Statistical models such as z-score, regression, variance and Sharpe filters.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "statistical__poly_regression",
+      "slug": "poly_regression",
+      "category": "statistical",
+      "name": "Poly Regression",
+      "short": "Statistical strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/statistical__poly_regression.ts"
+      ],
+      "description": "Statistical models such as z-score, regression, variance and Sharpe filters.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "statistical__r_squared",
+      "slug": "r_squared",
+      "category": "statistical",
+      "name": "R Squared",
+      "short": "Statistical strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/statistical__r_squared.ts"
+      ],
+      "description": "Statistical models such as z-score, regression, variance and Sharpe filters.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "statistical__sharpe_filter",
+      "slug": "sharpe_filter",
+      "category": "statistical",
+      "name": "Sharpe Filter",
+      "short": "Statistical strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/statistical__sharpe_filter.ts"
+      ],
+      "description": "Statistical models such as z-score, regression, variance and Sharpe filters.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "statistical__variance_ratio",
+      "slug": "variance_ratio",
+      "category": "statistical",
+      "name": "Variance Ratio",
+      "short": "Statistical strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/statistical__variance_ratio.ts"
+      ],
+      "description": "Statistical models such as z-score, regression, variance and Sharpe filters.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "statistical__z_score_bands",
+      "slug": "z_score_bands",
+      "category": "statistical",
+      "name": "Z Score Bands",
+      "short": "Statistical strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/statistical__z_score_bands.ts"
+      ],
+      "description": "Statistical models such as z-score, regression, variance and Sharpe filters.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "trend__adx_trend_rider",
+      "slug": "adx_trend_rider",
+      "category": "trend",
+      "name": "ADX Trend Rider",
+      "short": "Trend strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/trend__adx_trend_rider.ts"
+      ],
+      "description": "Trend-following systems using momentum confirmation and moving average structure.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "trend__ema_ribbon",
+      "slug": "ema_ribbon",
+      "category": "trend",
+      "name": "EMA Ribbon",
+      "short": "Trend strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/trend__ema_ribbon.ts"
+      ],
+      "description": "Trend-following systems using momentum confirmation and moving average structure.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "trend__heikin_ashi_trend",
+      "slug": "heikin_ashi_trend",
+      "category": "trend",
+      "name": "Heikin Ashi Trend",
+      "short": "Trend strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/trend__heikin_ashi_trend.ts"
+      ],
+      "description": "Trend-following systems using momentum confirmation and moving average structure.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "trend__macd_zero_cross",
+      "slug": "macd_zero_cross",
+      "category": "trend",
+      "name": "MACD Zero Cross",
+      "short": "Trend strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/trend__macd_zero_cross.ts"
+      ],
+      "description": "Trend-following systems using momentum confirmation and moving average structure.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "trendstrength__aroon",
+      "slug": "aroon",
+      "category": "trendstrength",
+      "name": "Aroon",
+      "short": "Trendstrength strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/trendstrength__aroon.ts"
+      ],
+      "description": "Trend strength filters for determining if a move has enough force.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "trendstrength__aroon_oscillator",
+      "slug": "aroon_oscillator",
+      "category": "trendstrength",
+      "name": "Aroon Oscillator",
+      "short": "Trendstrength strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/trendstrength__aroon_oscillator.ts"
+      ],
+      "description": "Trend strength filters for determining if a move has enough force.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "trendstrength__chande_momentum",
+      "slug": "chande_momentum",
+      "category": "trendstrength",
+      "name": "Chande Momentum",
+      "short": "Trendstrength strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/trendstrength__chande_momentum.ts"
+      ],
+      "description": "Trend strength filters for determining if a move has enough force.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "trendstrength__dpo",
+      "slug": "dpo",
+      "category": "trendstrength",
+      "name": "Dpo",
+      "short": "Trendstrength strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/trendstrength__dpo.ts"
+      ],
+      "description": "Trend strength filters for determining if a move has enough force.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "trendstrength__elder_ray",
+      "slug": "elder_ray",
+      "category": "trendstrength",
+      "name": "Elder Ray",
+      "short": "Trendstrength strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/trendstrength__elder_ray.ts"
+      ],
+      "description": "Trend strength filters for determining if a move has enough force.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "trendstrength__qstick",
+      "slug": "qstick",
+      "category": "trendstrength",
+      "name": "Qstick",
+      "short": "Trendstrength strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/trendstrength__qstick.ts"
+      ],
+      "description": "Trend strength filters for determining if a move has enough force.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "trendstrength__random_walk",
+      "slug": "random_walk",
+      "category": "trendstrength",
+      "name": "Random Walk",
+      "short": "Trendstrength strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/trendstrength__random_walk.ts"
+      ],
+      "description": "Trend strength filters for determining if a move has enough force.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "trendstrength__trend_intensity",
+      "slug": "trend_intensity",
+      "category": "trendstrength",
+      "name": "Trend Intensity",
+      "short": "Trendstrength strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/trendstrength__trend_intensity.ts"
+      ],
+      "description": "Trend strength filters for determining if a move has enough force.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "trendstrength__ttm_trend",
+      "slug": "ttm_trend",
+      "category": "trendstrength",
+      "name": "Ttm Trend",
+      "short": "Trendstrength strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/trendstrength__ttm_trend.ts"
+      ],
+      "description": "Trend strength filters for determining if a move has enough force.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "trendstrength__vortex_strength",
+      "slug": "vortex_strength",
+      "category": "trendstrength",
+      "name": "Vortex Strength",
+      "short": "Trendstrength strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/trendstrength__vortex_strength.ts"
+      ],
+      "description": "Trend strength filters for determining if a move has enough force.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "volatility__atr_channel",
+      "slug": "atr_channel",
+      "category": "volatility",
+      "name": "ATR Channel",
+      "short": "Volatility strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/volatility__atr_channel.ts"
+      ],
+      "description": "Volatility strategies using ATR, bandwidth, choppiness and expansion.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "volatility__bb_bandwidth",
+      "slug": "bb_bandwidth",
+      "category": "volatility",
+      "name": "BB Bandwidth",
+      "short": "Volatility strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/volatility__bb_bandwidth.ts"
+      ],
+      "description": "Volatility strategies using ATR, bandwidth, choppiness and expansion.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "volatility__choppiness",
+      "slug": "choppiness",
+      "category": "volatility",
+      "name": "Choppiness",
+      "short": "Volatility strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/volatility__choppiness.ts"
+      ],
+      "description": "Volatility strategies using ATR, bandwidth, choppiness and expansion.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "volatility__mass_index",
+      "slug": "mass_index",
+      "category": "volatility",
+      "name": "Mass Index",
+      "short": "Volatility strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/volatility__mass_index.ts"
+      ],
+      "description": "Volatility strategies using ATR, bandwidth, choppiness and expansion.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "volatility__rvi",
+      "slug": "rvi",
+      "category": "volatility",
+      "name": "Rvi",
+      "short": "Volatility strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/volatility__rvi.ts"
+      ],
+      "description": "Volatility strategies using ATR, bandwidth, choppiness and expansion.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "volatility__stddev_breakout",
+      "slug": "stddev_breakout",
+      "category": "volatility",
+      "name": "Stddev Breakout",
+      "short": "Volatility strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/volatility__stddev_breakout.ts"
+      ],
+      "description": "Volatility strategies using ATR, bandwidth, choppiness and expansion.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "volume__ad_line",
+      "slug": "ad_line",
+      "category": "volume",
+      "name": "Ad Line",
+      "short": "Volume strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/volume__ad_line.ts"
+      ],
+      "description": "Volume-confirmed strategies using OBV, CMF, PVT and volume surges.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "volume__cmf",
+      "slug": "cmf",
+      "category": "volume",
+      "name": "Cmf",
+      "short": "Volume strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/volume__cmf.ts"
+      ],
+      "description": "Volume-confirmed strategies using OBV, CMF, PVT and volume surges.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "volume__ease_of_movement",
+      "slug": "ease_of_movement",
+      "category": "volume",
+      "name": "Ease Of Movement",
+      "short": "Volume strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/volume__ease_of_movement.ts"
+      ],
+      "description": "Volume-confirmed strategies using OBV, CMF, PVT and volume surges.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "volume__force_index",
+      "slug": "force_index",
+      "category": "volume",
+      "name": "Force Index",
+      "short": "Volume strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/volume__force_index.ts"
+      ],
+      "description": "Volume-confirmed strategies using OBV, CMF, PVT and volume surges.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "volume__obv_trend",
+      "slug": "obv_trend",
+      "category": "volume",
+      "name": "OBV Trend",
+      "short": "Volume strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/volume__obv_trend.ts"
+      ],
+      "description": "Volume-confirmed strategies using OBV, CMF, PVT and volume surges.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "volume__pvt",
+      "slug": "pvt",
+      "category": "volume",
+      "name": "PVT",
+      "short": "Volume strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/volume__pvt.ts"
+      ],
+      "description": "Volume-confirmed strategies using OBV, CMF, PVT and volume surges.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "volume__volume_oscillator",
+      "slug": "volume_oscillator",
+      "category": "volume",
+      "name": "Volume Oscillator",
+      "short": "Volume strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/volume__volume_oscillator.ts"
+      ],
+      "description": "Volume-confirmed strategies using OBV, CMF, PVT and volume surges.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "volume__vwma_cross",
+      "slug": "vwma_cross",
+      "category": "volume",
+      "name": "Vwma Cross",
+      "short": "Volume strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/volume__vwma_cross.ts"
+      ],
+      "description": "Volume-confirmed strategies using OBV, CMF, PVT and volume surges.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "vwap__vwap_anchored",
+      "slug": "vwap_anchored",
+      "category": "vwap",
+      "name": "VWAP Anchored",
+      "short": "VWAP strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/vwap__vwap_anchored.ts"
+      ],
+      "description": "VWAP systems for anchored value, reversion and breakout confirmation.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "vwap__vwap_breakout",
+      "slug": "vwap_breakout",
+      "category": "vwap",
+      "name": "VWAP Breakout",
+      "short": "VWAP strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/vwap__vwap_breakout.ts"
+      ],
+      "description": "VWAP systems for anchored value, reversion and breakout confirmation.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "vwap__vwap_double",
+      "slug": "vwap_double",
+      "category": "vwap",
+      "name": "VWAP Double",
+      "short": "VWAP strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/vwap__vwap_double.ts"
+      ],
+      "description": "VWAP systems for anchored value, reversion and breakout confirmation.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "vwap__vwap_first_band",
+      "slug": "vwap_first_band",
+      "category": "vwap",
+      "name": "VWAP First Band",
+      "short": "VWAP strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/vwap__vwap_first_band.ts"
+      ],
+      "description": "VWAP systems for anchored value, reversion and breakout confirmation.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "vwap__vwap_magnet",
+      "slug": "vwap_magnet",
+      "category": "vwap",
+      "name": "VWAP Magnet",
+      "short": "VWAP strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/vwap__vwap_magnet.ts"
+      ],
+      "description": "VWAP systems for anchored value, reversion and breakout confirmation.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "vwap__vwap_reversion",
+      "slug": "vwap_reversion",
+      "category": "vwap",
+      "name": "VWAP Reversion",
+      "short": "VWAP strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/vwap__vwap_reversion.ts"
+      ],
+      "description": "VWAP systems for anchored value, reversion and breakout confirmation.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "vwap__vwap_trend",
+      "slug": "vwap_trend",
+      "category": "vwap",
+      "name": "VWAP Trend",
+      "short": "VWAP strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/vwap__vwap_trend.ts"
+      ],
+      "description": "VWAP systems for anchored value, reversion and breakout confirmation.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "vwap__vwap_vol_confirm",
+      "slug": "vwap_vol_confirm",
+      "category": "vwap",
+      "name": "VWAP Vol Confirm",
+      "short": "VWAP strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/vwap__vwap_vol_confirm.ts"
+      ],
+      "description": "VWAP systems for anchored value, reversion and breakout confirmation.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "wyckoff__wyck_accum",
+      "slug": "wyck_accum",
+      "category": "wyckoff",
+      "name": "Wyck Accum",
+      "short": "Wyckoff strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/wyckoff__wyck_accum.ts"
+      ],
+      "description": "Wyckoff accumulation/distribution, spring, upthrust and SOS/SOW logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "wyckoff__wyck_dist",
+      "slug": "wyck_dist",
+      "category": "wyckoff",
+      "name": "Wyck Dist",
+      "short": "Wyckoff strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/wyckoff__wyck_dist.ts"
+      ],
+      "description": "Wyckoff accumulation/distribution, spring, upthrust and SOS/SOW logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "wyckoff__wyck_jac",
+      "slug": "wyck_jac",
+      "category": "wyckoff",
+      "name": "Wyck Jac",
+      "short": "Wyckoff strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/wyckoff__wyck_jac.ts"
+      ],
+      "description": "Wyckoff accumulation/distribution, spring, upthrust and SOS/SOW logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "wyckoff__wyck_sos",
+      "slug": "wyck_sos",
+      "category": "wyckoff",
+      "name": "Wyck SOS",
+      "short": "Wyckoff strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/wyckoff__wyck_sos.ts"
+      ],
+      "description": "Wyckoff accumulation/distribution, spring, upthrust and SOS/SOW logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "wyckoff__wyck_sow",
+      "slug": "wyck_sow",
+      "category": "wyckoff",
+      "name": "Wyck SOW",
+      "short": "Wyckoff strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/wyckoff__wyck_sow.ts"
+      ],
+      "description": "Wyckoff accumulation/distribution, spring, upthrust and SOS/SOW logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "wyckoff__wyck_st",
+      "slug": "wyck_st",
+      "category": "wyckoff",
+      "name": "Wyck ST",
+      "short": "Wyckoff strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/wyckoff__wyck_st.ts"
+      ],
+      "description": "Wyckoff accumulation/distribution, spring, upthrust and SOS/SOW logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "wyckoff__wyck_spring",
+      "slug": "wyck_spring",
+      "category": "wyckoff",
+      "name": "Wyck Spring",
+      "short": "Wyckoff strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/wyckoff__wyck_spring.ts"
+      ],
+      "description": "Wyckoff accumulation/distribution, spring, upthrust and SOS/SOW logic.",
+      "languages": [
+        "ts"
+      ]
+    },
+    {
+      "id": "wyckoff__wyck_upthrust",
+      "slug": "wyck_upthrust",
+      "category": "wyckoff",
+      "name": "Wyck Upthrust",
+      "short": "Wyckoff strategy module for signal research and demo trading.",
+      "files": [
+        "strategy-code/wyckoff__wyck_upthrust.ts"
+      ],
+      "description": "Wyckoff accumulation/distribution, spring, upthrust and SOS/SOW logic.",
+      "languages": [
+        "ts"
+      ]
+    }
+  ]
+}

@@ -21,6 +21,12 @@
   to = "/.netlify/functions/sodex/:splat"
   status = 200
 
+
+[[redirects]]
+  from = "/api/chart"
+  to = "/.netlify/functions/chart"
+  status = 200
+
 [[redirects]]
   from = "/api/health"
   to = "/.netlify/functions/health"
