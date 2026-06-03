@@ -101,7 +101,7 @@
                 <div class="focus-symbol" id="focusSymbol">Loading</div>
                 <div class="focus-name" id="focusName">Live price focus</div>
               </div>
-              <div class="phone-icons-right">☆ ⋮</div>
+              <div class="phone-icons-right"><button id="phoneFavBtn" type="button" title="Add to watchlist">☆</button><button id="phoneMenuBtn" type="button" title="Phone menu">⋮</button></div>
             </div>
 
             <div class="focus-row">
@@ -129,17 +129,23 @@
             </div>
 
             <div class="phone-market-overview">
-              <h3>Market Overview</h3>
-              <p><span>Signal status</span><strong>Live</strong></p>
-              <p><span>Execution mode</span><strong id="mode">Protected</strong></p>
-              <p><span>Provider</span><strong id="marketStatus">loading</strong></p>
+              <h3 id="phonePanelTitle">Market Overview</h3>
+              <div id="phonePanelBody">
+                <p><span>Signal status</span><strong>Live</strong></p>
+                <p><span>Execution mode</span><strong id="mode">Protected</strong></p>
+                <p><span>Provider</span><strong id="marketStatus">loading</strong></p>
+              </div>
             </div>
 
             <pre id="healthBox" class="health-mini">system: SoDEX Agent
 mode: protected execution</pre>
 
-            <div class="phone-bottom-nav">
-              <span class="active">Overview</span><span>Markets</span><span>Signals</span><span>Agent</span><span>Portfolio</span>
+            <div class="phone-bottom-nav" id="phoneNav">
+              <button type="button" class="active" data-phone-tab="overview">Overview</button>
+              <button type="button" data-phone-tab="markets">Markets</button>
+              <button type="button" data-phone-tab="signals">Signals</button>
+              <button type="button" data-phone-tab="agent">Agent</button>
+              <button type="button" data-phone-tab="portfolio">Portfolio</button>
             </div>
             <div class="phone-home-indicator"></div>
           </div>

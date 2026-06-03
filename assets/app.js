@@ -1,4 +1,4 @@
-const state = { market: [], meta: {}, filtered: [], strategies: [], categories: [], signals: [], wallet: null, walletAddress: '', watchlist: [], focus: { symbol: '', range: '1D', candles: [] } };
+const state = { market: [], meta: {}, filtered: [], strategies: [], categories: [], signals: [], wallet: null, walletAddress: '', watchlist: [], phoneTab: 'overview', focus: { symbol: '', range: '1D', candles: [] } };
 const $ = (id) => document.getElementById(id);
 function compact(n) { const num = Number(n || 0); if (!Number.isFinite(num)) return '0'; return Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 2 }).format(num); }
 function money(n) { const num = Number(n || 0); if (!Number.isFinite(num) || num === 0) return '—'; return '$' + Intl.NumberFormat('en', { maximumFractionDigits: num > 1000 ? 0 : 5 }).format(num); }
@@ -16,14 +16,14 @@ async function loadMarket() {
   } catch (_) { state.market = []; state.meta = {}; $('marketStatus').textContent = 'unavailable'; }
   renderAll(); populateDemoAssets(); populateFocusAssets(); renderWallet(); loadFocusChart();
 }
-function renderAll(){ renderStats(); applyFilters(); drawChart(); renderWatchlist(); }
+function renderAll(){ renderStats(); applyFilters(); drawChart(); renderWatchlist(); renderPhonePanel(); }
 function renderStats() { const items = state.market; const avg = items.length ? items.reduce((s, x) => s + Number(x.change24h || 0), 0) / items.length : 0; const vol = items.reduce((s, x) => s + Number(x.volume24h || 0), 0); $('assetCount').textContent = String(state.meta.totalAssets || items.length || 0); $('universeLabel').textContent = `${state.meta.primary || 'Live'} • ${state.meta.universe || 'protected'}`; $('avgChange').textContent = pct(avg); $('avgChange').className = avg >= 0 ? 'green' : 'red'; $('totalVolume').textContent = '$' + compact(vol); if (items[0]?.rawSymbol) $('orderPair').textContent = items[0].rawSymbol; const av=document.getElementById('phoneAvatar'); if(av && items[0]?.symbol) av.textContent=String(items[0].symbol).slice(0,1); }
 function applyFilters(){ const q = ($('searchBox')?.value || '').toLowerCase().trim(); const sort = $('sortBox')?.value || 'volume'; let rows = [...state.market]; if (q) rows = rows.filter(x => String(x.symbol + ' ' + x.name + ' ' + x.rawSymbol).toLowerCase().includes(q)); if (sort === 'changeDesc') rows.sort((a,b)=>Number(b.change24h||0)-Number(a.change24h||0)); else if (sort === 'changeAsc') rows.sort((a,b)=>Number(a.change24h||0)-Number(b.change24h||0)); else if (sort === 'price') rows.sort((a,b)=>Number(b.price||0)-Number(a.price||0)); else rows.sort((a,b)=>Number(b.volume24h||0)-Number(a.volume24h||0)); state.filtered = rows; renderTable(rows.slice(0, Number(state.meta.tableLimit || 220))); }
 function renderTable(rows) {
   $('marketRows').innerHTML = rows.map((x, i) => {
     const cls = Number(x.change24h || 0) >= 0 ? 'green' : 'red';
     const score = Math.max(42, Math.min(98, Math.round(64 + Math.abs(Number(x.change24h||0))*4 + Math.log10(Math.max(10, Number(x.volume24h||0)))*2)));
-    return `<tr>
+    return `<tr data-focus-row="${escapeHtml(x.symbol)}">
       <td class="rank"></td>
       <td><span class="coin">${escapeHtml(x.symbol)}</span><span class="sub">${escapeHtml(x.rawSymbol || x.name)}${x.watchlist ? ' • SoDEX watchlist' : ''}</span></td>
       <td>${money(x.price)}</td>
@@ -32,7 +32,8 @@ function renderTable(rows) {
       <td><span class="score-badge">${score}</span> <button class="watch-action" data-watch="${escapeHtml(x.symbol)}">＋</button></td>
     </tr>`;
   }).join('') || '<tr><td colspan="6">No data available.</td></tr>';
-  document.querySelectorAll('[data-watch]').forEach(btn => btn.addEventListener('click', () => addWatchlist(btn.dataset.watch)));
+  document.querySelectorAll('[data-watch]').forEach(btn => btn.addEventListener('click', (e) => { e.stopPropagation(); addWatchlist(btn.dataset.watch); }));
+  document.querySelectorAll('[data-focus-row]').forEach(row => row.addEventListener('click', () => setFocusSymbol(row.dataset.focusRow)));
 }
 function drawChart() { const canvas = $('chart'); const ctx = canvas.getContext('2d'); const dpr = window.devicePixelRatio || 1; const chartLimit = Math.min(Number(state.meta.chartLimit || 60), 220); let rows = [...state.market].filter(x => !x.watchlist && (Number(x.volume24h || 0) > 0 || Number(x.price || 0) > 0 || Math.abs(Number(x.change24h || 0)) > 0)).sort((a,b)=>Number(b.volume24h||0)-Number(a.volume24h||0)).slice(0, chartLimit); if (!rows.length) rows = [...state.market].slice(0, chartLimit); const containerW = canvas.parentElement?.clientWidth || 700; const w = Math.max(containerW, 980, rows.length * 48); const h = 320; canvas.width = w * dpr; canvas.height = h * dpr; canvas.style.width = w + 'px'; canvas.style.height = h + 'px'; ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h); if (!rows.length) { $('chartNote').textContent = 'No live market data available yet.'; return; } $('chartNote').textContent = `Showing top ${rows.length} liquid assets by 24h volume. Bars show 24h % change, not raw price.`; const padL = 58, padR = 30, padT = 26, padB = 64; const vals = rows.map(x => Number(x.change24h || 0)); const absMax = Math.max(4, ...vals.map(v => Math.abs(v))); const max = absMax, min = -absMax; const chartH = h - padT - padB, chartW = w - padL - padR; const zeroY = padT + (max / (max - min)) * chartH; const yFor = (v) => padT + ((max - v) / (max - min)) * chartH; ctx.strokeStyle='rgba(148,163,184,.16)'; ctx.fillStyle='rgba(203,213,225,.82)'; ctx.font='11px Arial'; ctx.textAlign='right'; ctx.textBaseline='middle'; for(let i=0;i<=4;i++){ const val=max-(i*(max-min))/4; const y=yFor(val); ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(w-padR,y); ctx.stroke(); ctx.fillText(val.toFixed(1)+'%', padL-8, y); } ctx.strokeStyle='rgba(34,211,238,.55)'; ctx.beginPath(); ctx.moveTo(padL,zeroY); ctx.lineTo(w-padR,zeroY); ctx.stroke(); const gap=12; const barW=Math.max(22,(chartW-gap*(rows.length-1))/rows.length); rows.forEach((item,i)=>{ const x=padL+i*(barW+gap); const val=Number(item.change24h||0); const y=yFor(val); const barTop=Math.min(y,zeroY); const barH=Math.max(Math.abs(zeroY-y),3); const grad=ctx.createLinearGradient(0,barTop,0,barTop+barH); if(val>=0){grad.addColorStop(0,'rgba(52,211,153,.95)');grad.addColorStop(1,'rgba(34,211,238,.35)');} else {grad.addColorStop(0,'rgba(251,113,133,.95)');grad.addColorStop(1,'rgba(251,113,133,.28)');} roundRect(ctx,x,barTop,barW,barH,7); ctx.fillStyle=grad; ctx.fill(); ctx.fillStyle='rgba(226,232,240,.95)'; ctx.font='bold 10px Arial'; ctx.textAlign='center'; ctx.textBaseline=val>=0?'bottom':'top'; ctx.fillText(pct(val), x+barW/2, val>=0?barTop-5:barTop+barH+5); ctx.save(); ctx.translate(x+barW/2,h-padB+18); ctx.rotate(-Math.PI/5); ctx.fillStyle='rgba(203,213,225,.85)'; ctx.font='bold 11px Arial'; ctx.textAlign='right'; ctx.textBaseline='middle'; ctx.fillText(String(item.symbol).slice(0,10),0,0); ctx.restore(); }); }
 function roundRect(ctx,x,y,width,height,radius){const r=Math.min(radius,width/2,height/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+width,y,x+width,y+height,r);ctx.arcTo(x+width,y+height,x,y+height,r);ctx.arcTo(x,y+height,x,y,r);ctx.arcTo(x,y,x+width,y,r);ctx.closePath();}
@@ -74,24 +75,36 @@ function normalizeChartSymbol(asset){
 }
 function populateFocusAssets(){
   const sel=$('focusSelect'); if(!sel) return;
-  const current=sel.value;
-  const rows=[...state.market].filter(x=>x.price||x.volume24h||x.change24h).sort((a,b)=>Number(b.volume24h||0)-Number(a.volume24h||0)).slice(0,80);
+  const current=state.focus.symbol || sel.value;
+  const rows=[...state.market].filter(x=>x.price||x.volume24h||x.change24h).sort((a,b)=>Number(b.volume24h||0)-Number(a.volume24h||0)).slice(0,120);
   sel.innerHTML=rows.map(x=>`<option value="${escapeHtml(x.symbol)}">${escapeHtml(x.symbol)}</option>`).join('') || '<option value="BTC">BTC</option>';
-  const preferred=current || rows[0]?.symbol || 'BTC'; sel.value=preferred; state.focus.symbol=sel.value;
+  const preferred = rows.find(x=>x.symbol===current)?.symbol || rows[0]?.symbol || current || 'BTC';
+  sel.value=preferred; state.focus.symbol=preferred;
 }
 function selectedFocusAsset(){ return state.market.find(x=>x.symbol===state.focus.symbol) || state.market.find(x=>x.symbol===$('focusSelect')?.value) || state.market[0] || {symbol:'BTC',name:'Bitcoin',price:0,change24h:0,volume24h:0}; }
+function setFocusSymbol(symbol){
+  if(!symbol) return;
+  state.focus.symbol = symbol;
+  const sel=$('focusSelect'); if(sel) sel.value = symbol;
+  loadFocusChart();
+  renderPhonePanel();
+}
 async function loadFocusChart(){
   const asset=selectedFocusAsset(); if(!asset) return;
   state.focus.symbol=asset.symbol;
-  $('focusSymbol').textContent=asset.symbol || '—'; $('focusName').textContent=asset.name || asset.rawSymbol || 'Live price focus';
-  $('focusPrice').textContent=money(asset.price); $('focusChange').textContent=pct(asset.change24h); $('focusChange').className='focus-change '+(Number(asset.change24h||0)>=0?'':'red');
-  $('focusVol').textContent=asset.volume24h?'$'+compact(asset.volume24h):'—';
+  const sel=$('focusSelect'); if(sel && sel.value!==asset.symbol) sel.value=asset.symbol;
+  $('focusSymbol').textContent=asset.symbol || '—'; 
+  $('focusName').textContent=asset.name || asset.rawSymbol || 'Live price focus';
+  const av=document.getElementById('phoneAvatar'); if(av) av.textContent=String(asset.symbol||'S').slice(0,1);
+  updatePhoneSnapshot(asset);
   try{
     const symbol=encodeURIComponent(normalizeChartSymbol(asset));
     const data=await fetchJson(`/api/chart?symbol=${symbol}&range=${encodeURIComponent(state.focus.range||'1D')}&raw=${encodeURIComponent(asset.rawSymbol||asset.symbol||symbol)}`,{cache:'no-store'},12000);
     state.focus.candles=Array.isArray(data.data)?data.data:[];
   }catch(_){ state.focus.candles=[]; }
   drawFocusChart();
+  updatePhoneSnapshot(asset);
+  renderPhonePanel();
 }
 function drawFocusChart(){
   const canvas=$('focusChart'); if(!canvas) return;
@@ -113,8 +126,7 @@ function drawFocusChart(){
   const grad=ctx.createLinearGradient(0,padT,0,h-padB); grad.addColorStop(0,'rgba(14,165,233,.42)'); grad.addColorStop(1,'rgba(2,6,23,0)');
   ctx.beginPath(); rows.forEach((p,i)=>{ const x=xFor(i), y=yFor(Number(p.close||p.price||0)); if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y); }); ctx.lineTo(xFor(rows.length-1),h-padB); ctx.lineTo(xFor(0),h-padB); ctx.closePath(); ctx.fillStyle=grad; ctx.fill();
   ctx.beginPath(); rows.forEach((p,i)=>{ const x=xFor(i), y=yFor(Number(p.close||p.price||0)); if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y); }); ctx.strokeStyle=color; ctx.lineWidth=2.4; ctx.stroke();
-  const lastC=rows[rows.length-1]; $('focusOpen').textContent=money(rows[0]?.open || rows[0]?.close); $('focusHigh').textContent=money(Math.max(...highs)); $('focusLow').textContent=money(Math.min(...lows));
-  const delta=((last-first)/Math.max(1e-9,first))*100; $('focusChange').textContent=pct(delta); $('focusChange').className='focus-change '+(delta>=0?'':'red'); if(lastC?.close) $('focusPrice').textContent=money(lastC.close);
+  updatePhoneSnapshot(asset);
 }
 
 
@@ -152,7 +164,7 @@ async function connectWallet(){
 function loadWatchlist(){
   try{ state.watchlist = JSON.parse(localStorage.getItem('sodexWatchlist') || '[]'); }
   catch(_){ state.watchlist = []; }
-  renderWatchlist();
+  renderWatchlist(); renderPhonePanel();
 }
 function saveWatchlist(){
   localStorage.setItem('sodexWatchlist', JSON.stringify(state.watchlist));
@@ -162,7 +174,7 @@ function addWatchlist(symbol){
   if(!state.watchlist.includes(symbol)) state.watchlist.unshift(symbol);
   state.watchlist = state.watchlist.slice(0, 60);
   saveWatchlist();
-  renderWatchlist();
+  renderWatchlist(); renderPhonePanel();
   const box = document.getElementById('watchlistStatus');
   if(box) box.textContent = `${symbol} pinned to local watchlist.`;
 }
@@ -175,14 +187,14 @@ function addTopWatchlist(){
   const top = [...state.market].filter(x=>x.symbol).sort((a,b)=>Number(b.volume24h||0)-Number(a.volume24h||0)).slice(0,8).map(x=>x.symbol);
   state.watchlist = [...new Set([...top, ...state.watchlist])].slice(0,60);
   saveWatchlist();
-  renderWatchlist();
+  renderWatchlist(); renderPhonePanel();
   const box = document.getElementById('watchlistStatus');
   if(box) box.textContent = `Added ${top.length} top liquid assets.`;
 }
 function clearWatchlist(){
   state.watchlist = [];
   saveWatchlist();
-  renderWatchlist();
+  renderWatchlist(); renderPhonePanel();
   const box = document.getElementById('watchlistStatus');
   if(box) box.textContent = 'Watchlist cleared.';
 }
@@ -205,6 +217,66 @@ function renderWatchlist(){
 }
 
 
+
+function updatePhoneSnapshot(asset){
+  if(!asset) asset=selectedFocusAsset();
+  const price=Number(asset.price||0);
+  const change=Number(asset.change24h||0);
+  $('focusPrice').textContent=money(price);
+  $('focusChange').textContent=pct(change);
+  $('focusChange').className='focus-change '+(change>=0?'':'red');
+  $('focusVol').textContent=asset.volume24h?'$'+compact(asset.volume24h):'—';
+  const volatility = Math.max(0.002, Math.abs(change)/100 || 0.006);
+  $('focusOpen').textContent=price ? money(price/(1+change/100 || 1)) : '—';
+  $('focusHigh').textContent=price ? money(price*(1+volatility*0.65)) : '—';
+  $('focusLow').textContent=price ? money(price*(1-volatility*0.65)) : '—';
+}
+function setPhoneTab(tab){
+  state.phoneTab=tab||'overview';
+  document.querySelectorAll('[data-phone-tab]').forEach(btn=>btn.classList.toggle('active',btn.dataset.phoneTab===state.phoneTab));
+  renderPhonePanel();
+}
+function renderPhonePanel(){
+  const title=document.getElementById('phonePanelTitle');
+  const body=document.getElementById('phonePanelBody');
+  if(!title||!body) return;
+  const asset=selectedFocusAsset();
+  const topGain=[...state.market].filter(x=>!x.watchlist).sort((a,b)=>Number(b.change24h||0)-Number(a.change24h||0))[0];
+  const topVol=[...state.market].filter(x=>!x.watchlist).sort((a,b)=>Number(b.volume24h||0)-Number(a.volume24h||0))[0];
+  const score=Math.max(42,Math.min(98,Math.round(64+Math.abs(Number(asset.change24h||0))*4+Math.log10(Math.max(10,Number(asset.volume24h||0)))*2)));
+  if(state.phoneTab==='markets'){
+    title.textContent='Markets';
+    body.innerHTML=`<p><span>Top volume</span><strong>${escapeHtml(topVol?.symbol||asset.symbol)}</strong></p><p><span>Top gainer</span><strong>${escapeHtml(topGain?.symbol||asset.symbol)}</strong></p><p><span>Universe</span><strong>${state.meta.totalAssets||state.market.length||0}</strong></p>`;
+  }else if(state.phoneTab==='signals'){
+    title.textContent='Signals';
+    body.innerHTML=`<p><span>Signal score</span><strong>${score}</strong></p><p><span>24h bias</span><strong>${Number(asset.change24h||0)>=0?'Bullish':'Bearish'}</strong></p><p><span>Modules</span><strong>${state.strategies.length||269}</strong></p>`;
+  }else if(state.phoneTab==='agent'){
+    title.textContent='AI Agent';
+    body.innerHTML=`<p><span>Status</span><strong>Ready</strong></p><p><span>Focus asset</span><strong>${escapeHtml(asset.symbol||'—')}</strong></p><p><span>Action</span><strong>Ask review</strong></p>`;
+  }else if(state.phoneTab==='portfolio'){
+    title.textContent='Portfolio';
+    body.innerHTML=`<p><span>Wallet</span><strong>${state.walletAddress?shortAddress(state.walletAddress):'Not connected'}</strong></p><p><span>Watchlist</span><strong>${state.watchlist.length}</strong></p><p><span>Mode</span><strong>Paper only</strong></p>`;
+  }else{
+    title.textContent='Market Overview';
+    body.innerHTML=`<p><span>Signal status</span><strong>Live</strong></p><p><span>Execution mode</span><strong id="mode">Live</strong></p><p><span>Provider</span><strong id="marketStatus">${escapeHtml(state.meta.universe||'loading')}</strong></p>`;
+  }
+}
+function togglePhoneFavorite(){
+  const asset=selectedFocusAsset();
+  if(asset?.symbol) addWatchlist(asset.symbol);
+  const btn=document.getElementById('phoneFavBtn');
+  if(btn){ btn.textContent='★'; btn.classList.add('active'); }
+  setPhoneTab('portfolio');
+}
+function phoneQuickMenu(){
+  const asset=selectedFocusAsset();
+  const prompt=$('prompt');
+  if(prompt) prompt.value=`Give me a premium market brief for ${asset.symbol}, including signal score, risk, and a safe execution checklist.`;
+  setPhoneTab('agent');
+  document.querySelector('#agent')?.scrollIntoView({behavior:'smooth'});
+}
+
+
 function localProAnswer(promptText){ const items=state.market||[]; const avg=items.length?items.reduce((s,x)=>s+Number(x.change24h||0),0)/items.length:0; const top=[...items].sort((a,b)=>Number(b.volume24h||0)-Number(a.volume24h||0))[0]; const gain=[...items].sort((a,b)=>Number(b.change24h||0)-Number(a.change24h||0))[0]; const bestSig=state.signals?.[0]; const p=String(promptText||'').toLowerCase(); const tone=avg<-2?'defensive':avg>2?'momentum-positive':'selective and risk-controlled'; if(p.includes('strategy')||p.includes('signal')||p.includes('confluence')) return `Signal confluence brief: ${state.strategies.length} modules are loaded across ${state.categories.length} categories. ${bestSig?`Top active setup is ${bestSig.asset.symbol} ${bestSig.bias} at ${bestSig.confidence}% confidence.`:'Run the scanner to rank active setups.'}\nMarket tone is ${tone}, with average 24h change at ${pct(avg)}.\nUse confluence as a filter, not as an automatic trade command.`; if(p.includes('buy')||p.includes('sell')||p.includes('trade')||p.includes('order')) return `Execution intent detected. Treat this as a protected pre-trade review, not an automatic order.\nMarket tone is ${tone}; ${top?`liquidity anchor is ${top.symbol} at about $${compact(top.volume24h)} 24h volume.`:''}\nRequired checks: spread, depth, slippage, account balance, nonce/signature, and LIVE_TRADING status. Keep protected mode on for public demos.`; return `Premium market brief: ${items.length} assets and ${state.strategies.length} signal modules are loaded. Market tone is ${tone}, with average 24h change at ${pct(avg)}.\n${top?`Liquidity anchor: ${top.symbol} leads volume at about $${compact(top.volume24h)}.`:''}\n${gain?`Momentum leader: ${gain.symbol} at ${pct(gain.change24h)}.`:''}\nRisk-aware plan: keep core exposure in deeper/liquid pairs, use signal confluence to filter entries, and paper-trade before any SoDEX execution.`; }
 async function askAgent(){ const btn=$('askBtn'); const userPrompt=$('prompt').value.trim(); $('agentAnswer').textContent='Analyzing live market universe and signal confluence...'; btn.disabled=true; try{ const data=await fetchJson('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:userPrompt,market:state.market,meta:{...state.meta,strategies:state.strategies.length,signals:state.signals.slice(0,5)}})},14000); $('agentAnswer').textContent=data.answer||localProAnswer(userPrompt);}catch(_){$('agentAnswer').textContent=localProAnswer(userPrompt);}finally{btn.disabled=false;} }
 async function verifyOrder(){ $('orderStatus').textContent='Checking protected execution layer...'; try{ const symbol=state.market[0]?.rawSymbol||'vBTC_vUSDC'; const data=await fetchJson('/api/sodex/order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({symbol,side:'buy',type:'market',amount:'0.01'})}); $('orderStatus').textContent=data.message||'Protected order verified.';}catch(_){$('orderStatus').textContent='Execution layer unavailable.';} }
@@ -221,6 +293,10 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('walletBtn')?.addEventListener('click',connectWallet);
   document.getElementById('addTopWatchBtn')?.addEventListener('click',addTopWatchlist);
   document.getElementById('clearWatchBtn')?.addEventListener('click',clearWatchlist);
+
+  document.querySelectorAll('[data-phone-tab]').forEach(btn=>btn.addEventListener('click',()=>setPhoneTab(btn.dataset.phoneTab)));
+  document.getElementById('phoneFavBtn')?.addEventListener('click',togglePhoneFavorite);
+  document.getElementById('phoneMenuBtn')?.addEventListener('click',phoneQuickMenu);
 
   $('focusSelect')?.addEventListener('change',()=>{state.focus.symbol=$('focusSelect').value; loadFocusChart();});
   document.querySelectorAll('#focusTabs button').forEach(btn=>btn.addEventListener('click',()=>{
