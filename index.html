@@ -160,6 +160,39 @@ mode: protected execution</pre>
       <article><b>⬡ Built for Web3</b><span>Non-custodial. Transparent. Decentralized.</span></article>
     </section>
 
+    <section class="grid-main lower v3-upgrade">
+      <article class="panel valuechain-card">
+        <div class="panel-head">
+          <div>
+            <h2>ValueChain Wallet Center</h2>
+            <p>Connect wallet, check chain state, and add or switch to ValueChain Testnet from the UI.</p>
+          </div>
+          <span id="chainStatusPill" class="pill">wallet idle</span>
+        </div>
+        <div class="chain-grid">
+          <div><span>Wallet</span><strong id="walletAddressBox">Not connected</strong></div>
+          <div><span>Detected Chain</span><strong id="detectedChainBox">—</strong></div>
+          <div><span>Target Chain</span><strong id="targetChainBox">ValueChain Testnet · 13856</strong></div>
+        </div>
+        <div class="chain-actions">
+          <button id="switchChainBtn" class="btn primary">Switch to ValueChain</button>
+          <button id="addChainBtn" class="btn ghost">Add ValueChain</button>
+        </div>
+        <div id="chainStatus" class="answer small">Connect a wallet to check network status.</div>
+      </article>
+
+      <article class="panel sentiment-card">
+        <h2>Market Intelligence Pulse</h2>
+        <p class="muted">Generated from live 24h moves, volume distribution, and signal activity.</p>
+        <div class="pulse-meter">
+          <div id="pulseNeedle" class="pulse-needle"></div>
+          <span>Risk-off</span><span>Neutral</span><span>Risk-on</span>
+        </div>
+        <div id="sentimentBox" class="answer small">Waiting for market data...</div>
+      </article>
+    </section>
+
+
     <section id="market" class="premium-grid">
       <article class="panel market-movers">
         <div class="panel-head">
@@ -223,6 +256,38 @@ mode: protected execution</pre>
         <div id="orderStatus" class="answer small">No order prepared.</div>
       </article>
     </section>
+
+    <section id="orderbook" class="grid-main lower">
+      <article class="panel wide orderbook-panel">
+        <div class="panel-head">
+          <div>
+            <h2>Orderbook & Slippage Preview</h2>
+            <p>Protected, read-only execution preview for the selected phone asset. No real order is sent.</p>
+          </div>
+          <button id="loadOrderbookBtn" class="btn primary">Load Orderbook</button>
+        </div>
+        <div class="orderbook-grid">
+          <div>
+            <h3>Bids</h3>
+            <div id="bidRows" class="book-list"><div class="muted">No orderbook loaded.</div></div>
+          </div>
+          <div>
+            <h3>Asks</h3>
+            <div id="askRows" class="book-list"><div class="muted">No orderbook loaded.</div></div>
+          </div>
+        </div>
+      </article>
+      <article class="panel">
+        <h2>Execution Safety Check</h2>
+        <div class="chain-grid compact">
+          <div><span>Spread</span><strong id="spreadBox">—</strong></div>
+          <div><span>Est. Slippage</span><strong id="slippageBox">—</strong></div>
+          <div><span>Liquidity</span><strong id="liquidityBox">—</strong></div>
+        </div>
+        <div id="executionReadiness" class="answer small">Load the orderbook to calculate a protected execution preview.</div>
+      </article>
+    </section>
+
 
     <section id="signals" class="panel block-panel">
       <div class="panel-head">
@@ -331,7 +396,7 @@ mode: protected execution</pre>
         <h2>Watchlist Actions</h2>
         <p class="muted">Watchlist is stored locally in your browser. It does not expose wallet data, API keys, or server-side credentials.</p>
         <button id="clearWatchBtn" class="btn ghost full">Clear Watchlist</button>
-        <div id="watchlistStatus" class="answer small">Ready.</div>
+        <div id="watchlistStatus" class="answer small">Ready.</div><div id="watchlistAlerts" class="alert-stack"></div>
       </article>
     </section>
 

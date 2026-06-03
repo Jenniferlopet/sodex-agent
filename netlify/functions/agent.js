@@ -47,6 +47,9 @@ function buildSnapshot(market = [], meta = {}) {
     primary: meta.primary || 'live',
     trackedAssets: Number(meta.totalAssets || items.length || 0),
     strategyModules: Number(meta.strategies || 0),
+    focus: meta.focus || null,
+    watchlist: Array.isArray(meta.watchlist) ? meta.watchlist.slice(0, 20) : [],
+    orderbook: meta.orderbook || null,
     topSignals: Array.isArray(meta.signals) ? meta.signals.slice(0, 5) : [],
     average24hChange: avg,
     topVolume,
@@ -63,6 +66,7 @@ function proLocalAnswer(promptText = '', market = [], meta = {}) {
   const weakest = s.losers[0];
   const riskTone = s.average24hChange < -2 ? 'defensive' : s.average24hChange > 2 ? 'momentum-positive' : 'selective and risk-controlled';
   const tracked = s.trackedAssets || market.length || 0;
+  const focus = s.focus;
 
   if (!p || p.includes('hello') || p.includes('hi') || p.includes('xin chào')) {
     return `Hello — I am SoDEX Agent. I am tracking ${tracked} live assets from the protected market layer. Ask me for a market brief, signal confluence read, risk read, rebalance plan, orderbook checklist, or execution readiness review.`;
@@ -70,7 +74,7 @@ function proLocalAnswer(promptText = '', market = [], meta = {}) {
 
   if (hasAny(p, ['buy', 'sell', 'order', 'trade', 'mua', 'bán', 'lệnh', 'tư vấn mua'])) {
     return [
-      `Execution intent detected. I would treat this as a protected pre-trade review, not an automatic trade.`,
+      `Execution intent detected${focus ? ` for ${focus.symbol}` : ''}. I would treat this as a protected pre-trade review, not an automatic trade.`,
       `Market tone is currently ${riskTone}, with average 24h change at ${pct(s.average24hChange)} across ${tracked} tracked assets.`,
       topVol ? `Liquidity focus: ${topVol.symbol} is the highest-volume asset in the current snapshot at about $${compact(topVol.volume24h)}.` : `Liquidity focus: wait for a deeper SoDEX orderbook read before sizing the order.`,
       `Recommended flow: check spread, depth, slippage, account balance, nonce/signature, then only enable live execution after the order format is verified server-side.`,
@@ -80,7 +84,7 @@ function proLocalAnswer(promptText = '', market = [], meta = {}) {
 
   if (hasAny(p, ['rebalance', 'portfolio', 'risk', 'allocation', 'cân bằng', 'danh mục', 'rủi ro', 'phân bổ'])) {
     return [
-      `Portfolio read: the current market universe is ${riskTone}, tracking ${tracked} assets with an average 24h move of ${pct(s.average24hChange)}.`,
+      `Portfolio read: the current market universe is ${riskTone}, tracking ${tracked} assets with an average 24h move of ${pct(s.average24hChange)}.${focus ? ` Focus asset: ${focus.symbol} at ${pct(focus.change24h)} with about $${compact(focus.volume24h)} volume.` : ''}`,
       strongest ? `Momentum leader: ${strongest.symbol} at ${pct(strongest.change24h)}.` : '',
       weakest ? `Main drag: ${weakest.symbol} at ${pct(weakest.change24h)}.` : '',
       `Risk-aware rebalance: keep core exposure in the deepest/liquid pairs, reduce concentration in weak high-volatility names, and size satellite tokens smaller.`,

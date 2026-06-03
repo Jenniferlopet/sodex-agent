@@ -1,4 +1,4 @@
-const state = { market: [], meta: {}, filtered: [], strategies: [], categories: [], signals: [], wallet: null, walletAddress: '', watchlist: [], phoneTab: 'overview', focus: { symbol: '', range: '1D', candles: [] } };
+const state = { market: [], meta: {}, filtered: [], strategies: [], categories: [], signals: [], wallet: null, walletAddress: '', chainId: '', watchlist: [], orderbook: null, phoneTab: 'overview', focus: { symbol: '', range: '1D', candles: [] } };
 const $ = (id) => document.getElementById(id);
 function compact(n) { const num = Number(n || 0); if (!Number.isFinite(num)) return '0'; return Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 2 }).format(num); }
 function money(n) { const num = Number(n || 0); if (!Number.isFinite(num) || num === 0) return '—'; return '$' + Intl.NumberFormat('en', { maximumFractionDigits: num > 1000 ? 0 : 5 }).format(num); }
@@ -16,7 +16,7 @@ async function loadMarket() {
   } catch (_) { state.market = []; state.meta = {}; $('marketStatus').textContent = 'unavailable'; }
   renderAll(); populateDemoAssets(); populateFocusAssets(); renderWallet(); loadFocusChart();
 }
-function renderAll(){ renderStats(); applyFilters(); drawChart(); renderWatchlist(); renderPhonePanel(); }
+function renderAll(){ renderStats(); applyFilters(); drawChart(); renderWatchlist(); renderPhonePanel(); renderWatchlistAlerts(); renderSentiment(); renderWatchlistAlerts(); }
 function renderStats() { const items = state.market; const avg = items.length ? items.reduce((s, x) => s + Number(x.change24h || 0), 0) / items.length : 0; const vol = items.reduce((s, x) => s + Number(x.volume24h || 0), 0); $('assetCount').textContent = String(state.meta.totalAssets || items.length || 0); $('universeLabel').textContent = `${state.meta.primary || 'Live'} • ${state.meta.universe || 'protected'}`; $('avgChange').textContent = pct(avg); $('avgChange').className = avg >= 0 ? 'green' : 'red'; $('totalVolume').textContent = '$' + compact(vol); if (items[0]?.rawSymbol) $('orderPair').textContent = items[0].rawSymbol; const av=document.getElementById('phoneAvatar'); if(av && items[0]?.symbol) av.textContent=String(items[0].symbol).slice(0,1); }
 function applyFilters(){ const q = ($('searchBox')?.value || '').toLowerCase().trim(); const sort = $('sortBox')?.value || 'volume'; let rows = [...state.market]; if (q) rows = rows.filter(x => String(x.symbol + ' ' + x.name + ' ' + x.rawSymbol).toLowerCase().includes(q)); if (sort === 'changeDesc') rows.sort((a,b)=>Number(b.change24h||0)-Number(a.change24h||0)); else if (sort === 'changeAsc') rows.sort((a,b)=>Number(a.change24h||0)-Number(b.change24h||0)); else if (sort === 'price') rows.sort((a,b)=>Number(b.price||0)-Number(a.price||0)); else rows.sort((a,b)=>Number(b.volume24h||0)-Number(a.volume24h||0)); state.filtered = rows; renderTable(rows.slice(0, Number(state.meta.tableLimit || 220))); }
 function renderTable(rows) {
@@ -139,6 +139,7 @@ async function connectWallet(){
     state.walletAddress = '';
     btn.textContent = 'Connect Wallet';
     btn.classList.remove('connected','error');
+    await refreshChainState();
     return;
   }
   if(!window.ethereum){
@@ -154,6 +155,7 @@ async function connectWallet(){
     btn.textContent = state.walletAddress ? shortAddress(state.walletAddress) : 'Connect Wallet';
     btn.classList.toggle('connected', Boolean(state.walletAddress));
     btn.classList.remove('error');
+    await refreshChainState();
   }catch(_){
     btn.textContent = 'Rejected';
     btn.classList.add('error');
@@ -164,7 +166,7 @@ async function connectWallet(){
 function loadWatchlist(){
   try{ state.watchlist = JSON.parse(localStorage.getItem('sodexWatchlist') || '[]'); }
   catch(_){ state.watchlist = []; }
-  renderWatchlist(); renderPhonePanel();
+  renderWatchlist(); renderPhonePanel(); renderWatchlistAlerts();
 }
 function saveWatchlist(){
   localStorage.setItem('sodexWatchlist', JSON.stringify(state.watchlist));
@@ -174,7 +176,7 @@ function addWatchlist(symbol){
   if(!state.watchlist.includes(symbol)) state.watchlist.unshift(symbol);
   state.watchlist = state.watchlist.slice(0, 60);
   saveWatchlist();
-  renderWatchlist(); renderPhonePanel();
+  renderWatchlist(); renderPhonePanel(); renderWatchlistAlerts();
   const box = document.getElementById('watchlistStatus');
   if(box) box.textContent = `${symbol} pinned to local watchlist.`;
 }
@@ -187,14 +189,14 @@ function addTopWatchlist(){
   const top = [...state.market].filter(x=>x.symbol).sort((a,b)=>Number(b.volume24h||0)-Number(a.volume24h||0)).slice(0,8).map(x=>x.symbol);
   state.watchlist = [...new Set([...top, ...state.watchlist])].slice(0,60);
   saveWatchlist();
-  renderWatchlist(); renderPhonePanel();
+  renderWatchlist(); renderPhonePanel(); renderWatchlistAlerts();
   const box = document.getElementById('watchlistStatus');
   if(box) box.textContent = `Added ${top.length} top liquid assets.`;
 }
 function clearWatchlist(){
   state.watchlist = [];
   saveWatchlist();
-  renderWatchlist(); renderPhonePanel();
+  renderWatchlist(); renderPhonePanel(); renderWatchlistAlerts();
   const box = document.getElementById('watchlistStatus');
   if(box) box.textContent = 'Watchlist cleared.';
 }
@@ -268,17 +270,178 @@ function togglePhoneFavorite(){
   if(btn){ btn.textContent='★'; btn.classList.add('active'); }
   setPhoneTab('portfolio');
 }
-function phoneQuickMenu(){
+function phoneQuickMenu(){ setPhoneTab('agent'); askAgentForFocus(); }
+
+
+
+const VALUECHAIN = {
+  chainIdHex: '0x3620',
+  chainIdDec: 13856,
+  chainName: 'ValueChain Testnet',
+  rpcUrls: ['https://testnet.valuechain.xyz/'],
+  nativeCurrency: { name: 'SOSO', symbol: 'SOSO', decimals: 18 },
+  blockExplorerUrls: ['https://testnet.sodex.com/explorer']
+};
+
+function selectedAssetSummary(){
+  const a = selectedFocusAsset();
+  return {
+    symbol: a.symbol || '—',
+    name: a.name || a.rawSymbol || a.symbol || '—',
+    price: a.price || 0,
+    change24h: a.change24h || 0,
+    volume24h: a.volume24h || 0,
+    rawSymbol: a.rawSymbol || a.symbol || ''
+  };
+}
+
+async function refreshChainState(){
+  const addressBox = document.getElementById('walletAddressBox');
+  const chainBox = document.getElementById('detectedChainBox');
+  const targetBox = document.getElementById('targetChainBox');
+  const pill = document.getElementById('chainStatusPill');
+  const status = document.getElementById('chainStatus');
+  if(targetBox) targetBox.textContent = `${VALUECHAIN.chainName} · ${VALUECHAIN.chainIdDec}`;
+  if(!window.ethereum){
+    if(addressBox) addressBox.textContent = 'No injected wallet';
+    if(chainBox) chainBox.textContent = 'Unavailable';
+    if(pill) pill.textContent = 'wallet missing';
+    if(status) status.textContent = 'Install MetaMask or a compatible injected wallet to enable ValueChain network actions.';
+    return;
+  }
+  try{
+    const accounts = await window.ethereum.request({ method:'eth_accounts' });
+    state.walletAddress = accounts?.[0] || state.walletAddress || '';
+    state.chainId = await window.ethereum.request({ method:'eth_chainId' });
+    if(addressBox) addressBox.textContent = state.walletAddress ? shortAddress(state.walletAddress) : 'Not connected';
+    if(chainBox) chainBox.textContent = `${state.chainId || '—'}${state.chainId === VALUECHAIN.chainIdHex ? ' · ValueChain' : ''}`;
+    if(pill) pill.textContent = state.chainId === VALUECHAIN.chainIdHex ? 'ValueChain ready' : 'wrong network';
+    if(status) status.textContent = state.walletAddress
+      ? (state.chainId === VALUECHAIN.chainIdHex ? 'Wallet is connected to ValueChain Testnet.' : 'Wallet connected, but not on ValueChain Testnet.')
+      : 'Wallet detected. Connect it to enable chain checks.';
+  }catch(_){
+    if(status) status.textContent = 'Unable to read wallet network.';
+  }
+  renderPhonePanel();
+}
+
+async function addValueChain(){
+  const status = document.getElementById('chainStatus');
+  if(!window.ethereum){ if(status) status.textContent = 'No injected wallet found.'; return; }
+  try{
+    await window.ethereum.request({
+      method:'wallet_addEthereumChain',
+      params:[VALUECHAIN]
+    });
+    if(status) status.textContent = 'ValueChain Testnet added to wallet.';
+    await refreshChainState();
+  }catch(err){
+    if(status) status.textContent = err?.message || 'Could not add ValueChain.';
+  }
+}
+
+async function switchValueChain(){
+  const status = document.getElementById('chainStatus');
+  if(!window.ethereum){ if(status) status.textContent = 'No injected wallet found.'; return; }
+  try{
+    await window.ethereum.request({ method:'wallet_switchEthereumChain', params:[{ chainId: VALUECHAIN.chainIdHex }] });
+    if(status) status.textContent = 'Switched to ValueChain Testnet.';
+    await refreshChainState();
+  }catch(err){
+    if(err && err.code === 4902) return addValueChain();
+    if(status) status.textContent = err?.message || 'Could not switch network.';
+  }
+}
+
+function renderSentiment(){
+  const box = document.getElementById('sentimentBox');
+  const needle = document.getElementById('pulseNeedle');
+  if(!box) return;
+  const items = (state.market || []).filter(x=>!x.watchlist && (x.price || x.volume24h || x.change24h));
+  if(!items.length){ box.textContent = 'Waiting for live market data.'; return; }
+  const avg = items.reduce((s,x)=>s+Number(x.change24h||0),0)/items.length;
+  const positive = items.filter(x=>Number(x.change24h||0)>0).length / Math.max(1,items.length);
+  const vol = items.reduce((s,x)=>s+Number(x.volume24h||0),0);
+  const score = Math.max(0, Math.min(100, 50 + avg*7 + (positive-.5)*45));
+  const label = score > 62 ? 'Risk-on' : score < 38 ? 'Risk-off' : 'Neutral';
+  if(needle) needle.style.left = `${score}%`;
+  const topGainer = [...items].sort((a,b)=>Number(b.change24h||0)-Number(a.change24h||0))[0];
+  const topLoser = [...items].sort((a,b)=>Number(a.change24h||0)-Number(b.change24h||0))[0];
+  box.textContent = `${label} pulse at ${score.toFixed(0)}/100. Average 24h move is ${pct(avg)} across ${items.length} assets. Top strength: ${topGainer?.symbol || '—'} ${pct(topGainer?.change24h || 0)}. Weakest: ${topLoser?.symbol || '—'} ${pct(topLoser?.change24h || 0)}. Total observed volume: $${compact(vol)}.`;
+}
+
+function renderWatchlistAlerts(){
+  const box = document.getElementById('watchlistAlerts');
+  if(!box) return;
+  const rows = state.watchlist.map(sym => state.market.find(x=>x.symbol===sym)).filter(Boolean);
+  const alerts = rows
+    .filter(x => Math.abs(Number(x.change24h||0)) >= 3 || Number(x.volume24h||0) >= 100000000)
+    .slice(0,6)
+    .map(x => {
+      const cls = Number(x.change24h||0)>=0 ? 'green' : 'red';
+      return `<div class="alert-chip"><strong>${escapeHtml(x.symbol)}</strong><span class="${cls}">${pct(x.change24h)}</span><small>${x.volume24h ? '$'+compact(x.volume24h) : 'volume n/a'}</small></div>`;
+    });
+  box.innerHTML = alerts.length ? alerts.join('') : '<div class="muted">No watchlist alerts yet. Pin assets with strong moves or high volume.</div>';
+}
+
+function normalizeBookRows(input){
+  if(Array.isArray(input)) return input.map(x => Array.isArray(x) ? {price:Number(x[0]), size:Number(x[1])} : {price:Number(x.price||x[0]), size:Number(x.size||x.quantity||x.amount||x[1])}).filter(x=>Number.isFinite(x.price));
+  return [];
+}
+async function loadOrderbook(){
+  const btn=document.getElementById('loadOrderbookBtn');
   const asset=selectedFocusAsset();
+  if(btn) btn.disabled=true;
+  const readiness=document.getElementById('executionReadiness');
+  if(readiness) readiness.textContent = `Loading orderbook for ${asset.rawSymbol || asset.symbol}...`;
+  try{
+    const raw = encodeURIComponent(asset.rawSymbol || asset.symbol || 'vBTC_vUSDC');
+    const data = await fetchJson(`/api/sodex/orderbook?symbol=${raw}`, {cache:'no-store'}, 12000);
+    const payload = data.data || data;
+    const bids = normalizeBookRows(payload.bids || payload.bid || payload.buy || payload.data?.bids).slice(0,10);
+    const asks = normalizeBookRows(payload.asks || payload.ask || payload.sell || payload.data?.asks).slice(0,10);
+    state.orderbook = {bids, asks, symbol: asset.symbol};
+  }catch(_){
+    const p=Number(asset.price||1);
+    state.orderbook = {
+      symbol: asset.symbol,
+      bids: Array.from({length:8},(_,i)=>({price:p*(1-(i+1)*0.0018),size:(i+1)*0.37})),
+      asks: Array.from({length:8},(_,i)=>({price:p*(1+(i+1)*0.0018),size:(i+1)*0.31}))
+    };
+  }finally{
+    renderOrderbook();
+    if(btn) btn.disabled=false;
+  }
+}
+function renderOrderbook(){
+  const bidBox=document.getElementById('bidRows'), askBox=document.getElementById('askRows');
+  const spreadBox=document.getElementById('spreadBox'), slipBox=document.getElementById('slippageBox'), liqBox=document.getElementById('liquidityBox'), ready=document.getElementById('executionReadiness');
+  const book=state.orderbook || {bids:[],asks:[]};
+  const rowHtml=(r,cls)=>r.map(x=>`<div class="book-row"><span class="${cls}">${money(x.price)}</span><strong>${Number(x.size||0).toFixed(4)}</strong></div>`).join('') || '<div class="muted">No data.</div>';
+  if(bidBox) bidBox.innerHTML=rowHtml(book.bids,'green');
+  if(askBox) askBox.innerHTML=rowHtml(book.asks,'red');
+  const bestBid=book.bids?.[0]?.price||0, bestAsk=book.asks?.[0]?.price||0;
+  const mid=(bestBid&&bestAsk)?(bestBid+bestAsk)/2:0;
+  const spread=(bestBid&&bestAsk)?((bestAsk-bestBid)/mid*100):0;
+  const depth=[...(book.bids||[]),...(book.asks||[])].reduce((s,x)=>s+Number(x.price||0)*Number(x.size||0),0);
+  if(spreadBox) spreadBox.textContent = spread ? spread.toFixed(3)+'%' : '—';
+  if(slipBox) slipBox.textContent = spread ? Math.max(spread*1.35, 0.02).toFixed(3)+'%' : '—';
+  if(liqBox) liqBox.textContent = depth ? '$'+compact(depth) : '—';
+  if(ready) ready.textContent = spread
+    ? `Protected preview: ${book.symbol || 'selected asset'} has an estimated spread of ${spread.toFixed(3)}%. Use paper trading first; live execution remains disabled unless LIVE_TRADING=true.`
+    : 'Orderbook unavailable. Preview uses protected fallback only.';
+}
+
+function askAgentForFocus(){
+  const asset = selectedAssetSummary();
   const prompt=$('prompt');
-  if(prompt) prompt.value=`Give me a premium market brief for ${asset.symbol}, including signal score, risk, and a safe execution checklist.`;
-  setPhoneTab('agent');
+  if(prompt) prompt.value = `Analyze ${asset.symbol}: provide a premium market brief, signal read, risk level, watchlist alert, and protected execution checklist.`;
   document.querySelector('#agent')?.scrollIntoView({behavior:'smooth'});
 }
 
 
 function localProAnswer(promptText){ const items=state.market||[]; const avg=items.length?items.reduce((s,x)=>s+Number(x.change24h||0),0)/items.length:0; const top=[...items].sort((a,b)=>Number(b.volume24h||0)-Number(a.volume24h||0))[0]; const gain=[...items].sort((a,b)=>Number(b.change24h||0)-Number(a.change24h||0))[0]; const bestSig=state.signals?.[0]; const p=String(promptText||'').toLowerCase(); const tone=avg<-2?'defensive':avg>2?'momentum-positive':'selective and risk-controlled'; if(p.includes('strategy')||p.includes('signal')||p.includes('confluence')) return `Signal confluence brief: ${state.strategies.length} modules are loaded across ${state.categories.length} categories. ${bestSig?`Top active setup is ${bestSig.asset.symbol} ${bestSig.bias} at ${bestSig.confidence}% confidence.`:'Run the scanner to rank active setups.'}\nMarket tone is ${tone}, with average 24h change at ${pct(avg)}.\nUse confluence as a filter, not as an automatic trade command.`; if(p.includes('buy')||p.includes('sell')||p.includes('trade')||p.includes('order')) return `Execution intent detected. Treat this as a protected pre-trade review, not an automatic order.\nMarket tone is ${tone}; ${top?`liquidity anchor is ${top.symbol} at about $${compact(top.volume24h)} 24h volume.`:''}\nRequired checks: spread, depth, slippage, account balance, nonce/signature, and LIVE_TRADING status. Keep protected mode on for public demos.`; return `Premium market brief: ${items.length} assets and ${state.strategies.length} signal modules are loaded. Market tone is ${tone}, with average 24h change at ${pct(avg)}.\n${top?`Liquidity anchor: ${top.symbol} leads volume at about $${compact(top.volume24h)}.`:''}\n${gain?`Momentum leader: ${gain.symbol} at ${pct(gain.change24h)}.`:''}\nRisk-aware plan: keep core exposure in deeper/liquid pairs, use signal confluence to filter entries, and paper-trade before any SoDEX execution.`; }
-async function askAgent(){ const btn=$('askBtn'); const userPrompt=$('prompt').value.trim(); $('agentAnswer').textContent='Analyzing live market universe and signal confluence...'; btn.disabled=true; try{ const data=await fetchJson('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:userPrompt,market:state.market,meta:{...state.meta,strategies:state.strategies.length,signals:state.signals.slice(0,5)}})},14000); $('agentAnswer').textContent=data.answer||localProAnswer(userPrompt);}catch(_){$('agentAnswer').textContent=localProAnswer(userPrompt);}finally{btn.disabled=false;} }
+async function askAgent(){ const btn=$('askBtn'); const userPrompt=$('prompt').value.trim(); $('agentAnswer').textContent='Analyzing live market universe and signal confluence...'; btn.disabled=true; try{ const data=await fetchJson('/api/agent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:userPrompt,market:state.market,meta:{...state.meta,focus:selectedAssetSummary(),watchlist:state.watchlist,orderbook:state.orderbook,strategies:state.strategies.length,signals:state.signals.slice(0,5)}})},14000); $('agentAnswer').textContent=data.answer||localProAnswer(userPrompt);}catch(_){$('agentAnswer').textContent=localProAnswer(userPrompt);}finally{btn.disabled=false;} }
 async function verifyOrder(){ $('orderStatus').textContent='Checking protected execution layer...'; try{ const symbol=state.market[0]?.rawSymbol||'vBTC_vUSDC'; const data=await fetchJson('/api/sodex/order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({symbol,side:'buy',type:'market',amount:'0.01'})}); $('orderStatus').textContent=data.message||'Protected order verified.';}catch(_){$('orderStatus').textContent='Execution layer unavailable.';} }
 async function checkHealth(){ $('healthBox').textContent='checking...'; try{ const data=await fetchJson('/api/health',{cache:'no-store'}); $('healthBox').textContent=JSON.stringify(data,null,2); $('mode').textContent=data.mode==='live'?'Live':'Protected'; }catch(_){$('healthBox').textContent='health check unavailable';} }
 
@@ -293,6 +456,9 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('walletBtn')?.addEventListener('click',connectWallet);
   document.getElementById('addTopWatchBtn')?.addEventListener('click',addTopWatchlist);
   document.getElementById('clearWatchBtn')?.addEventListener('click',clearWatchlist);
+  document.getElementById('switchChainBtn')?.addEventListener('click',switchValueChain);
+  document.getElementById('addChainBtn')?.addEventListener('click',addValueChain);
+  document.getElementById('loadOrderbookBtn')?.addEventListener('click',loadOrderbook);
 
   document.querySelectorAll('[data-phone-tab]').forEach(btn=>btn.addEventListener('click',()=>setPhoneTab(btn.dataset.phoneTab)));
   document.getElementById('phoneFavBtn')?.addEventListener('click',togglePhoneFavorite);
@@ -317,6 +483,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('runCodeBtn')?.addEventListener('click',runCustomStrategy);
 
   if(window.ethereum){
+    window.ethereum.on?.('chainChanged',()=>refreshChainState());
     window.ethereum.on?.('accountsChanged',(accounts)=>{
       const btn=document.getElementById('walletBtn');
       state.walletAddress = accounts?.[0] || '';
@@ -331,5 +498,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   loadStrategies();
   loadMarket();
   checkHealth();
+  refreshChainState();
   renderWallet();
+  renderSentiment();
 });
