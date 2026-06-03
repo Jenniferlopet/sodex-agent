@@ -123,6 +123,18 @@ The tool uses Netlify Functions for protected API access:
 /api/chart
 ```
 
+
+## Official Links
+
+- SoSoValue Join: https://sosovalue.com/join/GJ0189KU
+- SoSoValue Developer Dashboard: https://sosovalue.com/developer/dashboard
+- SoSoValue API Docs: https://sosovalue-1.gitbook.io/sosovalue-api-doc
+- SoDEX Spot Trading: https://sodex.com/trade/spot/BTC_USDC
+- SoDEX API Docs: https://sodex.com/documentation/api/api
+- SoDEX API Keys: https://sodex.com/apikeys
+- WaveHack Submission: https://app.akindo.io/wave-hacks/JBEQXgN4Zi2jA3wA
+- SoDEX Discord: https://discord.gg/sodex
+
 ## Netlify Deployment
 
 Recommended Netlify settings:

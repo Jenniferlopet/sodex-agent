@@ -245,3 +245,33 @@ canvas{display:block}.chart-wrap::-webkit-scrollbar,.table-wrap::-webkit-scrollb
   font-weight:850;
 }
 .watch-action:hover{border-color:rgba(34,211,238,.55)}
+
+.doc-card.logo-card{
+  position:relative;
+  padding-top:20px;
+}
+.doc-logo{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  object-fit:cover;
+  display:block;
+  margin-bottom:14px;
+  padding:5px;
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(148,163,184,.16);
+  box-shadow:0 0 28px rgba(34,211,238,.13);
+}
+.doc-logo.local-logo{
+  padding:2px;
+  background:#fff;
+}
+.doc-card.logo-card:after{
+  content:"↗";
+  position:absolute;
+  right:16px;
+  top:16px;
+  color:#67e8f9;
+  font-weight:950;
+  opacity:.7;
+}
