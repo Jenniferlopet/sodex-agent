@@ -9,6 +9,8 @@
 </head>
 <body>
   <div class="bg-orbit"></div>
+  <div class="tech-grid"></div>
+  <div class="data-streams"></div>
   <div class="noise"></div>
 
   <header class="topbar">
@@ -33,7 +35,7 @@
 
     <div class="top-actions">
       <button class="chain-pill" type="button"><span></span> ValueChain</button>
-      <button class="wallet-btn" type="button">Connect Wallet</button>
+      <button id="walletBtn" class="wallet-btn" type="button">Connect Wallet</button>
     </div>
   </header>
 
@@ -299,6 +301,75 @@ mode: protected execution</pre>
         <button id="resetWalletBtn" class="btn ghost full">Reset Demo Wallet</button>
         <div class="answer small">Demo trading is isolated in localStorage. It never sends real orders and never stores user trades on a server.</div>
       </article>
+    </section>
+
+    
+    <section id="watchlist" class="grid-main lower">
+      <article class="panel wide">
+        <div class="panel-head">
+          <div>
+            <h2>Watchlist Command Center</h2>
+            <p>Pin liquid assets from the live universe, monitor their 24h move, and route them into the AI Agent or protected execution flow.</p>
+          </div>
+          <button id="addTopWatchBtn" class="btn primary">Add Top Assets</button>
+        </div>
+        <div class="table-wrap short">
+          <table>
+            <thead><tr><th>#</th><th>Asset</th><th>Price</th><th>24h</th><th>Volume</th><th>Action</th></tr></thead>
+            <tbody id="watchlistRows"><tr><td colspan="6">No assets pinned yet. Add top assets or use the buttons inside Market Movers.</td></tr></tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="panel watch-panel">
+        <h2>Watchlist Actions</h2>
+        <p class="muted">Watchlist is stored locally in your browser. It does not expose wallet data, API keys, or server-side credentials.</p>
+        <button id="clearWatchBtn" class="btn ghost full">Clear Watchlist</button>
+        <div id="watchlistStatus" class="answer small">Ready.</div>
+      </article>
+    </section>
+
+    <section id="docs" class="panel block-panel docs-panel">
+      <div class="panel-head">
+        <div>
+          <h2>Docs & Project Links</h2>
+          <p>Everything judges or builders need to verify the project, ecosystem context, and API direction.</p>
+        </div>
+        <span class="pill">external links</span>
+      </div>
+
+      <div class="docs-grid">
+        <a class="doc-card" href="https://sosovalue.com/developer/dashboard" target="_blank" rel="noreferrer">
+          <span>SoSoValue Developer</span>
+          <strong>API Dashboard</strong>
+          <small>API keys, data access, developer console.</small>
+        </a>
+        <a class="doc-card" href="https://sosovalue-1.gitbook.io/sosovalue-api-doc" target="_blank" rel="noreferrer">
+          <span>SoSoValue API</span>
+          <strong>GitBook Docs</strong>
+          <small>Official API documentation and endpoint reference.</small>
+        </a>
+        <a class="doc-card" href="https://sodex.com/documentation/api/api" target="_blank" rel="noreferrer">
+          <span>SoDEX API</span>
+          <strong>API Documentation</strong>
+          <small>Market data, execution flow, signing and order routes.</small>
+        </a>
+        <a class="doc-card" href="https://sodex.com/apikeys" target="_blank" rel="noreferrer">
+          <span>SoDEX Keys</span>
+          <strong>API Key Console</strong>
+          <small>Create and manage SoDEX API key names and signing keys.</small>
+        </a>
+        <a class="doc-card wave" href="https://app.akindo.io/wave-hacks/JBEQXgN4Zi2jA3wA" target="_blank" rel="noreferrer">
+          <span>WaveHack</span>
+          <strong>SoSoValue AI Buildathon Wave 2</strong>
+          <small>Submission page, judging context, and hackathon track.</small>
+        </a>
+        <a class="doc-card" href="https://discord.gg/HQuGhhkUw" target="_blank" rel="noreferrer">
+          <span>Community</span>
+          <strong>Discord</strong>
+          <small>Community support and ecosystem discussion.</small>
+        </a>
+      </div>
     </section>
 
     <section id="playground" class="panel block-panel">
